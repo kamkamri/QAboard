@@ -1,0 +1,2 @@
+class YourArea < ApplicationRecord
+end
