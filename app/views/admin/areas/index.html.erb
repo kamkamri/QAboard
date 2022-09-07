@@ -1,2 +1,37 @@
-<h1>Admin::Areas#index</h1>
-<p>Find me in app/views/admin/areas/index.html.erb</p>
+<!--<h1>Admin::Areas#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h3>拠点マスタ</h3>
+  </div>
+
+  <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
+    <div class = "row">
+      <%= f.label :name, '拠点名', class: 'col' %>
+      <%= f.text_field :name, placeholder: "拠点の名前を入力してください", class: 'col' %>
+      <%= f.submit "登録", class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>拠点名</th>
+        <th>管理拠点</th>
+        <th>ステータス</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @areas.each do |area| %>
+        <tr>
+          <td><%= area.id %></td>
+          <td><%= area.name %></td>
+          <td><%= area.admin_area_flag ? '管理者':'' %></td>
+          <td><%= area.is_deleted ? '無効':'有効' %></td>
+          <td><%= link_to '編集', edit_admin_area_path(area.id), class: 'btn btn-secondary' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
