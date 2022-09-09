@@ -1,2 +1,30 @@
-<h1>Admin::Areas#edit</h1>
-<p>Find me in app/views/admin/areas/edit.html.erb</p>
+<!--<h1>Admin::Areas#edit</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h3>拠点マスタ編集</h3>
+  </div>
+
+  <%= form_with model: @area, url: admin_area_path(@area.id), method: :patch do |f| %>
+    <div class = "row">
+      <%= f.label :name, "拠点名", class: "col" %>
+      <%= f.text_field :name, class: "col" %>
+    </div>
+    <div class = "row">
+      <%= f.label :admin_area_flag, "管理拠点", class: "col" %>
+      <%= f.radio_button :admin_area_flag, false, checked: true %>
+      <%= f.label :admin_area_flag, "通常拠点" %>
+      <%= f.radio_button :admin_area_flag, true %>
+      <%= f.label :admin_area_flag, "管理者拠点" %>
+    </div>
+    <div class = "row">
+      <%= f.label :is_deleted, "拠点ステータス", class: "col" %>
+      <%= f.radio_button :is_deleted, false, checked: true %>
+      <%= f.label :is_deleted, "有効" %>
+      <%= f.radio_button :is_deleted, true %>
+      <%= f.label :is_deleted, "廃止" %>
+    </div>
+    <div class = "row">
+      <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

@@ -17,14 +17,26 @@ class Admin::AreasController < ApplicationController
     end
   end
 
+  # 編集画面
   def edit
+    @area = Area.find(params[:id])
+  end
+
+  # 管理者更新
+  def update
+    @area = Area.find(params[:id])
+    if @area.update(area_params)
+      redirect_to admin_areas_path
+    else
+      render :edit
+    end
   end
 
   # ストロングステータス
   private
 
   def area_params
-    params.require(:area).permit(:name)
+    params.require(:area).permit(:name, :admin_area_flag, :is_deleted)
   end
 
 end
