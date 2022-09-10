@@ -1,2 +1,26 @@
-<h1>Admin::Jobs#edit</h1>
-<p>Find me in app/views/admin/jobs/edit.html.erb</p>
+<!--<h1>Admin::Jobs#edit</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h3>業務マスタ編集</h3>
+  </div>
+
+
+  <%= form_with model: @job, url: admin_job_path(@job.id), method: :patch do |f| %>
+    <div class = "row">
+      <%= f.label :name, "業務名" %>
+      <%= f.text_field :name %>
+    </div>
+    <div class = "row">
+      <%= f.label :is_deleted, "業務ステータス" %>
+      <%= f.radio_button :is_deleted, false, checked: true %>
+      <%= f.label :is_deleted, "有効" %>
+      <%= f.radio_button :is_deleted, true %>
+      <%= f.label :is_deleted, "廃止" %>
+    </div>
+    <div class = "row">
+      <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+
+</div>

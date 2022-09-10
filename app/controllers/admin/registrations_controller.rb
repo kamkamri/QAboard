@@ -1,18 +1,72 @@
 # frozen_string_literal: true
 
 class Admin::RegistrationsController < Devise::RegistrationsController
+  # サインアップする前に、パラムを取り込み可能にする
+  before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @admin_areas = Area.where(admin_area_flag: true).where(is_deleted: false)
+    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+    @jobs = Job.where(is_deleted: false)
+    @admin_user = AdminUser.new
+    @admin_user.your_areas.build
+    @admin_user.your_jobs.build
+    super
+  end
 
   # POST /resource
+  def create
+    @admin_areas = Area.where(admin_area_flag: true).where(is_deleted: false)
+    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+    @jobs = Job.where(is_deleted: false)
+    super
+  end
+
+  # カスタマイズをするためにクリエイトをコピー
   # def create
-  #   super
+  #   build_resource(sign_up_params)
+
+  #   # 追加
+  #   @area_ids = params[:your_area][:area_ids]
+  #   @job_ids = params[:your_job][:job_ids]
+  #   # ぱらむの最初に空白が入っているので、削除する
+  #   @area_ids.shift
+  #   @job_ids.shift
+  #   binding.pry
+  #   if resource.save(area_id: 1)
+  #     @area_ids.each do |area_id|
+  #       your_area = YourArea.new
+  #       your_area.admin_user_id = resource.id
+  #       your_area.area_id = area_id
+  #       your_area.save
+  #     end
+
+
+  #   end
+
+  #   yield resource if block_given?
+  #   if resource.persisted?
+  #     if resource.active_for_authentication?
+  #       set_flash_message! :notice, :signed_up
+  #       sign_up(resource_name, resource)
+  #       respond_with resource, location: after_sign_up_path_for(resource)
+  #     else
+  #       set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+  #       expire_data_after_sign_in!
+  #       respond_with resource, location: after_inactive_sign_up_path_for(resource)
+  #     end
+  #   else
+  #     clean_up_passwords resource
+  #     set_minimum_password_length
+  #     respond_with resource
+  #   end
   # end
+
+
+
 
   # GET /resource/edit
   # def edit
@@ -59,9 +113,23 @@ class Admin::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-  
+
+
+
+
+  protected
+
+  # サインアップする時のカラムを増やす
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:employee_number, :family_name, :first_name, :area_id, :is_deleted, area_ids:[], job_ids:[]])
+  end
+
+  # サインアップ後の遷移するページを表示
   def after_sign_up_path_for(resource_or_scope)
     admin_admin_user_path(current_admin_user.id)
   end
-  
+
+
 end
+
+

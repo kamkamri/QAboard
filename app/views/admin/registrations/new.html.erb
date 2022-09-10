@@ -5,15 +5,15 @@
 
   <div class="field">
     <%= f.label :employee_number, "社員番号" %>
-    <%= f.email_field :employee_number, autofocus: true, autocomplete: "on",  placeholder: "6桁前0を追加"  %>
+    <%= f.text_field :employee_number, autofocus: true, autocomplete: "on",  placeholder: "6桁前0を追加"  %>
   </div>
 
   <div class="field">
     <%= f.label "氏名" %>
     <%= f.label :family_name, "名字" %>
-    <%= f.email_field :family_name, autofocus: true, autocomplete: "on",  placeholder: "山田"  %>
+    <%= f.text_field :family_name, autofocus: true, autocomplete: "on",  placeholder: "山田"  %>
     <%= f.label :first_name, "名前" %>
-    <%= f.email_field :first_name, autofocus: true, autocomplete: "on",  placeholder: "太郎"  %>
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "on",  placeholder: "太郎"  %>
   </div>
 
   <div class="field">
@@ -34,8 +34,32 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <div class = "row">
+    <%= f.label "所属拠点", class: "col" %>
+    <%= f.collection_select(:area_id, @admin_areas, :id, :name) %>
+  </div>
+
+  <div class = "row">
+    <%= f.label "担当拠点", class: "col" %>
+  <!--fields_forで、別モデルnのyour_area も一緒に保存できるようにする-->
+    <%= f.collection_check_boxes(:area_ids, @user_areas, :id, :name, include_hidden: false) do |area| %>
+      <%= area.check_box %>
+      <%= area.text %>
+    <% end %>
+  </div>
+
+   <div class = "row">
+    <%= f.label "担当業務", class: "col" %>
+    <!--fields_forで、別モデルnのyour_job も一緒に保存できるようにする-->
+    <%= f.collection_check_boxes(:job_ids, @jobs, :id, :name, include_hidden: false) do |job| %>
+      <%= job.check_box %>
+      <%= job.text %>
+    <% end %>
+  </div>
+
+
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "新規登録" %>
   </div>
 <% end %>
 

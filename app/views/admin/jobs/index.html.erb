@@ -1,2 +1,37 @@
-<h1>Admin::Jobs#index</h1>
-<p>Find me in app/views/admin/jobs/index.html.erb</p>
+<!--<h1>Admin::Jobs#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h3>業務マスタ</h3>
+  </div>
+
+  <%= form_with model: @job, url: admin_jobs_path, method: :post do |f| %>
+    <div class = "row">
+      <%= f.label :name, "業務名", class: "col" %>
+      <%= f.text_field :name, placeholder: "業務の名前を入力してください", class: "col" %>
+      <%= f.submit "登録", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+
+  <div class = "row">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>業務名</th>
+          <th>ステータス</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @jobs.each do |job| %>
+          <tr>
+            <td><%= job.id %></td>
+            <td><%= job.name %></td>
+            <td><%= job.is_deleted ? "廃止":"有効" %></td>
+            <td><%= link_to "編集", edit_admin_job_path(job.id), class: "btn btn-secondary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
