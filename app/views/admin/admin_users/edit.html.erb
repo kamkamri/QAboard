@@ -1,2 +1,58 @@
-<h1>Admin::AdminUsers#edit</h1>
-<p>Find me in app/views/admin/admin_users/edit.html.erb</p>
+<!--<h1>Admin::AdminUsers#edit</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h3>管理者情報編集</h3>
+  </div>
+
+  <%= form_with model: @admin_user, url: admin_admin_user_path(@admin_user.id), method: :patch do |f| %>
+    <div class = "row">
+      <%= f.label :enmloyee_number, "社員番号" %>
+      <%= f.text_field :employee_number, autofocus: true, autocomplete: "on" %>
+    </div>
+    <div class = "row">
+      <%= f.label "氏名" %>
+      <%= f.label :family_name, "名字" %>
+      <%= f.text_field :family_name, autofocus: true, autocomplete: "on" %>
+      <%= f.label :first_name, "名前" %>
+      <%= f.text_field :first_name, autofocus: true, autocomplete: "on" %>
+    </div>
+    <div class = "row">
+      <%= f.label "メールアドレス" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+    <div class = "row">
+      <%= f.label :profile_image, "プロフィール画像" %>
+      <%= f.file_field :profile_image, accept: "image/*" %>
+    </div>
+    <div class = "row">
+      <%= f.label "所属拠点" %>
+      <%= f.collection_select(:area_id, @admin_areas, :id, :name) %>
+    </div>
+    <div class = "row">
+      <%= f.label "担当拠点" %>
+      <%= f.collection_check_boxes(:area_ids, @user_areas, :id, :name, include_hidden: false) do |area| %>
+        <%= area.check_box %>
+        <%= area.text %>
+      <% end %>
+    </div>
+    <div class = "row">
+      <%= f.label "担当業務" %>
+      <%= f.collection_check_boxes(:job_ids, @jobs, :id, :name, include_hidden: false) do |job| %>
+        <%= job.check_box %>
+        <%= job.text %>
+      <% end %>
+    </div>
+    <div class = "row">
+      <%= f.label :is_deleted, "管理者ステータス" %>
+      <%= f.radio_button :is_deleted, false %>
+      <%= f.label :is_deleted, "有効" %>
+      <%= f.radio_button :is_deleted, true %>
+      <%= f.label :is_deleted, "無効" %>
+    </div>
+    <div class = "row">
+      <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+
+</div>

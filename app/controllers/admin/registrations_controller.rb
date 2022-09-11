@@ -121,7 +121,7 @@ class Admin::RegistrationsController < Devise::RegistrationsController
 
   # サインアップする時のカラムを増やす
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:employee_number, :family_name, :first_name, :area_id, :is_deleted, area_ids:[], job_ids:[]])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, area_ids:[], job_ids:[]])
   end
 
   # サインアップ後の遷移するページを表示

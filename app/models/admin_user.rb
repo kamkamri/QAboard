@@ -40,6 +40,20 @@ class AdminUser < ApplicationRecord
 
   has_one_attached :profile_image
 
+  # 画像がない場合のno-image設定、画像リサイズ
+  def get_profile_image(width, height)
+    unless profile_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_image.jpg')
+      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+    end
+    profile_image.variant(resize_to_fill: [with, height]).processed
+  end
+
+  # 氏名を表示するメソッド
+  def name_display
+    family_name + "　" + first_name
+  end
+
   # 関連付けしたモデルを一緒にデータ保存できるようにする
   # accepts_nested_attributes_for :your_areas, allow_destroy: true  # fields_for（後述）に必要
   # accepts_nested_attributes_for :your_jobs, allow_destroy: true  # fields_for（後述）に必要

@@ -2,8 +2,8 @@
 
 <%= form_with model: @admin_user, url: admin_user_session_path do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :employee_number, "社員番号" %><br />
+    <%= f.text_field :employee_number, autofocus: true, autocomplete: "on" %>
   </div>
 
   <div class="field">
