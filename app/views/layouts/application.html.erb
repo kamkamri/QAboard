@@ -30,7 +30,7 @@
             <%= link_to "業務マスタ", admin_jobs_path %>
           </li>
           <li>
-            <%= link_to "マイページ", admin_end_user_path(current_admin_user.id) %>
+            <%= link_to "マイページ", admin_admin_user_path(current_admin_user.id) %>
           </li>
           <li>
             <%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete %>

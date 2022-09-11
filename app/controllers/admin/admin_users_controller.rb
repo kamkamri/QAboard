@@ -6,8 +6,9 @@ class Admin::AdminUsersController < ApplicationController
     @jobs = Job.where(is_deleted: false)
   end
 
-  # 管理者画面詳細
+  # 管理者画面詳細＝マイページ
   def show
+    @admin_user = AdminUser.find(current_admin_user.id)
   end
 
   # 管理者画面編集

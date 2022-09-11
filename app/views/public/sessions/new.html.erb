@@ -1,13 +1,13 @@
-<h2>Log in</h2>
+<h2>拠点担当者_ログイン</h2>
 
 <%= form_with model: @end_user, url: end_user_session_path do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :employee_number, "社員番号" %><br />
+    <%= f.text_field :employee_number, autofocus: true, autocomplete: "on" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
+    <%= f.label :password, "パスワード" %><br />
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 

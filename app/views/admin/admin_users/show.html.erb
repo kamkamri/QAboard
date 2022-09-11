@@ -1,2 +1,49 @@
-<h1>Admin::AdminUsers#show</h1>
-<p>Find me in app/views/admin/admin_users/show.html.erb</p>
+<!--<h1>Admin::AdminUsers#show</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h3>登録情報</h3>
+    <%= link_to "変更する", edit_admin_admin_user_path(current_admin_user.id), class: "btn btn-danger" %>
+  </div>
+
+  <div class = "row">
+    <div class = "col">
+      <%= image_tag @admin_user.get_profile_image(200,200),class: "img-fluid" %>
+    </div>
+    <div class = "col">
+      <table>
+        <tbody>
+          <tr>
+            <th>氏名</th>
+            <td><%= @admin_user.name_display %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= @admin_user.email %></td>
+          </tr>
+          <tr>
+            <th>所属拠点</th>
+            <td><%= @admin_user.area.name %></td>
+          </tr>
+          <tr>
+            <th>担当拠点</th>
+            <td>
+              <% @admin_user.areas.each do |area| %>
+                <%= area.name %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th>担当業務</th>
+            <td>
+              <% @admin_user.jobs.each do |job| %>
+                <%= job.name %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

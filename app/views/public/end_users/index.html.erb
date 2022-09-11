@@ -1,2 +1,24 @@
-<h1>Public::EndUsers#index</h1>
-<p>Find me in app/views/public/end_users/index.html.erb</p>
+<!--<h1>Public::EndUsers#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h3>< <%= current_end_user.area.name %> > 担当者一覧</h3>
+  </div>
+  <div class = "row">
+    <table>
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @end_users.each do |end_user| %>
+          <tr>
+            <td><%= end_user.name_display %></td>
+            <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
