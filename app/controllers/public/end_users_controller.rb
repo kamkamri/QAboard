@@ -5,12 +5,14 @@ class Public::EndUsersController < ApplicationController
     @end_users = EndUser.where(area_id: current_end_user.area_id).where(is_deleted: false)
   end
 
-  def show
+  def mypage
+    @end_user = current_end_user
   end
 
   # 拠点担当者編集画面
-  def edit
+  def mypage_edit
     @end_user = current_end_user
+    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
 
   # 拠点担当者更新
@@ -28,6 +30,6 @@ class Public::EndUsersController < ApplicationController
   private
 
   def end_user_params
-    params.permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted)
+    params.permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, :profile_image)
   end
 end

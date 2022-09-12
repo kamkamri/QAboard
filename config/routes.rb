@@ -27,7 +27,12 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
-    resources :end_users, only:[:index, :show, :edit, :update]
+    resources :end_users, only:[:index,:update] do
+      collection do
+        get 'mypage'
+        get 'mypage_edit'
+      end
+    end
     resources :trees, only:[:index, :new, :create, :show, :edit, :update, :destroy] do
       get :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]

@@ -45,7 +45,7 @@
             <%= link_to "拠点担当者一覧", end_users_path %>
           </li>
           <li>
-            <%= link_to "マイページ", end_user_path(current_end_user.id) %>
+            <%= link_to "マイページ", mypage_end_users_path %>
           </li>
           <li>
             <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete %>

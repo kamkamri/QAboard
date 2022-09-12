@@ -15,7 +15,7 @@
         <% @end_users.each do |end_user| %>
           <tr>
             <td><%= end_user.name_display %></td>
-            <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch %></td>
+            <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch, "data-confirm" => "本当に消しますか？"  %></td>
           </tr>
         <% end %>
       </tbody>

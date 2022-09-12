@@ -71,7 +71,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource_or_scope)
-    end_user_path(current_end_user.id)
+    mypage_end_users_path
   end
 
 end
