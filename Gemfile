@@ -61,3 +61,5 @@ gem 'pry-byebug', group: :development
 
 # deviseを追加
 gem 'devise'
+
+gem "net-smtp"

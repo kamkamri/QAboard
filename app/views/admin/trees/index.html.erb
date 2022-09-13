@@ -1,2 +1,75 @@
-<h1>Admin::Trees#index</h1>
-<p>Find me in app/views/admin/trees/index.html.erb</p>
+<!--<h1>Admin::Trees#index</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h3>掲示板</h3>
+  </div>
+
+  <div class = "row">
+
+    <div class = "col-md-4">
+
+    </div>
+
+    <div class = "col-md-6">
+      <div class = "row">
+        <%= link_to "質問をする", new_admin_tree_path, class: "btn btn-secondary" %>
+      </div>
+
+      <div class = "row">
+
+      </div>
+
+      <div class = "row">
+        <!--ツリーが存在するか？-->
+        <% if @trees.exists? %>
+          <% @trees.each do |tree| %>
+
+            <!--対象のツリーをadmin_userが投稿した場合-->
+            <% if tree.end_user.id.blank? %>
+              <div class = "card border-secondary mb-3">
+                <div class = "card-header"><%= tree.title %></div>
+                <div class = "card-body">
+                  <%= image_tag tree_admin_user.get_profile_image(200,200),class: "img-fluid" %>
+                  <p class = "card-text"><%= tree.body %></p>
+                </div>
+                <div class = "card-footer">
+                  <%= tree.job.name %>
+                  <%= tree.area.name %>
+                  <%= tree.admin_user.name_display %>
+                  <% if tree.response.exists? %>
+                    <%= tree.response.updated_at.order(updated_at: :desc).limit(1) %>
+                  <% else %>
+                    <%= tree.updated_at %>
+                  <% end %>
+                </div>
+              </div>
+            <!--対象のツリーをend_userが投稿した場合-->
+            <% else %>
+              <div class = "card border-secondary mb-3">
+                <div class = "card-header"><%= tree.title %></div>
+                <div class = "card-body">
+                  <%= image_tag tree_end_user.get_profile_image(200,200),class: "img-fluid" %>
+                  <p class = "card-text"><%= tree.body %></p>
+                </div>
+                <div class = "card-footer">
+                  <%= tree.job.name %>
+                  <%= tree.area.name %>
+                  <%= tree.end_user.name_display %>
+                  <% if tree.response.exists? %>
+                    <%= tree.response.updated_at.order(updated_at: :desc).limit(1) %>
+                  <% else %>
+                    <%= tree.updated_at %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+</div>

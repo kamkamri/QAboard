@@ -1,5 +1,8 @@
 class Admin::TreesController < ApplicationController
+  
+  # 掲示版ツリー一覧
   def index
+    @trees = Tree.all
   end
 
   def new
