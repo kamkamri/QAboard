@@ -1,8 +1,9 @@
 class Tree < ApplicationRecord
 
   # アソシエーション
-  belongs_to :admin_user
-  belongs_to :end_user
+   #  optional:true  は、belongs_to の外部キーのnilを許可する
+  belongs_to :admin_user, optional: true
+  belongs_to :end_user, optional: true
   belongs_to :area
   belongs_to :job
   has_many :responses, dependent: :destroy

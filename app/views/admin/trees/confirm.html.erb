@@ -1,2 +1,30 @@
-<h1>Admin::Trees#confirm</h1>
-<p>Find me in app/views/admin/trees/confirm.html.erb</p>
+<!--<h1>Admin::Trees#confirm</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <div class = "col-md-6">
+      <div class = "card border-secondary mb-3">
+        <div class = "card-header">質問を確認</div>
+        <div class = "card-body">
+          <div class = "row">
+            <h5 class = "card-title"><%= @tree.title %></h5>
+            <p><%= @tree.body %></p>
+          </div>
+        </div>
+        <div class = "card-footer">
+          <div class = "col">業務区分</div>
+          <div class = "col"><%= @tree.job.name %></div>
+          <%= form_with model: @tree, url: admin_trees_path, method: :post do |f| %>
+            <%= f.hidden_field :title, :value => @tree.title %>
+            <%= f.hidden_field :body, :value => @tree.body %>
+            <%= f.hidden_field :job_id, :value => @tree.job_id %>
+            <%= f.submit "修正する", name: "back", class: "btn btn-secondary" %>
+            <%= f.submit "投稿する", class: "btn btn-danger" %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

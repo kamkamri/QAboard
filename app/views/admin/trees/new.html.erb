@@ -1,2 +1,25 @@
-<h1>Admin::Trees#new</h1>
-<p>Find me in app/views/admin/trees/new.html.erb</p>
+<!--<h1>Admin::Trees#new</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <div class = "col-md-6">
+      <%= form_with model: @tree, url: confirm_admin_trees_path, method: :get do |f| %>
+        <div class = "card border-secondary mb-3">
+          <div class = "card-header">質問を投稿する</div>
+          <div class = "card-body">
+            <div class = "row">
+              <%= f.text_field :title, autofocus: true,  placeholder: "タイトルを入力してください", class: "col-sm-12 mb-4" %>
+              <%= f.text_area :body, autofocus: true,  placeholder: "質問を入力してください", rows:10, class: "col-sm-12 " %>
+            </div>
+          </div>
+          <div class = "card-footer">
+            <%= f.label :job_id, "質問タグ" %>
+            <%= f.collection_select(:job_id, @jobs, :id, :name) %>
+            <%= f.submit "質問を確認する", class: "btn btn-secondary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

@@ -26,18 +26,18 @@
           <% @trees.each do |tree| %>
 
             <!--対象のツリーをadmin_userが投稿した場合-->
-            <% if tree.end_user.id.blank? %>
+            <% if tree.end_user_id.nil? %>
               <div class = "card border-secondary mb-3">
                 <div class = "card-header"><%= tree.title %></div>
                 <div class = "card-body">
-                  <%= image_tag tree_admin_user.get_profile_image(200,200),class: "img-fluid" %>
+                  <%= image_tag tree.admin_user.get_profile_image(200,200),class: "img-fluid" %>
                   <p class = "card-text"><%= tree.body %></p>
                 </div>
                 <div class = "card-footer">
                   <%= tree.job.name %>
                   <%= tree.area.name %>
                   <%= tree.admin_user.name_display %>
-                  <% if tree.response.exists? %>
+                  <% if tree.responses.exists? %>
                     <%= tree.response.updated_at.order(updated_at: :desc).limit(1) %>
                   <% else %>
                     <%= tree.updated_at %>
