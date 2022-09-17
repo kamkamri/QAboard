@@ -1,2 +1,106 @@
-<h1>Admin::Trees#show</h1>
-<p>Find me in app/views/admin/trees/show.html.erb</p>
+<!--<h1>Admin::Trees#show</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <div class = "col-md-10">
+      <div class = "card border-secondary mb-5">
+        <div class = "card-header"><%= @tree.title %></div>
+        <div class = "card-body">
+          <div class = "row">
+            <div class = "col-md-1">
+              <% if @tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                <%= image_tag @tree.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+              <% else %>  <!--対象のツリーをend_userが投稿した場合-->
+                <%= image_tag @tree.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+              <% end %>
+            </div>
+            <div class = "col-md-10">
+              <p class = "card-text"><%= @tree.body %></p>
+            </div>
+          </div>
+        </div>
+        <div class = "card-footer">
+            <!--スレッドがクローズされていない場合、回答するを表示し、指定の場所に飛ぶようにする-->
+            <% if @tree.is_closed == false %>
+              <%= link_to "＋回答する", admin_tree_path(@tree.id, anchor: "response"), class: "d-block text-right" %>
+            <% end %>
+          <div class = "row">
+            <div class = "btn btn-info btn-sm">
+              <%= @tree.job.name %>
+            </div>
+            <div class = "col align-self-end text-right">
+              <% if @tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                <%= @tree.admin_user.area.name %>
+                <%= @tree.admin_user.name_display_short %>
+              <% else %>  <!--対象のツリーをend_userが投稿した場合-->
+                <%= @tree.end_user.area.name %>
+                <%= @tree.end_user.name_display_short %>
+              <% end %>
+              <%= l @tree.updated_at %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--レスポンス-->
+  <% @responses.each do |res| %>
+    <div class = "row">
+      <div class = "col-md-10">
+        <div class = "card border-secondary mb-1">
+          <div class = "card-header">
+            <div class = "text-left">
+              <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                <%= res.admin_user.area.name %>
+                <%= res.admin_user.name_display_short %>
+              <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                <%= res.end_user.area.name %>
+                <%= res.end_user.name_display_short %>
+              <% end %>
+              <%= l res.updated_at %>
+            </div>
+          </div>
+          <div class = "card-body">
+            <div class = "row">
+              <div class = "col-md-2">
+                <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                  <%= image_tag res.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                  <%= image_tag res.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                <% end %>
+              </div>
+              <div class = "col-md-10">
+                <p class = "card-text"><%= res.body %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @tree.is_closed == false %>
+    <div class = "row">
+      <div class = "col-md-10">
+        <%= form_with model: @res, url: admin_tree_responses_path(@tree), method: :post do |f| %>
+          <div class = "card border-danger mt-5">
+            <div class = "card-header bg-danger text-white"><strong>回答する</strong></div>
+            <div class = "card-body">
+              <div class = "row">
+                <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
+              </div>
+            </div>
+            <div class = "card-footer", id= "response">
+              <p><small class = "text-muted">質問をクローズする場合は「質問をクローズする」選んでください。</br>
+                  クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+              <%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %>
+              <%= f.submit "回答する", class: "btn btn-secondary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+</div>

@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2022_09_05_124656) do
     t.integer "end_user_id"
     t.integer "admin_user_id"
     t.integer "area_id", null: false
+    t.integer "post_id", null: false
     t.integer "job_id", null: false
     t.string "title", null: false
     t.text "body", null: false
@@ -126,4 +127,5 @@ ActiveRecord::Schema.define(version: 2022_09_05_124656) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "trees", "areas", column: "post_id"
 end

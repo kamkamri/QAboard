@@ -31,4 +31,10 @@ class EndUser < ApplicationRecord
   def name_display
     family_name + "　" + first_name
   end
+  
+  # 氏名を表示するメソッド短い
+  def name_display_short
+    family_name + first_name
+  end
+  
 end

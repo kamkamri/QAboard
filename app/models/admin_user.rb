@@ -38,6 +38,7 @@ class AdminUser < ApplicationRecord
 
   belongs_to :area  # 所属拠点
 
+  # プロフィール画像
   has_one_attached :profile_image
 
   # 画像がない場合のno-image設定、画像リサイズ
@@ -52,6 +53,11 @@ class AdminUser < ApplicationRecord
   # 氏名を表示するメソッド
   def name_display
     family_name + "　" + first_name
+  end
+  
+  # 氏名を表示するメソッド短い
+  def name_display_short
+    family_name + first_name
   end
 
   # 関連付けしたモデルを一緒にデータ保存できるようにする

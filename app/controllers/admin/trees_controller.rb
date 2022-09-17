@@ -9,6 +9,7 @@ class Admin::TreesController < ApplicationController
   def new
     @tree = Tree.new
     @jobs = Job.all
+    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
 
   # 質問確認画面
@@ -29,7 +30,11 @@ class Admin::TreesController < ApplicationController
     redirect_to admin_tree_path(@tree.id)
   end
 
+  # 質問詳細画面(レスポンス新規画面)
   def show
+    @tree = Tree.find(params[:id])
+    @responses = Response.all
+    @res = Response.new
   end
 
   def edit

@@ -12,6 +12,8 @@ class Area < ApplicationRecord
   has_many :end_users, dependent: :destroy
   has_many :your_areas, dependent: :destroy
   has_many :trees, dependent: :destroy
+  # Treeの中の、post_id(送信先)もareaを使うのでpostと命名
+  has_many :post, class_name: "Tree", foreign_key: "post_id"
 
 
 

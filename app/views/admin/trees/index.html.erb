@@ -21,52 +21,55 @@
       </div>
 
       <div class = "row">
-        <!--ツリーが存在するか？-->
-        <% if @trees.exists? %>
+        <div class = "col-md-11">
+
           <% @trees.each do |tree| %>
 
-            <!--対象のツリーをadmin_userが投稿した場合-->
-            <% if tree.end_user_id.nil? %>
-              <div class = "card border-secondary mb-3">
+            <div class = "card border-secondary mb-3">
+              <%= link_to admin_tree_path(tree.id) do %>
                 <div class = "card-header"><%= tree.title %></div>
                 <div class = "card-body">
-                  <%= image_tag tree.admin_user.get_profile_image(200,200),class: "img-fluid" %>
-                  <p class = "card-text"><%= tree.body %></p>
+                  <div class = "row">
+                    <div class = "col-md-2">
+                      <% if tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                        <%= image_tag tree.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                      <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                        <%= image_tag tree.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                      <% end %>
+                    </div>
+                    <div class = "col-md-10">
+                      <p class = "card-text"><%= tree.body %></p>
+                    </div>
+                  </div>
                 </div>
                 <div class = "card-footer">
-                  <%= tree.job.name %>
-                  <%= tree.area.name %>
-                  <%= tree.admin_user.name_display %>
-                  <% if tree.responses.exists? %>
-                    <%= tree.response.updated_at.order(updated_at: :desc).limit(1) %>
-                  <% else %>
-                    <%= tree.updated_at %>
-                  <% end %>
+                  <div class = "row">
+                    <div class = "btn btn-info btn-sm">
+                      <%= tree.job.name %>
+                    </div>
+                    <div class = "col align-self-end text-right">
+                      <% if tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                        <%= tree.admin_user.area.name %>
+                        <%= tree.admin_user.name_display_short %>
+                      <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                        <%= tree.end_user.area.name %>
+                        <%= tree.end_user.name_display_short %>
+                      <% end %>
+                      <% if tree.responses.exists? %>
+                        <%= l tree.latest_response.updated_at %>
+                      <% else %>
+                        <%= l tree.updated_at %>
+                      <% end %>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            <!--対象のツリーをend_userが投稿した場合-->
-            <% else %>
-              <div class = "card border-secondary mb-3">
-                <div class = "card-header"><%= tree.title %></div>
-                <div class = "card-body">
-                  <%= image_tag tree_end_user.get_profile_image(200,200),class: "img-fluid" %>
-                  <p class = "card-text"><%= tree.body %></p>
-                </div>
-                <div class = "card-footer">
-                  <%= tree.job.name %>
-                  <%= tree.area.name %>
-                  <%= tree.end_user.name_display %>
-                  <% if tree.response.exists? %>
-                    <%= tree.response.updated_at.order(updated_at: :desc).limit(1) %>
-                  <% else %>
-                    <%= tree.updated_at %>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
 
           <% end %>
-        <% end %>
+
+
+        </div>
       </div>
     </div>
 
