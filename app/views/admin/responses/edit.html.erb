@@ -1,2 +1,27 @@
-<h1>Admin::Responses#edit</h1>
-<p>Find me in app/views/admin/responses/edit.html.erb</p>
+<!--<h1>Admin::Responses#edit</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <div class = "col-md-6">
+      <%= form_with model: @res, url: admin_tree_response_path(@tree.id, @res.id), method: :patch do |f| %>
+        <div class = "card border-danger mt-5">
+          <div class = "card-header bg-danger text-white"><strong>回答を編集する</strong></div>
+          <div class = "card-body">
+            <div class = "row">
+              <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
+            </div>
+          </div>
+          <div class = "card-footer">
+            <p><small class = "text-muted">質問をクローズする場合は「質問をクローズする」選んでください。</br>
+                クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+            <%= f.fields_for @tree do |i| %>
+              <%= i.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]], selected: @tree.is_closed ) %>
+            <% end %>
+            <%= f.submit "編集する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary btn-sm" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

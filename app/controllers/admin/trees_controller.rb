@@ -9,7 +9,7 @@ class Admin::TreesController < ApplicationController
   def new
     @tree = Tree.new
     @jobs = Job.all
-    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+    @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
 
   # 質問確認画面
@@ -23,8 +23,10 @@ class Admin::TreesController < ApplicationController
     @tree.admin_user_id = current_admin_user.id
     @tree.area_id = current_admin_user.area_id
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
+    # !@tree.save !が前にあるので、saveできなかったらになる
     if params[:back] || !@tree.save
       @jobs = Job.all
+      @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
       render :new and return
     end
     redirect_to admin_tree_path(@tree.id)
@@ -37,12 +39,28 @@ class Admin::TreesController < ApplicationController
     @res = Response.new
   end
 
+  # 質問編集
   def edit
+    @tree = Tree.find(params[:id])
+    @jobs = Job.all
+    @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+  end
+
+  # 質問更新
+  def update
+    @tree = Tree.find(params[:id])
+    if @tree.update(tree_params)
+      redirect_to admin_tree_path(@tree.id)
+    else
+      @jobs = Job.all
+      @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+      render :edit
+    end
   end
 
   private
   def tree_params
-    params.require(:tree).permit(:job_id, :title, :body)
+    params.require(:tree).permit(:post_id, :job_id, :title, :body)
   end
 
 end

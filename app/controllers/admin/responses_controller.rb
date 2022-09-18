@@ -9,7 +9,7 @@ class Admin::ResponsesController < ApplicationController
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     if @res.save!
       #@tree.update!(tree_params)
-      if tree_params[:is_closed] == "true"
+      if tree_params[:is_closed] != @tree.is_closed
         @tree.update(tree_params)
       end
       redirect_to admin_tree_path(@tree.id)
@@ -19,7 +19,27 @@ class Admin::ResponsesController < ApplicationController
     end
   end
 
+  # 編集
   def edit
+    @tree = Tree.find(params[:tree_id])
+    @res = Response.find(params[:id])
+  end
+
+  # 更新
+  def update
+    @tree = Tree.find(params[:tree_id])
+    @res = Response.find(params[:id])
+    # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
+    if @res.update(response_params)
+      if close_params[:tree][:is_closed] != @tree.is_closed
+        @tree.update(close_params[:tree])
+      end
+      redirect_to admin_tree_path(@tree.id)
+    else
+      @responses = Response.all
+      render :edit
+    end
+
   end
 
   # ストロングパラメータ
@@ -30,5 +50,9 @@ class Admin::ResponsesController < ApplicationController
 
   def tree_params
     params.require(:response).permit(:is_closed)
+  end
+
+  def close_params
+    params.require(:response).permit(tree: [:is_closed])
   end
 end

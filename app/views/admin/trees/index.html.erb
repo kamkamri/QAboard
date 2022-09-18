@@ -26,7 +26,7 @@
           <% @trees.each do |tree| %>
 
             <div class = "card border-secondary mb-3">
-              <%= link_to admin_tree_path(tree.id) do %>
+              <%= link_to admin_tree_path(tree.id), class: "text-decoration-none" do %>
                 <div class = "card-header"><%= tree.title %></div>
                 <div class = "card-body">
                   <div class = "row">
@@ -38,7 +38,7 @@
                       <% end %>
                     </div>
                     <div class = "col-md-10">
-                      <p class = "card-text"><%= tree.body %></p>
+                      <p class = "card-text"><%= simple_format(tree.body) %></p>
                     </div>
                   </div>
                 </div>
@@ -47,20 +47,32 @@
                     <div class = "btn btn-info btn-sm">
                       <%= tree.job.name %>
                     </div>
-                    <div class = "col align-self-end text-right">
-                      <% if tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
-                        <%= tree.admin_user.area.name %>
-                        <%= tree.admin_user.name_display_short %>
-                      <% else %>　<!--対象のツリーをend_userが投稿した場合-->
-                        <%= tree.end_user.area.name %>
-                        <%= tree.end_user.name_display_short %>
-                      <% end %>
+                  </div>
+                  <div class = "row justify-content-end">
+                    <div class = "col-sm-2">投稿日</div>
+                    <div class = "col-sm-5">
                       <% if tree.responses.exists? %>
                         <%= l tree.latest_response.updated_at %>
                       <% else %>
                         <%= l tree.updated_at %>
                       <% end %>
                     </div>
+                  </div>
+                  <div class = "row justify-content-end">
+                    <div class = "col-sm-2">送信者</div>
+                    <div class = "col-sm-5">
+                      <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
+                        <%= tree.admin_user.area.name %>
+                        <%= tree.admin_user.name_display_short %>
+                      <% else %><!--対象のツリーをend_userが投稿した場合-->
+                        <%= tree.end_user.area.name %>
+                        <%= tree.end_user.name_display_short %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class= "row justify-content-end">
+                    <div class = "col-sm-2">宛先</div>
+                    <div class = "col-sm-5"><%= tree.post.name %></div>
                   </div>
                 </div>
               <% end %>

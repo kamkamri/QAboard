@@ -13,11 +13,17 @@
             </div>
           </div>
           <div class = "card-footer">
-            <%= f.label :area_id, "送信先" %>
-            <%= f.collection_select(:area_id, @user_areas, :id, :name) %>
-            <%= f.label :job_id, "質問タグ" %>
-            <%= f.collection_select(:job_id, @jobs, :id, :name) %>
-            <%= f.submit "質問を確認する", class: "btn btn-secondary" %>
+            <div class = "row">
+              <%= f.label :post_id, "送信先", class: "col-sm-2" %>
+              <%= f.collection_select(:post_id, @user_areas, :id, :name, prompt: "選択してください") %>
+            </div>
+            <div class = "row">
+              <%= f.label :job_id, "質問タグ", class: "col-sm-2" %>
+              <%= f.collection_select(:job_id, @jobs, :id, :name, prompt: "選択してください") %>
+            </div>
+            <div class = "row">
+              <%= f.submit "質問を確認する", class: "btn btn-secondary" %>
+            </div>
           </div>
         </div>
       <% end %>

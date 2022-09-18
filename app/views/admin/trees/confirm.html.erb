@@ -4,19 +4,25 @@
   <div class = "row">
     <div class = "col-md-6">
       <div class = "card border-secondary mb-3">
-        <div class = "card-header">質問を確認</div>
+        <div class = "card-header">
+          <h5 class = "card-title"><%= @tree.title %></h5>
+        </div>
         <div class = "card-body">
-          <div class = "row">
-            <h5 class = "card-title"><%= @tree.title %></h5>
-            <p><%= @tree.body %></p>
-          </div>
+            <%= simple_format(@tree.body) %>
         </div>
         <div class = "card-footer">
-          <div class = "col">業務区分</div>
-          <div class = "col"><%= @tree.job.name %></div>
+          <div class = "row">
+            <div class = "col-sm-2">送信先</div>
+            <div class = "col-sm-3"><%= @tree.post.name %></div>
+          </div>
+          <div class = "row">
+            <div class = "col-sm-2">業務区分</div>
+            <div class = "col-sm-3"><%= @tree.job.name %></div>
+          </div>
           <%= form_with model: @tree, url: admin_trees_path, method: :post do |f| %>
             <%= f.hidden_field :title, :value => @tree.title %>
             <%= f.hidden_field :body, :value => @tree.body %>
+            <%= f.hidden_field :post_id, :value => @tree.post_id %>
             <%= f.hidden_field :job_id, :value => @tree.job_id %>
             <%= f.submit "修正する", name: "back", class: "btn btn-secondary" %>
             <%= f.submit "投稿する", class: "btn btn-danger" %>
