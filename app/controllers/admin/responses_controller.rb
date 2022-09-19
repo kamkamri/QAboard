@@ -22,13 +22,13 @@ class Admin::ResponsesController < ApplicationController
   # 編集
   def edit
     @tree = Tree.find(params[:tree_id])
-    @res = Response.find(params[:id])
+    @res = current_admin_user.responses.find(params[:id])
   end
 
   # 更新
   def update
     @tree = Tree.find(params[:tree_id])
-    @res = Response.find(params[:id])
+    @res = current_admin_user.responses.find(params[:id])
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     if @res.update(response_params)
       if close_params[:tree][:is_closed] != @tree.is_closed
@@ -39,7 +39,13 @@ class Admin::ResponsesController < ApplicationController
       @responses = Response.all
       render :edit
     end
+  end
 
+  # 削除
+  def destroy
+    @res = current_admin_user.responses.find(params[:id])
+    @res.delete
+    redirect_to admin_tree_path(@res.tree_id)
   end
 
   # ストロングパラメータ

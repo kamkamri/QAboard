@@ -19,8 +19,7 @@ class Admin::TreesController < ApplicationController
 
   # 更新機能
   def create
-    @tree = Tree.new(tree_params)
-    @tree.admin_user_id = current_admin_user.id
+    @tree = current_admin_user.trees.new(tree_params)
     @tree.area_id = current_admin_user.area_id
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     # !@tree.save !が前にあるので、saveできなかったらになる
@@ -35,20 +34,20 @@ class Admin::TreesController < ApplicationController
   # 質問詳細画面(レスポンス新規画面)
   def show
     @tree = Tree.find(params[:id])
-    @responses = Response.all
+    @responses = @tree.responses
     @res = Response.new
   end
 
   # 質問編集
   def edit
-    @tree = Tree.find(params[:id])
+    @tree = current_admin_user.trees.find(params[:id])
     @jobs = Job.all
     @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
 
   # 質問更新
   def update
-    @tree = Tree.find(params[:id])
+    @tree = current_admin_user.trees.find(params[:id])
     if @tree.update(tree_params)
       redirect_to admin_tree_path(@tree.id)
     else
@@ -56,6 +55,15 @@ class Admin::TreesController < ApplicationController
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
       render :edit
     end
+  end
+
+  # 削除機能
+  def destroy
+    #@tree = current_admin_user.trees.find(params[:id])
+    @tree = Tree.find(params[:id])
+    #byebug
+    @tree.destroy
+    redirect_to admin_trees_path
   end
 
   private

@@ -50,7 +50,7 @@
           <div class = "btn btn-info btn-sm mr-auto">
             <%= @tree.job.name %>
           </div>
-          <% if current_admin_user == @tree.admin_user || current_end_user == @tree.end_user %>
+          <% if (admin_user_signed_in? && (current_admin_user == @tree.admin_user)) || (end_user_signed_in? && (current_end_user == @tree.end_user)) %>
             <%= link_to "編集する", edit_admin_tree_path(@tree.id), class: "btn btn-secondary mr-2" %>
             <%= link_to "削除する", admin_tree_path(@tree.id), method: :delete, "data-confirm" => "ツリーを削除してもよろしいですか？全ての回答も削除されます", class: "btn btn-secondary mr-2" %>
           <% end %>
@@ -93,10 +93,10 @@
                 <p class = "card-text"><%= simple_format(res.body) %></p>
               </div>
             </div>
-            <% if current_admin_user == res.admin_user || current_end_user == res.end_user %>
+            <% if admin_user_signed_in? && current_admin_user == res.admin_user || end_user_signed_in? && current_end_user == res.end_user %>
               <div class = "row d-flex justify-content-end">
                 <%= link_to "編集する", edit_admin_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
-                <%= link_to "削除する", admin_tree_response_path(@tree.id, res), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>
+                <%= link_to "削除する", admin_tree_response_path(@tree.id, res.id), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>
               </div>
             <% end %>
           </div>
