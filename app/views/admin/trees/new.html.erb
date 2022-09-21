@@ -3,7 +3,7 @@
 
   <div class = "row">
     <div class = "col-md-6">
-      <%= form_with model: @tree, url: confirm_admin_trees_path, method: :get do |f| %>
+      <%= form_with model: @tree, url: confirm_admin_trees_path, method: :post do |f| %>
         <div class = "card border-secondary mb-3">
           <div class = "card-header">質問を投稿する</div>
           <div class = "card-body">
@@ -14,12 +14,16 @@
           </div>
           <div class = "card-footer">
             <div class = "row">
-              <%= f.label :post_id, "送信先", class: "col-sm-2" %>
+              <%= f.label :post_id, "送信先", class: "col-sm-3" %>
               <%= f.collection_select(:post_id, @user_areas, :id, :name, prompt: "選択してください") %>
             </div>
             <div class = "row">
-              <%= f.label :job_id, "質問タグ", class: "col-sm-2" %>
+              <%= f.label :job_id, "質問タグ", class: "col-sm-3" %>
               <%= f.collection_select(:job_id, @jobs, :id, :name, prompt: "選択してください") %>
+            </div>
+            <div class = "row">
+              <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
+              <%= f.file_field :attachments, multiple: true %>
             </div>
             <div class = "row">
               <%= f.submit "質問を確認する", class: "btn btn-secondary" %>

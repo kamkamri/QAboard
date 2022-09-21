@@ -45,6 +45,18 @@
               <p class = "card-text"><%= simple_format(@tree.body) %></p>
             </div>
           </div>
+          <div class = "row">
+            <% if @tree.attachments.attached? %>
+              <div class = "col-sm-2">添付ファイル</div>
+              <div class = "col-sm-8">
+                <% @tree.attachments.each do |obj| %>
+                  <%# url = rails_blob_path(obj) %>
+                  <%#= link_to CGI.unecape(File.basename(url)),url %>
+                  <%= link_to File.basename(rails_blob_path(obj)), rails_blob_path(obj) %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
         <div class = "card-footer d-flex justify-content-end">
           <div class = "btn btn-info btn-sm mr-auto">

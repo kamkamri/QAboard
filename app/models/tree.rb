@@ -10,6 +10,9 @@ class Tree < ApplicationRecord
   belongs_to :post, class_name: "Area"
   belongs_to :job
 
+  # 添付ファイル
+  has_many_attached :attachments
+
 
   # モデルファイルに並び替えを行う
   default_scope -> { order(updated_at: :desc) }
