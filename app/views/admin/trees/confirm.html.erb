@@ -22,10 +22,12 @@
           <% if @tree.attachments.attached? %>
             <div class = "row">
               <div class = "col-sm-2">添付ファイル</div>
-              <div class = "col-sm-3">
-                <% @tree.attachments.each do |obj| %>
-                  <%= File.basename(rails_blob_path(obj))%>
-                <% end %>
+              <div class = "col">
+                <ul>
+                  <% @tree.attachments.each do |obj| %>
+                    <li><%= File.basename(rails_blob_path(obj))%></li>
+                  <% end %>
+                </ul>
               </div>
             </div>
           <% end %>

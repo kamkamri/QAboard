@@ -4,6 +4,7 @@ class Admin::ResponsesController < ApplicationController
   def create
     @tree = Tree.find(params[:tree_id])
     @res = Response.new(response_params)
+    @res.attachments = params[:response][:attachments]
     @res.tree_id = @tree.id
     @res.admin_user_id = current_admin_user.id
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
@@ -51,7 +52,7 @@ class Admin::ResponsesController < ApplicationController
   # ストロングパラメータ
   private
   def response_params
-    params.require(:response).permit(:body)
+    params.require(:response).permit(:body, attachments: [])
   end
 
   def tree_params

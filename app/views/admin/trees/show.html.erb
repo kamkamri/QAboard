@@ -9,7 +9,7 @@
         <div class = "card-header bg-white">
           <div class = "row">
             <div class = "col-sm-2">投稿日</div>
-            <div class = "col-sm-8">更新日：<%= l @tree.updated_at %> (投稿日：<%= l @tree.created_at %>)</div>
+            <div class = "col-sm-8">更新日：<%= l @tree.updated_at %>  (投稿日：<%= l @tree.created_at %>)</div>
           </div>
         </div>
         <div class = "card-header bg-white">
@@ -45,15 +45,17 @@
               <p class = "card-text"><%= simple_format(@tree.body) %></p>
             </div>
           </div>
-          <div class = "row">
+          <div class = "row border-top">
             <% if @tree.attachments.attached? %>
               <div class = "col-sm-2">添付ファイル</div>
               <div class = "col-sm-8">
-                <% @tree.attachments.each do |obj| %>
-                  <%# url = rails_blob_path(obj) %>
-                  <%#= link_to CGI.unecape(File.basename(url)),url %>
-                  <%= link_to File.basename(rails_blob_path(obj)), rails_blob_path(obj) %>
-                <% end %>
+                <ul>
+                  <% @tree.attachments.each do |obj| %>
+                    <%# url = rails_blob_path(obj) %>
+                    <%#= link_to CGI.unecape(File.basename(url)),url %>
+                    <li><%= link_to File.basename(rails_blob_path(obj)), rails_blob_path(obj) %></li>
+                  <% end %>
+                </ul>
               </div>
             <% end %>
           </div>
@@ -105,6 +107,19 @@
                 <p class = "card-text"><%= simple_format(res.body) %></p>
               </div>
             </div>
+            <div class = "row border-top">
+              <% if res.attachments.attached? %>
+                <div class = "col-sm-2">添付ファイル</div>
+                <div class = "col-sm-8">
+                  <ul>
+                    <% res.attachments.each do |obj| %>
+                      <% url = rails_blob_path(obj) %>
+                      <li><%= link_to CGI.unescape(File.basename(url)),url %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
             <% if admin_user_signed_in? && current_admin_user == res.admin_user || end_user_signed_in? && current_end_user == res.end_user %>
               <div class = "row d-flex justify-content-end">
                 <%= link_to "編集する", edit_admin_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
@@ -129,11 +144,22 @@
                 <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
               </div>
             </div>
-            <div class = "card-footer", id= "response">
-              <p><small class = "text-muted">質問をクローズする場合は「質問をクローズする」選んでください。</br>
-                  クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
-              <%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %>
-              <%= f.submit "回答する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary btn-sm" %>
+            <div class = "card-footer">
+              <div class = "row">
+                <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
+                <%= f.file_field :attachments, multiple: true %>
+              </div>
+            </div>
+            <div class = "card-footer", id = "response">
+              <div class = "row">
+                <%= f.label :is_closed, "質問を終了する", class: "col-sm-3" %>
+                <div class = "col-sm-3 pl-0"><%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %></div>
+                <small class = "col text-muted">質問をクローズする場合は「質問をクローズする」選んでください。
+                    クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+              </div>
+              <div class = "row d-flex justify-content-end">
+                <%= f.submit "回答する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary" %>
+              </div>
             </div>
           </div>
         <% end %>

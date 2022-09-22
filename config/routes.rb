@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :jobs, only:[:index, :create, :edit, :update]
     resources :trees, only:[:index, :new, :create, :show, :edit, :update, :destroy] do
       post :confirm, on: :collection
+      delete :destroy_attachment, on: :member
       resources :responses, only:[:create, :edit, :update, :destroy]
     end
   end
