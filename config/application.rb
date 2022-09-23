@@ -22,5 +22,8 @@ module QAboard
     # タイムゾーンを日本時間に設定
     config.time_zone = 'Asia/Tokyo'
     config.i18n.default_locale = :ja
+
+    #ActiveStorage上書きしない
+    config.active_storage.replace_on_assign_to_many = false
   end
 end

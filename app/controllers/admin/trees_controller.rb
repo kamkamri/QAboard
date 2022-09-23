@@ -90,10 +90,17 @@ class Admin::TreesController < ApplicationController
 
   # 質問更新
   def update
-    @tree = current_admin_user.trees.find(params[:id])
-    @tree[0].attachments = params[:tree][:attachments]
-    @tree = @tree[0]
-    binding.pry
+     @tree = current_admin_user.trees.find(params[:id])
+    
+    # 添付済のファイル削除
+    if params[:tree][:obj_ids]
+      params[:tree][:obj_ids].each do |obj_id|
+        @attachment = @tree.attachments.find(obj_id)
+        # binding.pry
+        @attachment.purge
+      end
+    end
+
     if @tree.update(tree_params)
       redirect_to admin_tree_path(@tree.id)
     else
@@ -112,13 +119,6 @@ class Admin::TreesController < ApplicationController
     redirect_to admin_trees_path
   end
 
-  # 添付ファイル削除
-  def destroy_attachment
-    @attachment = ActiveStorage::Attachment.find(params[:id])
-    @attachment.purge
-    @tree = Tree.find(params[:id])
-    redirect_to edit_admin_tree_path(@tree.id)
-  end
 
   private
   def tree_params
