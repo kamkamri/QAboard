@@ -2,11 +2,13 @@ class Admin::ResponsesController < ApplicationController
 
   # 更新機能
   def create
+
     @tree = Tree.find(params[:tree_id])
     @res = Response.new(response_params)
-    @res.attachments = params[:response][:attachments]
+    #@res.resattachments = params[:response][:resattachments]
     @res.tree_id = @tree.id
     @res.admin_user_id = current_admin_user.id
+     #byebug
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     if @res.save!
       #@tree.update!(tree_params)
@@ -15,7 +17,7 @@ class Admin::ResponsesController < ApplicationController
       end
       redirect_to admin_tree_path(@tree.id)
     else
-      @responses = Response.all
+      @tree.responses
       render "admin/trees/show"
     end
   end
@@ -30,14 +32,22 @@ class Admin::ResponsesController < ApplicationController
   def update
     @tree = Tree.find(params[:tree_id])
     @res = current_admin_user.responses.find(params[:id])
-    # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
+
+    # 添付済のファイル削除
+    if params[:response][:obj_ids]
+      params[:response][:obj_ids].each do |obj_id|
+        @resattachment = @res.resattachments.find(obj_id)
+        @resattachment.purge
+      end
+    end
+
+    # 修正するをクリック、または@resがsaveされなかったときはnewに戻る
     if @res.update(response_params)
       if close_params[:tree][:is_closed] != @tree.is_closed
         @tree.update(close_params[:tree])
       end
       redirect_to admin_tree_path(@tree.id)
     else
-      @responses = Response.all
       render :edit
     end
   end
@@ -52,7 +62,7 @@ class Admin::ResponsesController < ApplicationController
   # ストロングパラメータ
   private
   def response_params
-    params.require(:response).permit(:body, attachments: [])
+    params.require(:response).permit(:body, resattachments: [])
   end
 
   def tree_params

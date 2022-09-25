@@ -14,43 +14,38 @@
           </div>
           <div class = "card-footer">
             <div class = "row">
-              <%= f.label :post_id, "送信先", class: "col-sm-2" %>
+              <%= f.label :post_id, "送信先", class: "col-sm-4" %>
               <%= f.collection_select(:post_id, @user_areas, :id, :name, prompt: "選択してください") %>
             </div>
             <div class = "row">
-              <%= f.label :job_id, "質問タグ", class: "col-sm-2" %>
+              <%= f.label :job_id, "質問タグ", class: "col-sm-4" %>
               <%= f.collection_select(:job_id, @jobs, :id, :name, prompt: "選択してください") %>
             </div>
             <div class = "row">
-              <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
+              <%= f.label "添付ファイル追加(複数可)", class: "col-sm-4" %>
               <%= f.file_field :attachments, multiple: true %>
-            </div></br>
+            </div>
             <% if @tree.attachments.attached? %>
               <div class = "row">
-                <%= f.label "添付済みのファイル　※削除する場合はチェックボックスをクリック",class: "col" %>
+                <%= f.label "添付済みのファイル",class: "col-sm-3" %>
+                <div class = "col text-muted"><small>※削除する場合は下記チェックボックスをクリック</small></div>
               </div>
-              <div class ="row flex-column">
-                <!--<ul>-->
-                <% @tree.attachments.each do |obj| %>
-                  <div class = "form-check">
-                    <%= f.check_box :obj_ids, {multiple: true}, obj.id, false %>
-                    <% url = rails_blob_path(obj) %>
-                    <%= link_to CGI.unescape(File.basename(url)),url %>
-                  </div>
-                <% end %>
-                  <%# @tree.attachments.each do |obj| %>
-                    <%# url = rails_blob_path(obj) %>
-                    <!--<li>-->
-                      <%#= link_to CGI.unescape(File.basename(url)),url %>
-                      <%#= link_to "削除", destroy_attachment_admin_tree_path(obj), method: :delete, class: "btn btn-secondary btn-sm" %>
-                    <!--</li>-->
-                  <%# end %>
-                <!--</ul>-->
+              <div class ="row">
+                <div class = "col offset-sm-4 pl-0">
+                  <% @tree.attachments.each do |obj| %>
+                    <div class = "form-check pl-0">
+                      <%= f.check_box :obj_ids, {multiple: true}, obj.id, false %>
+                      <% url = rails_blob_path(obj) %>
+                      <%= link_to CGI.unescape(File.basename(url)),url %>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             <% end %>
-            <div class = "row">
+            <div class = "row d-flex justify-content-end">
               <%= f.submit "質問を更新する", class: "btn btn-secondary" %>
             </div>
+
           </div>
         </div>
       <% end %>

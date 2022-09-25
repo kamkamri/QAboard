@@ -3,6 +3,15 @@ class Admin::TreesController < ApplicationController
   # 掲示版ツリー一覧
   def index
     @trees = Tree.all
+
+    # 検索
+    case params[:genre]
+      when "受信" then
+        @trees = Tree.all
+      else
+
+    end
+
   end
 
   # 質問入力画面
@@ -16,21 +25,24 @@ class Admin::TreesController < ApplicationController
   def confirm
     # 複数添付ファイル保存のために
     # ファイルを入れるための箱を準備
-    @files = []
-    # ファイルに、ファイル名と、base64でエンコードされたデータを配列で保存
-    # エンコード：データを他の形式へ変換
-    # Base64とは：すべてのデータをアルファベット(a~z, A~z)と数字(0~9)、一部の記号(+,/)の64文字で表すエンコード方式です
-    # https://wa3.i-3-i.info/word11338.html
-    # [[] [] ]で保存
-    tree_params[:attachments].each do |file|
-      @files << [file.original_filename, Base64.encode64(File.open(file.tempfile.path).read).gsub(/\n/,'')]
+    if tree_params[:attachments].present?
+      @files = []
+      # ファイルに、ファイル名と、base64でエンコードされたデータを配列で保存
+      # エンコード：データを他の形式へ変換
+      # Base64とは：すべてのデータをアルファベット(a~z, A~z)と数字(0~9)、一部の記号(+,/)の64文字で表すエンコード方式です
+      # https://wa3.i-3-i.info/word11338.html
+      # [[] [] ]で保存
+
+      tree_params[:attachments].each do |file|
+        @files << [file.original_filename, Base64.encode64(File.open(file.tempfile.path).read).gsub(/\n/,'')]
+      end
+
+      #hidden_fieldは配列を送れないので、カンマ区切りのstringの羅列に変更
+      @files = @files.join(',')
     end
 
-    #hidden_fieldは配列を送れないので、カンマ区切りのstringの羅列に変更
-    @files = @files.join(',')
-
     @tree = Tree.new(tree_params)
-    @tree.attachments = params[:tree][:attachments]
+    # @tree.attachments = params[:tree][:attachments]
   end
 
   # 更新機能
@@ -91,7 +103,7 @@ class Admin::TreesController < ApplicationController
   # 質問更新
   def update
      @tree = current_admin_user.trees.find(params[:id])
-    
+
     # 添付済のファイル削除
     if params[:tree][:obj_ids]
       params[:tree][:obj_ids].each do |obj_id|

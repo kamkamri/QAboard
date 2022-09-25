@@ -7,6 +7,6 @@ class Response < ApplicationRecord
   belongs_to :end_user, optional: true
 
   # 添付ファイル
-  has_many_attached :attachments
+  has_many_attached :resattachments
 
 end

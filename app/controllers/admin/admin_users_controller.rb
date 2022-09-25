@@ -36,7 +36,7 @@ class Admin::AdminUsersController < ApplicationController
 
    # サインアップする時のカラムを増やす
   def admin_user_params
-    params.require(:admin_user).permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, area_ids:[], job_ids:[])
+    params.require(:admin_user).permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, :profile_image, area_ids:[], job_ids:[])
   end
 
 end

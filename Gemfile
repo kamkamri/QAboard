@@ -63,3 +63,5 @@ gem 'pry-byebug', group: :development
 gem 'devise'
 
 gem "net-smtp"
+
+gem "mini_magick"
