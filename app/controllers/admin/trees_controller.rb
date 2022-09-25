@@ -6,8 +6,14 @@ class Admin::TreesController < ApplicationController
 
     # 検索
     case params[:genre]
+      # admin受信した質問
       when "受信" then
-        @trees = Tree.all
+        @admin_user = current_admin_user
+        # ツリーの送信者が自分の担当拠点
+        @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
+        # ツリーの業務がじぶんの担当業務
+        @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
+        @trees = Tree.where(area_id: @myarea, job_id: @myjob)
       else
 
     end

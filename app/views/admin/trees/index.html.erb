@@ -10,7 +10,7 @@
     <!--ジャンル検索-->
     <div class = "col-md-4">
       カテゴリ検索
-            
+
             <!--自分宛の質問-->
             <%= link_to "受信した質問", admin_trees_path(genre: "受信") %>
             <!--自分が送信した質問-->
@@ -25,50 +25,30 @@
       </div>
 
       <div class = "row">
+        <div class = "col-md-12">
 
-      </div>
+          <table class = "table table-hover">
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>カテゴリ</th>
+                <th>送信者</th>
+                <th>受信者</th>
+                <th>日付</th>
+                <th>回答数</th>
+              </tr>
+            </thead>
 
-      <div class = "row">
-        <div class = "col-md-11">
-
-          <% @trees.each do |tree| %>
-
-            <div class = "card border-secondary mb-3">
-              <%= link_to admin_tree_path(tree.id), class: "text-decoration-none text-dark" do %>
-                <div class = "card-header">
-                  <div class = "row">
-                    <div class = "col"><%= tree.title %></div>
-                    <div class = "btn btn-info"><%= tree.job.name %></div>
-                  </div>
-                </div>
-                <div class = "card-body">
-                  <div class = "row">
-                    <div class = "col-md-2 d-flex align-items-start">
-                      <% if tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
-                        <%= image_tag tree.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-                      <% else %>　<!--対象のツリーをend_userが投稿した場合-->
-                        <%= image_tag tree.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-                      <% end %>
-                    </div>
-                    <div class = "col-md-10">
-                      <p class = "card-text"><%= simple_format(tree.body) %></p>
-                    </div>
-                  </div>
-                </div>
-                <div class = "card-footer">
-                  <div class = "row justify-content-end">
-                    <div class = "col-sm-2">投稿日</div>
-                    <div class = "col-sm-5">
-                      <% if tree.responses.exists? %>
-                        <%= l tree.latest_response.updated_at %>
-                      <% else %>
-                        <%= l tree.updated_at %>
-                      <% end %>
-                    </div>
-                  </div>
-                  <div class = "row justify-content-end">
-                    <div class = "col-sm-2">送信者</div>
-                    <div class = "col-sm-5">
+            <tbody>
+              <% @trees.each do |tree| %>
+                <% if tree.is_closed == true %>
+                  <tr class = "table-secondary">
+                <% else %>
+                  <tr>
+                <% end %>
+                    <td><%= link_to tree.title, admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
+                    <td><%= tree.job.name %></td>
+                    <td>
                       <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
                         <%= tree.admin_user.area.name %>
                         <%= tree.admin_user.name_display_short %>
@@ -76,18 +56,25 @@
                         <%= tree.end_user.area.name %>
                         <%= tree.end_user.name_display_short %>
                       <% end %>
-                    </div>
-                  </div>
-                  <div class= "row justify-content-end">
-                    <div class = "col-sm-2">宛先</div>
-                    <div class = "col-sm-5"><%= tree.post.name %></div>
-                  </div>
-                </div>
+                    </td>
+                    <td><%= tree.post.name %></td>
+                    <td>
+                      <% if tree.responses.exists? %>
+                        <%= l tree.latest_response.updated_at %>
+                      <% else %>
+                        <%= l tree.updated_at %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= tree.responses.count %>
+                      <% if tree.is_closed == true %>
+                        </br>終了
+                      <% end %>
+                    </td>
+                  </tr>
               <% end %>
-            </div>
-
-          <% end %>
-
+            </tbody>
+          </table>
 
         </div>
       </div>

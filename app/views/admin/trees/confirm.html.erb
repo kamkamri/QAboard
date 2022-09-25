@@ -25,7 +25,8 @@
               <div class = "colƒ">
                 <ul>
                   <% @tree.attachments.each do |obj| %>
-                    <li><%= File.basename(rails_blob_path(obj))%></li>
+                    <!--<li><%#= File.basename(rails_blob_path(obj))%></li>-->
+                    <li><%= obj.filename %></li>
                   <% end %>
                 </ul>
               </div>

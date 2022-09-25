@@ -15,7 +15,7 @@
       <nav class = "navbar navbar-expand-lg navbar-light bg-light mb-4 flex-column">
         <div class = 'container-fluid'>
           <% if admin_user_signed_in? %>
-            <span>管理者：<%= current_admin_user.name_display %></span>
+            <span><%= current_admin_user.area.name %>：<%= current_admin_user.name_display %></span>
             <div class = "collapse navbar-collapse justify-content-end" id = "navbarNavDropdown">
               <ul class = 'navbar-nav'>
                 <li class = "nav-item m-3">
@@ -43,7 +43,7 @@
             </div>
             
           <% elsif end_user_signed_in? %>
-          <span>拠点担当者：<%= current_end_user.name_display %>様</span>
+          <span><%= current_end_user.area.name %>：<%= current_end_user.name_display %>様</span>
             <div class = "collapse navbar-collapse justify-content-end" id = "navbarNavDropdown">
               <ul class = 'navbar-nav'>
                 <li class = "nav-item m-3">

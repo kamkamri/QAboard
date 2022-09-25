@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       end
     end
     resources :trees, only:[:index, :new, :create, :show, :edit, :update, :destroy] do
-      get :confirm, on: :collection
+      post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]
     end
   end

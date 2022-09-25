@@ -1,2 +1,53 @@
-<h1>Public::Trees#edit</h1>
-<p>Find me in app/views/public/trees/edit.html.erb</p>
+<!--<h1>Public::Trees#edit</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <div class = "col-md-6">
+      <%= form_with model: @tree, url: tree_path, method: :patch do |f| %>
+        <div class = "card border-secondary mb-3">
+          <div class = "card-header">質問を編集する</div>
+          <div class = "card-body">
+            <div class = "row">
+              <%= f.text_field :title, autofocus: true,  placeholder: "タイトルを入力してください", class: "col-sm-12 mb-4" %>
+              <%= f.text_area :body, autofocus: true,  placeholder: "質問を入力してください", rows:10, class: "col-sm-12 " %>
+            </div>
+          </div>
+          <div class = "card-footer">
+            <div class = "row">
+              <%= f.label :job_id, "質問タグ", class: "col-sm-4" %>
+              <%= f.collection_select(:job_id, @jobs, :id, :name, prompt: "選択してください") %>
+            </div>
+            <div class = "row">
+              <%= f.label "添付ファイル追加(複数可)", class: "col-sm-4" %>
+              <%= f.file_field :attachments, multiple: true %>
+            </div>
+            <% if @tree.attachments.attached? %>
+              <div class = "row">
+                <%= f.label "添付済みのファイル",class: "col-sm-3" %>
+                <div class = "col text-muted"><small>※削除する場合は下記チェックボックスをクリック</small></div>
+              </div>
+              <div class ="row">
+                <div class = "col offset-sm-4 pl-0">
+                  <% @tree.attachments.each do |obj| %>
+                    <div class = "form-check pl-0">
+                      <%= f.check_box :obj_ids, {multiple: true}, obj.id, false %>
+                      <% url = rails_blob_path(obj) %>
+                      <%= link_to CGI.unescape(File.basename(url)),url %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <div class = "row d-flex justify-content-end">
+              <%= f.submit "質問を更新する", class: "btn btn-secondary" %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+
+

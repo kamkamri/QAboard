@@ -40,6 +40,11 @@ class AdminUser < ApplicationRecord
 
   # プロフィール画像
   has_one_attached :profile_image
+  
+  ## 条件
+  # admin　受信した質問1 拠点担当者のarea_idが、自分の担当拠点
+  has_many :rec_admin_yourareas, ->{rec_admin_myarea}, class_name: "YourArea"
+  has_many :rec_admin_area, through: :rec_admin_yourareas
 
   # 画像がない場合のno-image設定、画像リサイズ
   def get_profile_image(width, height)
