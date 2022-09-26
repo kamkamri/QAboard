@@ -12,10 +12,10 @@
       カテゴリ検索
       <!--自分宛の質問-->
       <%= link_to "受信した質問", trees_path(genre: "受信") %>
-      <!--自分が送信した質問-->
-      <%= link_to "送信した質問", admin_trees_path(genre: "送信") %>
       <!--全ての質問-->
       <%= link_to "全ての質問", admin_trees_path(genre: "全部") %>
+      <!--自分が送信した質問-->
+      <%= link_to "送信した質問", admin_trees_path(genre: "送信") %>
 
     </div>
 
@@ -34,10 +34,10 @@
           <table class = "table table-hover">
             <thead>
               <tr>
-                <th>タイトル</th>
-                <th>カテゴリ</th>
                 <th>送信者</th>
-                <th>受信者</th>
+                <th>宛先</th>
+                <th>カテゴリ</th>
+                <th>タイトル</th>
                 <th>日付</th>
                 <th>回答数</th>
               </tr>
@@ -50,8 +50,6 @@
                 <% else %>
                   <tr>
                 <% end %>
-                    <td><%= link_to tree.title, tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
-                    <td><%= tree.job.name %></td>
                     <td>
                       <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
                         <%= tree.admin_user.area.name %>
@@ -62,6 +60,8 @@
                       <% end %>
                     </td>
                     <td><%= tree.post.name %></td>
+                    <td><%= tree.job.name %></td>
+                    <td><%= link_to tree.title, tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
                     <td>
                       <% if tree.responses.exists? %>
                         <%= l tree.latest_response.updated_at %>
