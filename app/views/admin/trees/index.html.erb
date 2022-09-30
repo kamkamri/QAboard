@@ -1,16 +1,13 @@
 <!--<h1>Admin::Trees#index</h1>-->
 <div class = "container-fluid">
-
   <div class = "row">
 
     <!--検索-->
     <div class = "col-md-3 border-right pl-4">
       <!--自分宛の質問-->
       <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
-
       <!--自分が送信した質問-->
       <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %></br>
-
       <!--全ての質問-->
       <%= link_to "全ての質問", admin_trees_path(genre: "全て") %>
 
@@ -38,7 +35,6 @@
           <% end %>
         </div>
       </div>
-
     </div>
 
     <div class = "col-md-8">
@@ -85,16 +81,16 @@
                     <td><%= link_to tree.title, admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
                     <td>
                       <% if tree.responses.exists? %>
-                        <%= l tree.latest_response.updated_at %>
+                        <%= l tree.latest_response.updated_at, format: :short %>
                       <% else %>
-                        <%= l tree.updated_at %>
+                        <%= l tree.updated_at, format: :short %>
                       <% end %>
                     </td>
                     <td>
-                      <% if tree.is_closed == true %>
-                        終了</br>
-                      <% end %>
                       <%= tree.responses.count %>
+                      <% if tree.is_closed == true %>
+                         終了
+                      <% end %>
                     </td>
                   </tr>
               <% end %>
@@ -106,5 +102,4 @@
     </div>
 
   </div>
-
 </div>

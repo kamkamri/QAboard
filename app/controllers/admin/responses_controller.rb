@@ -15,6 +15,14 @@ class Admin::ResponsesController < ApplicationController
       if tree_params[:is_closed] != @tree.is_closed
         @tree.update(tree_params)
       end
+      # コメント通知　adminが投稿したツリーの場合
+      # 対象のツリーをadmin_userが投稿した場合
+      if @tree.end_user_id.nil?
+        @res.create_admin_notification_res!(current_admin_user, @res.id, @tree.id, @tree.post_id, @tree.job_id)
+        @res.create_end_notification_res!(current_admin_user, @res.id, @tree.id, @tree.post_id)
+      # 対象のツリーをend_userが投稿した場合
+      else
+      end
       redirect_to admin_tree_path(@tree.id)
     else
       @tree.responses

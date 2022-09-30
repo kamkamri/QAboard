@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_05_124656) do
+ActiveRecord::Schema.define(version: 2022_09_29_105953) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -87,6 +87,25 @@ ActiveRecord::Schema.define(version: 2022_09_05_124656) do
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "admin_visitor_id"
+    t.integer "admin_visited_id"
+    t.integer "end_visitor_id"
+    t.integer "end_visited_id"
+    t.integer "tree_id"
+    t.integer "response_id"
+    t.string "action", default: "", null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_visited_id"], name: "index_notifications_on_admin_visited_id"
+    t.index ["admin_visitor_id"], name: "index_notifications_on_admin_visitor_id"
+    t.index ["end_visited_id"], name: "index_notifications_on_end_visited_id"
+    t.index ["end_visitor_id"], name: "index_notifications_on_end_visitor_id"
+    t.index ["response_id"], name: "index_notifications_on_response_id"
+    t.index ["tree_id"], name: "index_notifications_on_tree_id"
   end
 
   create_table "responses", force: :cascade do |t|

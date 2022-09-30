@@ -1,35 +1,40 @@
 <!--<h1>Public::Trees#index</h1>-->
 <div class = "container-fluid">
-
+  
   <div class = "row">
-    <h3>掲示板</h3>
-  </div>
-
-  <div class = "row">
-
-    <!--ジャンル検索-->
-    <div class = "col-md-4">
-      カテゴリ検索
+    <!--検索-->
+    <div class = "col-md-3 border-right pl-4">
       <!--自分宛の質問-->
-      <%= link_to "受信した質問", trees_path(genre: "受信") %>
-      <!--全ての質問-->
-      <%= link_to "全ての質問", admin_trees_path(genre: "全部") %>
+      <%= link_to "自拠点", trees_path(genre: "自拠点") %></br>
+
       <!--自分が送信した質問-->
-      <%= link_to "送信した質問", admin_trees_path(genre: "送信") %>
+      <%= link_to "自分の投稿", trees_path(genre: "送信") %></br>
+
+
+      <!--業務検索-->
+      <div class="dropdown mt-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          業務
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <% @jobs.each do |job| %>
+            <%= link_to job.name, trees_path(job: job.id), class: "dropdown-item", type: "button" %>
+          <% end %>
+        </div>
+      </div>
 
     </div>
 
-    <div class = "col-md-6">
+    <div class = "col-md-8">
       <div class = "row">
+        <h4 class = "bg-light"><%= @bord_name %></h4>
+      </div>
+      <div class = "row justify-content-center">
         <%= link_to "質問をする", new_tree_path, class: "btn btn-secondary" %>
       </div>
 
       <div class = "row">
-
-      </div>
-
-      <div class = "row">
-        <div class = "col-md-11">
+        <div class = "col-md-12">
 
           <table class = "table table-hover">
             <thead>
@@ -38,7 +43,7 @@
                 <th>宛先</th>
                 <th>カテゴリ</th>
                 <th>タイトル</th>
-                <th>日付</th>
+                <th>登校日</th>
                 <th>回答数</th>
               </tr>
             </thead>
@@ -64,15 +69,15 @@
                     <td><%= link_to tree.title, tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
                     <td>
                       <% if tree.responses.exists? %>
-                        <%= l tree.latest_response.updated_at %>
+                        <%= l tree.latest_response.updated_at, format: :short %>
                       <% else %>
-                        <%= l tree.updated_at %>
+                        <%= l tree.updated_at, format: :short %>
                       <% end %>
                     </td>
                     <td>
                       <%= tree.responses.count %>
                       <% if tree.is_closed == true %>
-                        </br>終了
+                         終了
                       <% end %>
                     </td>
                   </tr>

@@ -45,6 +45,12 @@ class AdminUser < ApplicationRecord
   # admin　受信した質問1 拠点担当者のarea_idが、自分の担当拠点
   has_many :rec_admin_yourareas, ->{rec_admin_myarea}, class_name: "YourArea"
   has_many :rec_admin_area, through: :rec_admin_yourareas
+  
+  # 通知機能
+  # 自分からの通知
+  has_many :active_notifications, class_name: "Notification", foreign_key: "admin_visitor_id", dependent: :destroy
+  # 相手からの
+  has_many :passive_notifications, class_name: "Notification", foreign_key: "admin_visited_id", dependent: :destroy
 
   # 画像がない場合のno-image設定、画像リサイズ
   def get_profile_image(width, height)

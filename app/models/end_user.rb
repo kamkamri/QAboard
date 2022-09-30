@@ -18,6 +18,12 @@ class EndUser < ApplicationRecord
 
   has_one_attached :profile_image
 
+  # 通知機能
+  # 自分からの通知
+  has_many :active_notifications, class_name: "Notification", foreign_key: "end_visitor_id", dependent: :destroy
+  # 相手からの通知
+  has_many :passive_notifications, class_name: "Notification", foreign_key: "end_visited_id", dependent: :destroy
+
    # 画像がない場合のno-image設定、画像リサイズ
   def get_profile_image(width, height)
     unless profile_image.attached?
@@ -31,10 +37,10 @@ class EndUser < ApplicationRecord
   def name_display
     family_name + "　" + first_name
   end
-  
+
   # 氏名を表示するメソッド短い
   def name_display_short
     family_name + first_name
   end
-  
+
 end

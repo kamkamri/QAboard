@@ -1,175 +1,197 @@
 <!--<h1>Public::Trees#show</h1>-->
 <div class = "container-fluid">
+  <div class = "row">
+    <!--検索-->
+    <div class = "col-md-3 border-right pl-4">
+      <!--自分宛の質問-->
+      <%= link_to "自拠点", trees_path(genre: "自拠点") %></br>
+      <!--自分が送信した質問-->
+      <%= link_to "自分の投稿", trees_path(genre: "送信") %></br>
 
-  <!--ツリー-->
-  <div class = "row mb-4">
-    <div class = "col-md-6">
-      <div class = "card border-secondary mb-5">
-        <div class = "card-header">
-          <div class = "row">
-            <div class = "col"><%= @tree.title %></div>
-            <div class = "btn btn-info"><%= @tree.job.name %></div>
-          </div>
-        </div>
-        <div class = "card-header bg-white">
-          <div class = "row">
-            <div class = "col-sm-2">投稿日</div>
-            <div class = "col-sm-8">更新日：<%= l @tree.updated_at %>  (投稿日：<%= l @tree.created_at %>)</div>
-          </div>
-        </div>
-        <div class = "card-header bg-white">
-          <div class = "row">
-            <div class = "col-sm-2">送信者</div>
-            <div class = "col-sm-8">
-              <% if @tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
-                <%= @tree.admin_user.area.name %>
-                <%= @tree.admin_user.name_display_short %>
-              <% else %><!--対象のツリーをend_userが投稿した場合-->
-                <%= @tree.end_user.area.name %>
-                <%= @tree.end_user.name_display_short %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class = "card-header bg-white">
-          <div class= "row">
-            <div class = "col-sm-2">宛先</div>
-            <div class = "col-sm-8"><%= @tree.post.name %></div>
-          </div>
-        </div>
-        <div class = "card-body">
-          <div class = "row">
-            <div class = "col-sm-2 d-flex align-items-center p-0">
-              <% if @tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
-                <%= image_tag @tree.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-              <% else %>  <!--対象のツリーをend_userが投稿した場合-->
-                <%= image_tag @tree.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-              <% end %>
-            </div>
-            <div class = "col-sm-8">
-              <p class = "card-text"><%= simple_format(@tree.body) %></p>
-            </div>
-          </div>
-          <div class = "row border-top">
-            <% if @tree.attachments.attached? %>
-              <div class = "col-sm-2">添付ファイル</div>
-              <div class = "col-sm-8">
-                <ul>
-                  <% @tree.attachments.each do |obj| %>
-                    <% url = rails_blob_path(obj) %>
-                    <li><%= link_to CGI.unescape(File.basename(url)),url %></li>
-                    <%#= link_to File.basename(rails_blob_path(obj)), rails_blob_path(obj) %>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class = "card-footer d-flex justify-content-end">
-          <!--<div class = "btn btn-info btn-sm mr-auto">-->
-            <%#= @tree.job.name %>
-          <!--</div>-->
-          <% if (admin_user_signed_in? && (current_admin_user == @tree.admin_user)) || (end_user_signed_in? && (current_end_user == @tree.end_user)) %>
-            <%= link_to "編集する", edit_tree_path(@tree.id), class: "btn btn-secondary mr-2" %>
-            <%= link_to "削除する", tree_path(@tree.id), method: :delete, "data-confirm" => "ツリーを削除してもよろしいですか？全ての回答も削除されます", class: "btn btn-secondary mr-2" %>
-          <% end %>
-          <!--スレッドがクローズされていない場合、回答するを表示し、指定の場所に飛ぶようにする-->
-          <% if @tree.is_closed == false %>
-            <%= link_to "＋回答する", tree_path(@tree.id, anchor: "response"), class: "btn btn-secondary" %>
+      <!--業務検索-->
+      <div class="dropdown mt-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          業務
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <% @jobs.each do |job| %>
+            <%= link_to job.name, trees_path(job: job.id), class: "dropdown-item", type: "button" %>
           <% end %>
         </div>
       </div>
     </div>
-  </div>
 
-  <!--レスポンス-->
-  <% @responses.each do |res| %>
-    <div class = "row">
-      <div class = "col-md-6">
-        <div class = "card border-secondary mb-1">
-          <div class = "card-header bg-white">
-            <div class = "text-left">
-              <%= l res.updated_at %>
-              <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
-                <%= res.admin_user.area.name %>
-                <%= res.admin_user.name_display_short %>
-              <% else %>　<!--対象のツリーをend_userが投稿した場合-->
-                <%= res.end_user.area.name %>
-                <%= res.end_user.name_display_short %>
-              <% end %>
-            </div>
-          </div>
-          <div class = "card-body">
-            <div class = "row">
-              <div class = "col-sm-2 d-flex align-items-center p-0">
-                <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
-                  <%= image_tag res.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-                <% else %>　<!--対象のツリーをend_userが投稿した場合-->
-                  <%= image_tag res.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
-                <% end %>
-              </div>
-              <div class = "col-sm-8">
-                <p class = "card-text"><%= simple_format(res.body) %></p>
+    <div class = "col-md-8">
+      <!--ツリー-->
+      <div class = "row mb-4">
+        <div class = "col-md-9">
+          <div class = "card border-secondary mb-5">
+            <div class = "card-header">
+              <div class = "row">
+                <div class = "col"><%= @tree.title %></div>
+                <div class = "btn btn-info"><%= @tree.job.name %></div>
               </div>
             </div>
-            <div class = "row border-top">
-              <% if res.resattachments.attached? %>
-                <div class = "col-sm-2">添付ファイル</div>
+            <div class = "card-header bg-white">
+              <div class = "row">
+                <div class = "col-sm-2">投稿日</div>
+                <div class = "col-sm-8">更新日：<%= l @tree.updated_at %>  (投稿日：<%= l @tree.created_at %>)</div>
+              </div>
+            </div>
+            <div class = "card-header bg-white">
+              <div class = "row">
+                <div class = "col-sm-2">送信者</div>
                 <div class = "col-sm-8">
-                  <ul>
-                    <% res.resattachments.each do |resobj| %>
-                      <% url = rails_blob_path(resobj) %>
-                      <li><%= link_to CGI.unescape(File.basename(url)),url %></li>
-                    <% end %>
-                  </ul>
+                  <% if @tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
+                    <%= @tree.admin_user.area.name %>
+                    <%= @tree.admin_user.name_display_short %>
+                  <% else %><!--対象のツリーをend_userが投稿した場合-->
+                    <%= @tree.end_user.area.name %>
+                    <%= @tree.end_user.name_display_short %>
+                  <% end %>
                 </div>
-              <% end %>
-            </div>
-            <% if admin_user_signed_in? && current_admin_user == res.admin_user || end_user_signed_in? && current_end_user == res.end_user %>
-              <div class = "row d-flex justify-content-end">
-                <%= link_to "編集する", edit_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
-                <%= link_to "削除する", tree_response_path(@tree.id, res.id), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>
               </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <!--新規レス-->
-  <% if @tree.is_closed == false %>
-    <div class = "row">
-      <div class = "col-md-6">
-        <%= form_with model: @res, url: tree_responses_path(@tree), method: :post do |f| %>
-          <div class = "card border-danger mt-5">
-            <div class = "card-header bg-danger text-white"><strong>回答する</strong></div>
+            </div>
+            <div class = "card-header bg-white">
+              <div class= "row">
+                <div class = "col-sm-2">宛先</div>
+                <div class = "col-sm-8"><%= @tree.post.name %></div>
+              </div>
+            </div>
             <div class = "card-body">
               <div class = "row">
-                <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
+                <div class = "col-sm-2 d-flex align-items-center p-0">
+                  <% if @tree.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                    <%= image_tag @tree.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                  <% else %>  <!--対象のツリーをend_userが投稿した場合-->
+                    <%= image_tag @tree.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                  <% end %>
+                </div>
+                <div class = "col-sm-8">
+                  <p class = "card-text"><%= simple_format(@tree.body) %></p>
+                </div>
+              </div>
+              <div class = "row border-top">
+                <% if @tree.attachments.attached? %>
+                  <div class = "col-sm-2">添付ファイル</div>
+                  <div class = "col-sm-8">
+                    <ul>
+                      <% @tree.attachments.each do |obj| %>
+                        <% url = rails_blob_path(obj) %>
+                        <li><%= link_to CGI.unescape(File.basename(url)),url %></li>
+                        <%#= link_to File.basename(rails_blob_path(obj)), rails_blob_path(obj) %>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
               </div>
             </div>
-            <div class = "card-footer">
-              <div class = "row">
-                <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
-                <%= f.file_field :resattachments, multiple: true %>
-              </div>
+            <div class = "card-footer d-flex justify-content-end">
+              <!--<div class = "btn btn-info btn-sm mr-auto">-->
+                <%#= @tree.job.name %>
+              <!--</div>-->
+              <% if (admin_user_signed_in? && (current_admin_user == @tree.admin_user)) || (end_user_signed_in? && (current_end_user == @tree.end_user)) %>
+                <%= link_to "編集する", edit_tree_path(@tree.id), class: "btn btn-secondary mr-2" %>
+                <%= link_to "削除する", tree_path(@tree.id), method: :delete, "data-confirm" => "ツリーを削除してもよろしいですか？全ての回答も削除されます", class: "btn btn-secondary mr-2" %>
+              <% end %>
+              <!--スレッドがクローズされていない場合、回答するを表示し、指定の場所に飛ぶようにする-->
+              <% if @tree.is_closed == false %>
+                <%= link_to "＋回答する", tree_path(@tree.id, anchor: "response"), class: "btn btn-secondary" %>
+              <% end %>
             </div>
-            <div class = "card-footer", id = "response">
-              <div class = "row">
-                <%= f.label :is_closed, "質問を終了する", class: "col-sm-3" %>
-                <div class = "col-sm-3 pl-0"><%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %></div>
-                <small class = "col text-muted">質問をクローズする場合は「質問をクローズする」選んでください。
-                    クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+          </div>
+        </div>
+      </div>
+    
+      <!--レスポンス-->
+      <% @responses.each do |res| %>
+        <div class = "row">
+          <div class = "col-md-9">
+            <div class = "card border-secondary mb-1">
+              <div class = "card-header bg-white">
+                <div class = "text-left">
+                  <%= l res.updated_at %>
+                  <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                    <%= res.admin_user.area.name %>
+                    <%= res.admin_user.name_display_short %>
+                  <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                    <%= res.end_user.area.name %>
+                    <%= res.end_user.name_display_short %>
+                  <% end %>
+                </div>
               </div>
-              <div class = "row d-flex justify-content-end">
-                <%= f.submit "回答する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary" %>
+              <div class = "card-body">
+                <div class = "row">
+                  <div class = "col-sm-2 d-flex align-items-center p-0">
+                    <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
+                      <%= image_tag res.admin_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                    <% else %>　<!--対象のツリーをend_userが投稿した場合-->
+                      <%= image_tag res.end_user.get_profile_image(100,100),class: "img img-fluid rounded-circle" %>
+                    <% end %>
+                  </div>
+                  <div class = "col-sm-8">
+                    <p class = "card-text"><%= simple_format(res.body) %></p>
+                  </div>
+                </div>
+                <div class = "row border-top">
+                  <% if res.resattachments.attached? %>
+                    <div class = "col-sm-2">添付ファイル</div>
+                    <div class = "col-sm-8">
+                      <ul>
+                        <% res.resattachments.each do |resobj| %>
+                          <% url = rails_blob_path(resobj) %>
+                          <li><%= link_to CGI.unescape(File.basename(url)),url %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                </div>
+                <% if admin_user_signed_in? && current_admin_user == res.admin_user || end_user_signed_in? && current_end_user == res.end_user %>
+                  <div class = "row d-flex justify-content-end">
+                    <%= link_to "編集する", edit_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
+                    <%= link_to "削除する", tree_response_path(@tree.id, res.id), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    
+      <!--新規レス-->
+      <% if @tree.is_closed == false %>
+        <div class = "row">
+          <div class = "col-md-9">
+            <%= form_with model: @res, url: tree_responses_path(@tree), method: :post do |f| %>
+              <div class = "card border-danger mt-5">
+                <div class = "card-header bg-danger text-white"><strong>回答する</strong></div>
+                <div class = "card-body">
+                  <div class = "row">
+                    <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
+                  </div>
+                </div>
+                <div class = "card-footer">
+                  <div class = "row">
+                    <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
+                    <%= f.file_field :resattachments, multiple: true %>
+                  </div>
+                </div>
+                <div class = "card-footer", id = "response">
+                  <div class = "row">
+                    <%= f.label :is_closed, "質問を終了する", class: "col-sm-3" %>
+                    <div class = "col-sm-3 pl-0"><%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %></div>
+                    <small class = "col text-muted">質問をクローズする場合は「質問をクローズする」選んでください。
+                        クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+                  </div>
+                  <div class = "row d-flex justify-content-end">
+                    <%= f.submit "回答する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
+  </div>
 </div>

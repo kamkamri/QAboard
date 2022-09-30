@@ -3,13 +3,27 @@ class Public::TreesController < ApplicationController
   # 掲示版ツリー一覧
   def index
     @trees = Tree.all
+    @jobs = Job.where(is_deleted: false)
+    @end_user = current_end_user
+    @myarea = @end_user.area
 
     # 検索
     case params[:genre]
-      when "受信" then
-        @trees = Tree.all
-      else
+    # admin受信した質問
+    when "自拠点" then
+      # ツリーの送信者が自分の担当拠点
+      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
+      @bord_name = "自拠点の質問"
 
+    # 自分が送信した質問
+    when "送信" then
+      @trees = Tree.where(end_user_id: @end_user)
+      @bord_name = "自分の投稿"
+    else
+      if params[:job]
+        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct
+        @bord_name = Job.find(params[:job]).name + "の質問"
+      end
     end
   end
 
@@ -88,7 +102,29 @@ class Public::TreesController < ApplicationController
     @tree = Tree.find(params[:id])
     @responses = @tree.responses
     @res = Response.new
+    
+    @jobs = Job.where(is_deleted: false)
+    @end_user = current_end_user
+    @myarea = @end_user.area
+
+    # 検索
+    case params[:genre]
+    # admin受信した質問
+    when "自拠点" then
+      # ツリーの送信者が自分の担当拠点
+      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
+
+    # 自分が送信した質問
+    when "送信" then
+      @trees = Tree.where(end_user_id: @end_user)
+    else
+      if params[:job]
+        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct
+      end
+    end
   end
+
+
 
   # 質問編集
   def edit

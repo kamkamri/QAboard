@@ -117,7 +117,43 @@ class Admin::TreesController < ApplicationController
     @tree = Tree.find(params[:id])
     @responses = @tree.responses
     @res = Response.new
+
+    @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
+    @jobs = Job.where(is_deleted: false)
+    @admin_user = current_admin_user
+
+    # 検索
+    case params[:genre]
+    # admin受信した質問
+    when "担当" then
+      # ツリーの送信者が自分の担当拠点
+      @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
+      # ツリーの業務がじぶんの担当業務
+      @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
+      @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct
+      @bord_name = "担当拠点の質問"
+
+    #全ての質問
+    when "全て" then
+      @trees = Tree.all
+      @bord_name = "全ての質問"
+
+    # 自分が送信した質問
+    when "送信" then
+      @trees = Tree.where(admin_user_id: @admin_user)
+      @bord_name = "自分の投稿"
+    else
+      if params[:area]
+        @trees = Tree.where(area_id: params[:area]).or( Tree.where(post_id: params[:area])).distinct
+        @bord_name = Area.find(params[:area]).name + "の質問"
+      elsif params[:job]
+        @trees = Tree.where(job_id: params[:job])
+        @bord_name = Job.find(params[:job]).name + "の質問"
+      else
+      end
+    end
   end
+
 
   # 質問編集
   def edit

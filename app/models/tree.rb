@@ -12,6 +12,9 @@ class Tree < ApplicationRecord
 
   # 添付ファイル
   has_many_attached :attachments
+  
+  # 通知機能
+  has_many :notifications, dependent: :destroy
 
 
   # モデルファイルに並び替えを行う
