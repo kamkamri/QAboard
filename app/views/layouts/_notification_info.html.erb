@@ -1,0 +1,88 @@
+<!--部分テンプレート-->
+<!--admin notification#index  public notification#indes-->
+
+<span>
+  <% notifications.each do |notification| %>
+    <div class = "row">
+      <div class = "col-md-6">
+        <!--admin_userからの通知の場合-->
+        <% if notification.end_visitor_id.nil? %>
+          <strong>管理者 <%= notification.admin_visitor.name_display_short %></strong>さんが
+
+          <% case notification.action
+          # admin が投稿した質問
+           when "tree" then %>
+            <strong><%= notification.tree.post.name %></strong>に
+            <strong><%= notification.tree.job.name %></strong>の
+            <% if admin_user_signed_in? %>
+              <strong><%= link_to "質問", admin_tree_path(notification.tree_id) %></strong>しました
+            <% else %>
+              <strong><%= link_to "質問", tree_path(notification.tree_id) %></strong>しました
+            <% end %>
+
+
+          <!--admin が投稿したレスポンス-->
+          <% else %>
+            <!--adminが投稿したツリーへのコメント-->
+            <% if notification.tree.end_user_id.nil? %>
+              <strong><%= notification.tree.post.name %></strong>に
+              <strong><%= notification.tree.job.name %></strong>の
+              <% if admin_user_signed_in? %>
+                <strong><%= link_to "返信", admin_tree_path(notification.tree_id) %></strong>しました
+              <% else %>
+                <strong><%= link_to "返信", tree_path(notification.tree_id) %></strong>しました
+              <% end %>
+              </br>
+              <p class = "text-muted"><small><%= notification.response.body.truncate(20) %></small></p>
+            <!--enduserが投稿したツリーへのコメント-->
+            <% else %>
+              <strong><%= notification.tree.area.name %></strong>に
+              <strong><%= notification.tree.job.name %></strong>の
+              <% if admin_user_signed_in? %>
+                <strong><%= link_to "返信", admin_tree_path(notification.tree_id) %></strong>しました
+              <% else %>
+                <strong><%= link_to "返信", tree_path(notification.tree_id) %></strong>しました
+              <% end %>
+              </br>
+              <p class = "text-muted"><small><%= notification.response.body.truncate(20) %></small></p>
+            <% end %>
+          <% end %>
+
+        <!--end_userからの通知の場合-->
+        <% else %>
+          <strong>
+            <%= notification.end_visitor.area.name %>
+            <%= notification.end_visitor.name_display_short %></strong>さんが
+            <strong><%= notification.tree.job.name %></strong>の
+
+          <% case notification.action
+          # admin が投稿した質問
+           when "tree" then %>
+            <% if admin_user_signed_in? %>
+              <strong><%= link_to "質問", admin_tree_path(notification.tree_id) %></strong>しました
+            <% else %>
+              <strong><%= link_to "質問", tree_path(notification.tree_id) %></strong>しました
+            <% end %>
+
+          <!--admin が投稿したコメント-->
+          <% else %>
+            <!--adminが投稿したツリーへのコメント-->
+            質問に
+            <% if admin_user_signed_in? %>
+              <strong><%= link_to "返信", admin_tree_path(notification.tree_id) %></strong>しました
+            <% else %>
+              <strong><%= link_to "返信", tree_path(notification.tree_id) %></strong>しました
+            <% end %>
+            </br>
+            <p class = "text-muted"><small><%= notification.response.body.truncate(20) %></small></p>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class = "col-md-4">
+        <%= l notification.created_at, format: :short %>
+      </div>
+
+    </div>
+  <% end %>
+</span>

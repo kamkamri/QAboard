@@ -4,6 +4,8 @@
 
     <!--検索-->
     <div class = "col-md-3 border-right pl-4">
+      <!--新着通知-->
+      <%= link_to "新着通知", admin_notifications_path %></br>
       <!--自分宛の質問-->
       <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
       <!--自分が送信した質問-->

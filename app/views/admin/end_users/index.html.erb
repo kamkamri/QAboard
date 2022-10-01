@@ -7,6 +7,7 @@
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>社員番号</th>
           <th>名前</th>
           <th>所属拠点</th>
@@ -17,6 +18,7 @@
       <tbody>
         <% @end_users.each do |end_user| %>
           <tr>
+            <td><%= end_user.id %></td>
             <td><%= end_user.employee_number %></td>
             <td><%= end_user.name_display %></td>
             <td><%= end_user.area.name %></td>

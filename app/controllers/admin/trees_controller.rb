@@ -109,6 +109,18 @@ class Admin::TreesController < ApplicationController
       # 仮で作成したファイルを削除
       FileUtils.rm("#{Rails.root}/tmp/#{file_name}")
     end
+
+    # コメント通知　モデルに定義
+    # admin_userが投稿したツリー場合
+    if @tree.end_user_id.nil?
+      @tree.create_admin_ad_notification_tree!(current_admin_user, @tree.id, @tree.post_id, @tree.job_id)
+      @tree.create_admin_end_notification_tree!(current_admin_user, @tree.id, @tree.post_id)
+    # end_userが投稿したツリー場合
+    else
+      @tree.create_end_ad_notification_tree!(current_admin_user, @tree.id, @tree.area_id, @tree.job_id)
+      @tree.create_end_end_notification_tree!(current_admin_user, @tree.id, @tree.area_id)
+    end
+
     redirect_to admin_tree_path(@tree.id)
   end
 
@@ -121,6 +133,12 @@ class Admin::TreesController < ApplicationController
     @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
     @jobs = Job.where(is_deleted: false)
     @admin_user = current_admin_user
+
+    # 通知をチェック済にする
+    @notifications = current_admin_user.passive_notifications.where(tree_id: @tree.id)
+    @notifications.each do |notification|
+      notification.update(checked: true)
+    end
 
     # 検索
     case params[:genre]

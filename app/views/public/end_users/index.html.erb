@@ -7,6 +7,7 @@
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>名前</th>
           <th></th>
         </tr>
@@ -14,6 +15,7 @@
       <tbody>
         <% @end_users.each do |end_user| %>
           <tr>
+            <td><%= end_user.id %></td>
             <td><%= end_user.name_display %></td>
             <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
           </tr>

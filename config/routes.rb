@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :end_users, only:[:index, :show, :edit, :update]
     resources :areas, only:[:index, :create, :edit, :update]
     resources :jobs, only:[:index, :create, :edit, :update]
+    resources :notifications, only: :index
     resources :trees, only:[:index, :new, :create, :show, :edit, :update, :destroy] do
       post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
         get 'mypage_edit'
       end
     end
+    resources :notifications, only: :index
     resources :trees, only:[:index, :new, :create, :show, :edit, :update, :destroy] do
       post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]

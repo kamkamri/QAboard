@@ -10,6 +10,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <h>社員番号</h>
           <th>管理者名</th>
           <th>担当拠点</th>
           <th>業務</th>
@@ -21,6 +22,7 @@
         <% @admin_users.each do |admin_user| %>
           <tr>
             <td><%= admin_user.id %></td>
+            <td><%= admin_user.employee_number %></td>
             <td><%= admin_user.name_display %></td>
             <td>
               <% admin_user.areas.each do |area| %>
