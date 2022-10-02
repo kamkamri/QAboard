@@ -1,6 +1,13 @@
 <!--<h1>Admin::Notifications#index</h1>-->
 <div class = "container-fluid">
   <div class = "row">
+    
+  <!--検索-->
+    <div class = "col-md-3 border-right pl-4">
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_search', areas: @areas, jobs: @jobs %>
+    </div>
+    
     <div class = "col-md-8">
       <!--通知が存在する場合-->
       <% if @notifications.exists? %>

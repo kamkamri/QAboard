@@ -4,6 +4,7 @@
 <span>
   <% notifications.each do |notification| %>
     <div class = "row">
+      
       <div class = "col-md-6">
         <!--admin_userからの通知の場合-->
         <% if notification.end_visitor_id.nil? %>

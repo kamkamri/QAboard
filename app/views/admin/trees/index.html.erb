@@ -4,39 +4,8 @@
 
     <!--検索-->
     <div class = "col-md-3 border-right pl-4">
-      <!--新着通知-->
-      <%= link_to "新着通知", admin_notifications_path %></br>
-      <!--自分宛の質問-->
-      <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
-      <!--自分が送信した質問-->
-      <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %></br>
-      <!--全ての質問-->
-      <%= link_to "全ての質問", admin_trees_path(genre: "全て") %>
-
-
-      <!--拠点検索-->
-      <div class="dropdown mt-5">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          拠点
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <% @areas.each do |area| %>
-            <%= link_to area.name, admin_trees_path(area: area.id), class: "dropdown-item", type: "button" %>
-          <% end %>
-        </div>
-      </div>
-
-      <!--業務検索-->
-      <div class="dropdown mt-4">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          業務
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <% @jobs.each do |job| %>
-            <%= link_to job.name, admin_trees_path(job: job.id), class: "dropdown-item", type: "button" %>
-          <% end %>
-        </div>
-      </div>
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_search', areas: @areas, jobs: @jobs %>
     </div>
 
     <div class = "col-md-8">
@@ -80,7 +49,7 @@
                     </td>
                     <td><%= tree.post.name %></td>
                     <td><%= tree.job.name %></td>
-                    <td><%= link_to tree.title, admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
+                    <td><%= link_to tree.title.truncate(20), admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
                     <td>
                       <% if tree.responses.exists? %>
                         <%= l tree.latest_response.updated_at, format: :short %>

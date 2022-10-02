@@ -3,24 +3,8 @@
   <div class = "row">
     <!--検索-->
     <div class = "col-md-3 border-right pl-4">
-      <!--新着通知-->
-      <%= link_to "新着通知", notifications_path %></br>
-      <!--自分宛の質問-->
-      <%= link_to "自拠点", trees_path(genre: "自拠点") %></br>
-      <!--自分が送信した質問-->
-      <%= link_to "自分の投稿", trees_path(genre: "送信") %></br>
-
-      <!--業務検索-->
-      <div class="dropdown mt-4">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          業務
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <% @jobs.each do |job| %>
-            <%= link_to job.name, trees_path(job: job.id), class: "dropdown-item", type: "button" %>
-          <% end %>
-        </div>
-      </div>
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_search', jobs: @jobs %>
     </div>
 
     <div class = "col-md-8">

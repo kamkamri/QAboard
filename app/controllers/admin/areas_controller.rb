@@ -3,7 +3,7 @@ class Admin::AreasController < ApplicationController
   #一覧（新規登録画面）
   def index
     @area = Area.new
-    @areas = Area.all
+    @areas = Area.where(admin_area_flag: false)
   end
 
   # 新規登録画面

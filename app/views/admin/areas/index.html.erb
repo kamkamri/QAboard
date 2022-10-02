@@ -19,7 +19,6 @@
         <tr>
           <th>ID</th>
           <th>拠点名</th>
-          <th>管理拠点</th>
           <th>ステータス</th>
           <th></th>
         </tr>
@@ -29,7 +28,6 @@
           <tr>
             <td><%= area.id %></td>
             <td><%= area.name %></td>
-            <td><%= area.admin_area_flag ? '管理者':'' %></td>
             <td><%= area.is_deleted ? '無効':'有効' %></td>
             <td><%= link_to '編集', edit_admin_area_path(area.id), class: 'btn btn-secondary' %></td>
           </tr>

@@ -1,0 +1,71 @@
+<!--部分テンプレート-->
+<!--admin tree#index,show,_notification  public tree#index,show,_notification-->
+
+<!--アドミンユーザーがサインインしている場合-->
+<% if admin_user_signed_in? %>
+  <!--新着通知-->
+  <% if admin_unchecked_notifications.any? %>
+    <%= link_to "新着通知", admin_notifications_path %>
+    <i class="fa-solid fa-bell"></i></br>
+  <% else %>
+    <%= link_to "新着通知", admin_notifications_path %></br>
+  <% end %>
+  <!--自分宛の質問-->
+  <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
+  <!--自分が送信した質問-->
+  <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %></br>
+  <!--全ての質問-->
+  <%= link_to "全ての質問", admin_trees_path(genre: "全て") %>
+
+
+  <!--拠点検索-->
+  <div class="dropdown mt-5">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      拠点
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <% areas.each do |area| %>
+        <%= link_to area.name, admin_trees_path(area: area.id), class: "dropdown-item", type: "button" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!--業務検索-->
+  <div class="dropdown mt-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      業務
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <% jobs.each do |job| %>
+        <%= link_to job.name, admin_trees_path(job: job.id), class: "dropdown-item", type: "button" %>
+      <% end %>
+    </div>
+  </div>
+<!--エンドユーザーがサインインしている場合-->
+<% else %>
+  <!--新着通知-->
+  <% if end_unchecked_notifications.any? %>
+    <%= link_to "新着通知", notifications_path %>
+    <i class="fa-solid fa-bell"></i></br>
+  <% else %>
+    <%= link_to "新着通知", notifications_path %></br>
+  <% end %>
+  <!--自分宛の質問-->
+  <%= link_to "自拠点", trees_path(genre: "自拠点") %></br>
+
+  <!--自分が送信した質問-->
+  <%= link_to "自分の投稿", trees_path(genre: "送信") %></br>
+
+
+  <!--業務検索-->
+  <div class="dropdown mt-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      業務
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <% jobs.each do |job| %>
+        <%= link_to job.name, trees_path(job: job.id), class: "dropdown-item", type: "button" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
