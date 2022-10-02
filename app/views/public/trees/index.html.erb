@@ -2,7 +2,7 @@
 <div class = "container-fluid">
 
   <div class = "row">
-    
+
     <!--検索-->
     <div class = "col-md-3 border-right pl-4">
       <!--部分テンプレート：ジャンル検索-->
@@ -35,9 +35,9 @@
             <tbody>
               <% @trees.each do |tree| %>
                 <% if tree.is_closed == true %>
-                  <tr class = "table-secondary">
+                  <tr class="table-secondary tree_tbody_tr" data-link="<%= tree_path(tree.id) %>">
                 <% else %>
-                  <tr>
+                  <tr class="tree_tbody_tr" data-link="<%= tree_path(tree.id) %>">
                 <% end %>
                     <td>
                       <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
@@ -50,7 +50,7 @@
                     </td>
                     <td><%= tree.post.name %></td>
                     <td><%= tree.job.name %></td>
-                    <td><%= link_to tree.title.truncate(20), tree_path(tree.id), class: "text-decoration-none text-dark" %></td>
+                    <td><%= tree.title.truncate(20) %></td>
                     <td>
                       <% if tree.responses.exists? %>
                         <%= l tree.latest_response.updated_at, format: :short %>
@@ -62,6 +62,10 @@
                       <%= tree.responses.count %>
                       <% if tree.is_closed == true %>
                          終了
+                      <% end %>
+                      <!--レスポンス含め未読がある場合-->
+                      <% if h_appli_end_unchecked_notifications_tree(tree.id).present? %>
+                        <i class="fa-solid fa-bell"></i>
                       <% end %>
                     </td>
                   </tr>

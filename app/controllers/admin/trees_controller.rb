@@ -2,10 +2,15 @@ class Admin::TreesController < ApplicationController
 
   # 掲示版ツリー一覧
   def index
-    @trees = Tree.all
+    # @trees = Tree.all
     @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
     @jobs = Job.where(is_deleted: false)
     @admin_user = current_admin_user
+
+    @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
+    # ツリーの業務がじぶんの担当業務
+    @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
+    @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct
 
 
     # 検索
@@ -123,6 +128,7 @@ class Admin::TreesController < ApplicationController
 
     redirect_to admin_tree_path(@tree.id)
   end
+
 
   # 質問詳細画面(レスポンス新規画面)
   def show

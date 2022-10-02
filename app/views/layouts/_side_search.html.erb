@@ -12,10 +12,11 @@
   <% end %>
   <!--自分宛の質問-->
   <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
-  <!--自分が送信した質問-->
-  <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %></br>
   <!--全ての質問-->
-  <%= link_to "全ての質問", admin_trees_path(genre: "全て") %>
+  <%= link_to "全ての質問", admin_trees_path(genre: "全て") %></br>
+  <!--自分が送信した質問-->
+  <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %>
+  
 
 
   <!--拠点検索-->

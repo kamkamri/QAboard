@@ -65,3 +65,6 @@ gem 'devise'
 gem "net-smtp"
 
 gem "mini_magick"
+
+# jquery
+gem 'jquery-rails'

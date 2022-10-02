@@ -2,10 +2,10 @@ class Public::TreesController < ApplicationController
 
   # 掲示版ツリー一覧
   def index
-    @trees = Tree.all
     @jobs = Job.where(is_deleted: false)
     @end_user = current_end_user
     @myarea = @end_user.area
+    @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
 
     # 検索
     case params[:genre]

@@ -27,7 +27,7 @@ class Admin::EndUsersController < ApplicationController
 
    # ストロングパラメータ
   def end_user_params
-    params.require(:end_user).permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted)
+    params.require(:end_user).permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, :password)
   end
 
 
