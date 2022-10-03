@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]
     end
+    get "search" => "searches"
   end
 
 
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
       post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]
     end
+    get "search" => "searches"
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
