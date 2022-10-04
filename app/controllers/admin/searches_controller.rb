@@ -14,9 +14,10 @@ class Admin::SearchesController < ApplicationController
     # ツリー検索
     @search_tree_ids = Tree.where(["title like? OR body like?", "%#{params[:keyword]}%", "%#{params[:keyword]}%"]).pluck(:id)
     # レス検索
-    @search_rese_ids = Response.where(["body like?", "%#{params[:keyword]}%"]).pluck(:tree_id)
+    @search_res_ids = Response.where(["body like?", "%#{params[:keyword]}%"]).pluck(:tree_id)
+    # admin
     #ツリーに合体
-    @search_tree_ids = @search_tree_ids.push(@search_rese_ids)
+    @search_tree_ids = @search_tree_ids.push(@search_res_ids)
     #連想配列を削除[1,2,3[5,6]]みたいなの
     @search_tree_ids.flatten!
     # 重複削除
@@ -27,7 +28,7 @@ class Admin::SearchesController < ApplicationController
     @trees = Tree.where(id: @search_tree_ids)
 
 
-    @bord_name = "#{ params[:keyword]}　検索結果"
+    @bord_name = "検索結果　#{ params[:keyword]}"
     render "admin/trees/index"
   end
 

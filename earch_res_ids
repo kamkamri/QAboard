@@ -1,0 +1,30 @@
+
+[1mFrom:[0m /home/ec2-user/environment/QAboard/app/controllers/public/searches_controller.rb:26 Public::SearchesController#search:
+
+     [1;34m3[0m: [32mdef[0m [1;34msearch[0m
+     [1;34m4[0m:   @jobs = [1;34;4mJob[0m.where([35mis_deleted[0m: [1;36mfalse[0m)
+     [1;34m5[0m:   @end_user = current_end_user
+     [1;34m6[0m:   @myarea = @end_user.area
+     [1;34m7[0m:   [1;34m# 自分の拠点ツリーを絞る[0m
+     [1;34m8[0m:   @search = [1;34;4mTree[0m.where([35marea_id[0m: @myarea).or( [1;34;4mTree[0m.where([35mpost_id[0m: @myarea)).distinct
+     [1;34m9[0m:   [1;34m# ツリー検索[0m
+    [1;34m10[0m:   @search_tree_ids = @search.where([[31m[1;31m"[0m[31mtitle like? OR body like?[1;31m"[0m[31m[0m, [31m[1;31m"[0m[31m%#{params[:keyword]}[0m[31m%[1;31m"[0m[31m[0m, [31m[1;31m"[0m[31m%#{params[:keyword]}[0m[31m%[1;31m"[0m[31m[0m]).pluck([33m:id[0m)
+    [1;34m11[0m:   [1;34m# レスポンス検索[0m
+    [1;34m12[0m:   @search_res_ids = [1;34;4mResponse[0m.where([[31m[1;31m"[0m[31mbody like?[1;31m"[0m[31m[0m, [31m[1;31m"[0m[31m%#{params[:keyword]}[0m[31m%[1;31m"[0m[31m[0m]).where([35mtree_id[0m: @search.ids).pluck([33m:tree_id[0m)
+    [1;34m13[0m:   [1;34m# @search_res_ids = @search.includes(:responses).where(["body like?", "%#{params[:keyword]}%"]).pluck(:tree_id)[0m
+    [1;34m14[0m: 
+    [1;34m15[0m:   [1;34m#連想配列を削除[1,2,3[5,6]]みたいなの[0m
+    [1;34m16[0m:   @search_tree_ids.flatten!
+    [1;34m17[0m:   [1;34m# 重複削除[0m
+    [1;34m18[0m:   @search_tree_ids = @search_tree_ids.uniq
+    [1;34m19[0m:   [1;34m# nilを削除[0m
+    [1;34m20[0m:   @search_tree_ids = @search_tree_ids.compact
+    [1;34m21[0m:   [1;34m# 対象のツリー[0m
+    [1;34m22[0m:   @trees = [1;34;4mTree[0m.where([35mid[0m: @search_tree_ids)
+    [1;34m23[0m:   binding.pry
+    [1;34m24[0m: 
+    [1;34m25[0m: 
+ => [1;34m26[0m:   @bord_name = [31m[1;31m"[0m[31m#{ params[:keyword]}[0m[31m　検索結果[1;31m"[0m[31m[0m
+    [1;34m27[0m:   render [31m[1;31m"[0m[31mpublic/trees/index[1;31m"[0m[31m[0m
+    [1;34m28[0m: [32mend[0m
+
