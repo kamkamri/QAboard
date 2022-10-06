@@ -3,7 +3,18 @@ class Admin::AdminUsersController < ApplicationController
   # 管理者一覧
   def index
     @admin_users = AdminUser.all
+    @areas = Area.where(is_deleted: false)
     @jobs = Job.where(is_deleted: false)
+
+    # 検索
+    if params[:area]
+      @admin_users = AdminUser.where(area_id: params[:area])
+      @bord_name = Area.find(params[:area]).name + "の管理者"
+    elsif params[:job]
+      @admin_users = AdminUser.where(job_id: params[:job])
+      @bord_name = Job.find(params[:job]).name + "の管理者"
+    else
+    end
   end
 
   # 管理者画面詳細＝マイページ

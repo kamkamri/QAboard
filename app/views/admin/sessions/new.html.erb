@@ -1,26 +1,33 @@
-<h2>管理者_ログイン</h2>
+<!--admin-sign-in-->
 
-<%= form_with model: @admin_user, url: admin_user_session_path do |f| %>
-  <div class="field">
-    <%= f.label :employee_number, "社員番号" %><br />
-    <%= f.text_field :employee_number, autofocus: true, autocomplete: "on" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
+<div class = "container-fluid">
+  <h5 class="mb-5">管理者 ログイン</h5>
+  <%= form_with model: @admin_user, url: admin_user_session_path do |f| %>
     <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :employee_number, "社員番号", class: "col-md-2" %>
+      <%= f.text_field :employee_number, autofocus: true, autocomplete: "on", class: "col-md-2 sm-5" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :password,"パスワード", class: "col-md-2" %>
+      <%= f.password_field :password, autocomplete: "current-password", class: "col-md-2 sm-5" %>
+    </div>
+  
+    <% if devise_mapping.rememberable? %>
+      <div class="field offset-2">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+  
+    <div class="actions">
+      <%= f.submit "ログイン", class: "btn btn-secondary offset-2 mt-4" %>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="row offset-2">
+    <ul>
+      <li>未登録の方は<%= link_to "こちら", new_admin_user_registration_path %></li>
+      <li>パスワードを忘れた場合は<%= link_to "こちら", new_admin_user_password_path %></li>
+    </ul>
   </div>
-<% end %>
-
-<%= render "admin/shared/links" %>
+</div>
