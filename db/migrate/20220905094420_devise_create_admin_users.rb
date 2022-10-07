@@ -37,7 +37,7 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration[6.1]
       t.string :first_name, null: false
       t.integer :area_id, null: false
       t.boolean :is_deleted, null: false, default: false
-      
+
       t.timestamps null: false
     end
 
@@ -45,5 +45,6 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration[6.1]
     add_index :admin_users, :reset_password_token, unique: true
     # add_index :admin_users, :confirmation_token,   unique: true
     # add_index :admin_users, :unlock_token,         unique: true
+    # add_foreign_key :admin_users, :your_areas
   end
 end

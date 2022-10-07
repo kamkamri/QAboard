@@ -10,6 +10,13 @@
       <%= f.text_field :name, class: "col" %>
     </div>
     <div class = "row">
+      <%= f.label :admin_area_flag, "管理拠点", class: "col" %>
+      <%= f.radio_button :admin_area_flag, false, checked: true %>
+      <%= f.label :admin_area_flag, "通常拠点" %>
+      <%= f.radio_button :admin_area_flag, true %>
+      <%= f.label :admin_area_flag, "管理者拠点" %>
+    </div>
+    <div class = "row">
       <%= f.label :is_deleted, "拠点ステータス", class: "col" %>
       <%= f.radio_button :is_deleted, false, checked: true %>
       <%= f.label :is_deleted, "有効" %>
@@ -18,6 +25,6 @@
     </div>
     <div class = "row">
       <%= f.submit "変更を保存", class: "btn btn-secondary" %>
-    </div>
+    
   <% end %>
 </div>

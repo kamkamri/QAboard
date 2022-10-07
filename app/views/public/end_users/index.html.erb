@@ -1,26 +1,34 @@
 <!--<h1>Public::EndUsers#index</h1>-->
 <div class = "container-fluid">
   <div class = "row">
-    <h3>< <%= current_end_user.area.name %> > 担当者一覧</h3>
-  </div>
-  <div class = "row">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>名前</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @end_users.each do |end_user| %>
+    <div class="col-md-3">
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_end', areas: @areas %>
+    </div>
+    <div class="col-md-8">
+      <h5 class="mb-5">< <%= current_end_user.area.name %> > 担当者一覧</h5>
+      <table>
+        <thead>
           <tr>
-            <td><%= end_user.id %></td>
-            <td><%= end_user.name_display %></td>
-            <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
+            <th>ID</th>
+            <th>名前</th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @end_users.each do |end_user| %>
+            <% if end_user.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= end_user.id %></td>
+              <td><%= end_user.name_display %></td>
+              <td><%= link_to "削除", end_user_path(end_user.id, is_deleted: true), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

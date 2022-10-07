@@ -2,59 +2,58 @@
 <div class = "container-fluid">
 
   <div class = "row">
-    <h3>管理者情報編集</h3>
+    <h5 class="mb-5 ml-3">管理者情報編集</h5>
   </div>
 
   <%= form_with model: @admin_user, url: admin_admin_user_path(@admin_user.id), method: :patch do |f| %>
-    <div class = "row">
-      <%= f.label :enmloyee_number, "社員番号" %>
-      <%= f.text_field :employee_number, autofocus: true, autocomplete: "on" %>
+    <div class="form-group row">
+      <%= f.label :enmloyee_number, "社員番号", class: "col-md-2" %>
+      <%= f.text_field :employee_number, autofocus: true, autocomplete: "on", class: "col-md-2" %>
     </div>
-    <div class = "row">
-      <%= f.label "氏名" %>
-      <%= f.label :family_name, "名字" %>
-      <%= f.text_field :family_name, autofocus: true, autocomplete: "on" %>
-      <%= f.label :first_name, "名前" %>
-      <%= f.text_field :first_name, autofocus: true, autocomplete: "on" %>
+    <div class="form-group row">
+      <%= f.label :family_name, "名字", class: "col-md-2" %>
+      <%= f.text_field :family_name, autofocus: true, autocomplete: "on", class: "col-md-2" %>
+      <%= f.label :first_name, "名前", class: "col-md-1 text-right" %>
+      <%= f.text_field :first_name, autofocus: true, autocomplete: "on", class: "col-md-2" %>
     </div>
-    <div class = "row">
-      <%= f.label "メールアドレス" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <div class="form-group row">
+      <%= f.label "メールアドレス", class: "col-md-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-md-2" %>
     </div>
-    <div class = "row">
-      <%= f.label :password, "パスワード" %>
-      <%= f.password_field :password %>
-    </div>
-    <div class = "row">
-      <%= f.label :profile_image, "プロフィール画像" %>
+    <!--<div class = "row">-->
+    <!--  <%#= f.label :password, "パスワード" %>-->
+    <!--  <%#= f.password_field :password %>-->
+    <!--</div>-->
+    <div class="form-group row">
+      <%= f.label :profile_image, "プロフィール画像", class: "col-md-2" %>
       <%= f.file_field :profile_image, accept: "image/*" %>
     </div>
-    <div class = "row">
-      <%= f.label "所属拠点" %>
+    <div class="form-group row">
+      <%= f.label "所属拠点", class: "col-md-2" %>
       <%= f.collection_select(:area_id, @admin_areas, :id, :name) %>
     </div>
-    <div class = "row">
-      <%= f.label "担当拠点" %>
+    <div class="form-group row">
+      <%= f.label "担当拠点", class: "col-md-2" %>
       <%= f.collection_check_boxes(:area_ids, @user_areas, :id, :name, include_hidden: false) do |area| %>
         <%= area.check_box %>
-        <%= area.text %>
+        <%= area.text %>&emsp;
       <% end %>
     </div>
-    <div class = "row">
-      <%= f.label "担当業務" %>
+    <div class="form-group row">
+      <%= f.label "担当業務", class: "col-md-2" %>
       <%= f.collection_check_boxes(:job_ids, @jobs, :id, :name, include_hidden: false) do |job| %>
         <%= job.check_box %>
-        <%= job.text %>
+        <%= job.text %>&emsp;
       <% end %>
     </div>
-    <div class = "row">
-      <%= f.label :is_deleted, "管理者ステータス" %>
+    <div class="form-group row">
+      <%= f.label :is_deleted, "管理者ステータス", class: "col-md-2" %>
       <%= f.radio_button :is_deleted, false %>
-      <%= f.label :is_deleted, "有効" %>
+      <%= f.label :is_deleted, "有効" %>&emsp;
       <%= f.radio_button :is_deleted, true %>
       <%= f.label :is_deleted, "無効" %>
     </div>
-    <div class = "row">
+    <div class="form-group row offset-2 mt-4">
       <%= f.submit "変更を保存", class: "btn btn-secondary" %>
     </div>
   <% end %>

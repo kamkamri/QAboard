@@ -2,7 +2,16 @@ class Admin::EndUsersController < ApplicationController
 
   # 拠点担当者一覧
   def index
-    @end_users = EndUser.all.order(:area_id, employee_number: "ASC")
+    @end_users = EndUser.all.order(:area_id, area_id: "ASC")
+    @areas = Area.where(is_deleted: false, admin_area_flag: false)
+    @jobs = Job.where(is_deleted: false)
+    
+    # 検索
+    if params[:area]
+      # your_areaの対象
+      @end_users = EndUser.where(area_id: params[:area])
+      @bord_name = Area.find(params[:area]).name + " "
+    end
   end
 
   def show

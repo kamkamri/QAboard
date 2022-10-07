@@ -3,16 +3,20 @@ class Admin::AdminUsersController < ApplicationController
   # 管理者一覧
   def index
     @admin_users = AdminUser.all
-    @areas = Area.where(is_deleted: false)
+    @areas = Area.where(is_deleted: false, admin_area_flag: false)
     @jobs = Job.where(is_deleted: false)
 
     # 検索
     if params[:area]
-      @admin_users = AdminUser.where(area_id: params[:area])
-      @bord_name = Area.find(params[:area]).name + "の管理者"
+      # your_areaの対象
+      @user = YourArea.where(area_id: params[:area]).pluck(:admin_user_id)
+      @admin_users = AdminUser.where(id: @user)
+      @bord_name = Area.find(params[:area]).name + " "
+      # binding.pry
     elsif params[:job]
-      @admin_users = AdminUser.where(job_id: params[:job])
-      @bord_name = Job.find(params[:job]).name + "の管理者"
+      @user = YourJob.where(job_id: params[:job]).pluck(:admin_user_id)
+      @admin_users = AdminUser.where(id: @user)
+      @bord_name = Job.find(params[:job]).name + " "
     else
     end
   end
@@ -35,12 +39,15 @@ class Admin::AdminUsersController < ApplicationController
   # 管理者編集
   def update
     @admin_user = AdminUser.find(params[:id])
+    # binding.pry
     # @admin_user.your_areas.build
     # @admin_user.your_jobs.build
     if @admin_user.update(admin_user_params)
       redirect_to admin_admin_users_path
     else
       @admin_users = AdminUser.all
+      @areas = Area.where(is_deleted: false, admin_area_flag: false)
+      @jobs = Job.where(is_deleted: false)
       render :index
     end
   end
