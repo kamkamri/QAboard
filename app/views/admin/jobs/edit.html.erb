@@ -2,23 +2,27 @@
 <div class = "container-fluid">
 
   <div class = "row">
-    <h3>業務マスタ編集</h3>
+    <h5 class="mb-5 ml-3">業務マスタ編集</h5>
   </div>
 
 
   <%= form_with model: @job, url: admin_job_path(@job.id), method: :patch do |f| %>
-    <div class = "row">
-      <%= f.label :name, "業務名" %>
-      <%= f.text_field :name %>
+    <div class="form-group row">
+      <%= f.label :id, "ID", class: "col-md-2 offset-1" %>
+      <div class="col-md-2"><%= @job.id%></div>
     </div>
-    <div class = "row">
-      <%= f.label :is_deleted, "業務ステータス" %>
-      <%= f.radio_button :is_deleted, false, checked: true %>
-      <%= f.label :is_deleted, "有効" %>
-      <%= f.radio_button :is_deleted, true %>
+    <div class="form-group row">
+      <%= f.label :name, "業務名", class: "col-md-2 offset-1" %>
+      <%= f.text_field :name, class: "col-md-2" %>
+    </div>
+    <div class="form-group row">
+      <%= f.label :is_deleted, "業務ステータス", class: "col-md-2 offset-1" %>
+      <%= f.radio_button :is_deleted, false, checked: true %>&emsp;
+      <%= f.label :is_deleted, "有効" %>&emsp;&emsp;
+      <%= f.radio_button :is_deleted, true %>&emsp;
       <%= f.label :is_deleted, "廃止" %>
     </div>
-    <div class = "row">
+    <div class="form-group row offset-3 mt-4">
       <%= f.submit "変更を保存", class: "btn btn-secondary" %>
     </div>
   <% end %>

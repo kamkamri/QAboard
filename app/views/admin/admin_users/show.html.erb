@@ -2,16 +2,16 @@
 <div class = "container-fluid">
 
   <div class = "row">
-    <h3>登録情報</h3>
-    <%= link_to "変更する", edit_admin_admin_user_path(current_admin_user.id), class: "btn btn-danger" %>
+    <h5 class="mb-5 ml-2">登録情報</h5>
   </div>
 
   <div class = "row">
-    <div class = "col">
+    <div class = "col-md-3">
       <%= image_tag @admin_user.get_profile_image(200,200),class: "img-fluid" %>
     </div>
-    <div class = "col">
-      <table>
+    <div class="col-md-6">
+      <%= link_to "変更する", edit_admin_admin_user_path(current_admin_user.id), class: "btn btn-secondary" %>
+      <table class="table">
         <tbody>
           <tr>
             <th>社員番号</th>
@@ -49,5 +49,4 @@
       </table>
     </div>
   </div>
-
 </div>

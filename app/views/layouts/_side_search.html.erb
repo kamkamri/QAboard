@@ -4,19 +4,21 @@
 <!--アドミンユーザーがサインインしている場合-->
 <% if admin_user_signed_in? %>
   <!--新着通知-->
-  <% if admin_unchecked_notifications.any? %>
-    <%= link_to "新着通知", admin_notifications_path %>
-    <i class="fa-solid fa-bell"></i></br>
-  <% else %>
-    <%= link_to "新着通知", admin_notifications_path %></br>
-  <% end %>
-  <!--自分宛の質問-->
-  <%= link_to "担当拠点", admin_trees_path(genre: "担当") %></br>
-  <!--全ての質問-->
-  <%= link_to "全ての質問", admin_trees_path(genre: "全て") %></br>
-  <!--自分が送信した質問-->
-  <%= link_to "自分の投稿", admin_trees_path(genre: "送信") %>
-  
+  <div class="list-group">
+    <% if admin_unchecked_notifications.any? %>
+      <%= link_to  admin_notifications_path, class: "list-group-item list-group-item-action list-group-item-light" do %>
+        新着通知  <i class="fa-solid fa-bell"></i>
+      <% end %>
+    <% else %>
+      <%= link_to "新着通知", admin_notifications_path, class: "list-group-item list-group-item-action list-group-item-light" %>
+    <% end %>
+    <!--自分宛の質問-->
+    <%= link_to "担当拠点", admin_trees_path(genre: "担当"), class: "list-group-item list-group-item-action list-group-item-light" %>
+    <!--全ての質問-->
+    <%= link_to "全ての質問", admin_trees_path(genre: "全て"), class: "list-group-item list-group-item-action list-group-item-light" %>
+    <!--自分が送信した質問-->
+    <%= link_to "自分の投稿", admin_trees_path(genre: "送信"), class: "list-group-item list-group-item-action list-group-item-light" %>
+  </div>
 
 
   <!--拠点検索-->
@@ -46,16 +48,19 @@
 <% else %>
   <!--新着通知-->
   <% if end_unchecked_notifications.any? %>
-    <%= link_to "新着通知", notifications_path %>
-    <i class="fa-solid fa-bell"></i></br>
+    <%#= link_to "新着通知", notifications_path, class: "list-group-item list-group-item-action list-group-item-light" %>
+    <!--<i class="fa-solid fa-bell"></i>-->
+    <%= link_to notifications_path, class: "list-group-item list-group-item-action list-group-item-light" do %>
+      新着通知  <i class="fa-solid fa-bell"></i>
+    <% end %>
   <% else %>
-    <%= link_to "新着通知", notifications_path %></br>
+    <%= link_to "新着通知", notifications_path, class: "list-group-item list-group-item-action list-group-item-light" %>
   <% end %>
   <!--自分宛の質問-->
-  <%= link_to "自拠点", trees_path(genre: "自拠点") %></br>
+  <%= link_to "自拠点", trees_path(genre: "自拠点"), class: "list-group-item list-group-item-action list-group-item-light" %>
 
   <!--自分が送信した質問-->
-  <%= link_to "自分の投稿", trees_path(genre: "送信") %></br>
+  <%= link_to "自分の投稿", trees_path(genre: "送信"), class: "list-group-item list-group-item-action list-group-item-light" %>
 
 
   <!--業務検索-->

@@ -9,13 +9,16 @@ class Admin::AdminUsersController < ApplicationController
     # 検索
     if params[:area]
       # your_areaの対象
-      @user = YourArea.where(area_id: params[:area]).pluck(:admin_user_id)
-      @admin_users = AdminUser.where(id: @user)
+      # @user = YourArea.where(area_id: params[:area]).pluck(:admin_user_id)
+      # @admin_users = AdminUser.where(id: @user)
+      # Areaからthorouでyour_areasを通り、admin_userを取得
+      @admin_users = Area.find_by(id: params[:area]).admin_users
       @bord_name = Area.find(params[:area]).name + " "
       # binding.pry
     elsif params[:job]
-      @user = YourJob.where(job_id: params[:job]).pluck(:admin_user_id)
-      @admin_users = AdminUser.where(id: @user)
+      # @user = YourJob.where(job_id: params[:job]).pluck(:admin_user_id)
+      # @admin_users = AdminUser.where(id: @user)
+      @admin_users = Job.find_by(id: params[:job]).admin_users
       @bord_name = Job.find(params[:job]).name + " "
     else
     end

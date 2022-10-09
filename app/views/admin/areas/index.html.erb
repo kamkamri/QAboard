@@ -1,39 +1,36 @@
 <!--<h1>Admin::Areas#index</h1>-->
 <div class = "container-fluid">
-
   <div class = "row">
-    <h3>拠点マスタ</h3>
+    <h5 class="mb-5 offset-1">拠点マスタ</h5>
   </div>
 
-  <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
-    <div class = "row">
-      <%= f.label :name, "拠点名", class: "col" %>
-      <%= f.text_field :name, placeholder: "拠点の名前を入力してください", class: "col" %>
-      <%= f.submit "登録", class: "btn btn-secondary" %>
-    </div>
-  <% end %>
-
   <div class = "row">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>拠点名</th>
-          <th>ステータス</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @areas.each do |area| %>
+    <div class="col-md-8 offset-1">
+      <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
+        <%= f.label :name, "業務名" %>
+        <%= f.text_field :name, placeholder: "業務の名前を入力してください", class: "col-md-4" %>
+        <%= f.submit "登録", class: "btn btn-secondary" %>
+      <% end %>
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td><%= area.id %></td>
-            <td><%= area.name %></td>
-            <td><%= area.is_deleted ? '無効':'有効' %></td>
-            <td><%= link_to '編集', edit_admin_area_path(area.id), class: 'btn btn-secondary' %></td>
+            <th>ID</th>
+            <th>業務名</th>
+            <th>ステータス</th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @areas.each do |area| %>
+            <tr>
+              <td><%= area.id %></td>
+              <td><%= area.name %></td>
+              <td><%= area.is_deleted ? "廃止":"有効" %></td>
+              <td><%= link_to "編集", edit_admin_area_path(area.id), class: "btn btn-secondary" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-
 </div>

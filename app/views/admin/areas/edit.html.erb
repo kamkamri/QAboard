@@ -1,29 +1,26 @@
 <!--<h1>Admin::Areas#edit</h1>-->
 <div class = "container-fluid">
   <div class = "row">
-    <h3>拠点マスタ編集</h3>
+    <h5 class="mb-5 ml-3">拠点マスタ編集</h5>
   </div>
 
   <%= form_with model: @area, url: admin_area_path(@area.id), method: :patch do |f| %>
-    <div class = "row">
-      <%= f.label :name, "拠点名", class: "col" %>
-      <%= f.text_field :name, class: "col" %>
+    <div class="form-group row">
+      <%= f.label :id, "ID", class: "col-md-2 offset-1" %>
+      <div class="col-md-2"><%= @area.id%></div>
     </div>
-    <div class = "row">
-      <%= f.label :admin_area_flag, "管理拠点", class: "col" %>
-      <%= f.radio_button :admin_area_flag, false, checked: true %>
-      <%= f.label :admin_area_flag, "通常拠点" %>
-      <%= f.radio_button :admin_area_flag, true %>
-      <%= f.label :admin_area_flag, "管理者拠点" %>
+    <div class="form-group row">
+      <%= f.label :name, "拠点名", class: "col-md-2 offset-1" %>
+      <%= f.text_field :name, class: "col-md-2" %>
     </div>
-    <div class = "row">
-      <%= f.label :is_deleted, "拠点ステータス", class: "col" %>
-      <%= f.radio_button :is_deleted, false, checked: true %>
-      <%= f.label :is_deleted, "有効" %>
-      <%= f.radio_button :is_deleted, true %>
+    <div class="form-group row">
+      <%= f.label :is_deleted, "拠点ステータス", class: "col-md-2 offset-1" %>
+      <%= f.radio_button :is_deleted, false, checked: true %>&emsp;
+      <%= f.label :is_deleted, "有効" %>&emsp;&emsp;
+      <%= f.radio_button :is_deleted, true %>&emsp;
       <%= f.label :is_deleted, "廃止" %>
     </div>
-    <div class = "row">
+    <div class="form-group row offset-3 mt-4">
       <%= f.submit "変更を保存", class: "btn btn-secondary" %>
     
   <% end %>

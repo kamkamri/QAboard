@@ -6,8 +6,8 @@
       <%= render 'layouts/side_end', areas: @areas %>
     </div>
     <div class="col-md-8">
-      <h5 class="mb-5">< <%= current_end_user.area.name %> > 担当者一覧</h5>
-      <table>
+      <h5 class="mb-5"><%= current_end_user.area.name %>  担当者一覧</h5>
+      <table class="table table-hover">
         <thead>
           <tr>
             <th>ID</th>
