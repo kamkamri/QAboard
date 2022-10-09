@@ -50,7 +50,7 @@
                       <% end %>
                     </td>
                     <td><%= tree.post.name %></td>
-                    <td><%= tree.job.name %></td>
+                    <td><span style="background-color:<%= tree.job.color %>">&emsp;<%= tree.job.name %>&emsp;</span></td>
                     <td><%= tree.title.truncate(20) %></td>
                     <td>
                       <% if tree.responses.exists? %>

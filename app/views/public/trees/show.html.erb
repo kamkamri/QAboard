@@ -15,7 +15,7 @@
             <div class = "card-header">
               <div class = "row">
                 <div class = "col"><%= @tree.title %></div>
-                <div class = "badge badge-pill badge-info"><h6><%= @tree.job.name %></h6></div>
+                <div style = "background-color:<%= @tree.job.color %>"><strong>&emsp;<%= @tree.job.name %>&emsp;</strong></div>
               </div>
             </div>
             <div class = "card-header bg-white">
@@ -88,7 +88,7 @@
           </div>
         </div>
       </div>
-    
+
       <!--レスポンス-->
       <% @responses.each do |res| %>
         <div class = "row">
@@ -143,7 +143,7 @@
           </div>
         </div>
       <% end %>
-    
+
       <!--新規レス-->
       <% if @tree.is_closed == false %>
         <div class = "row">

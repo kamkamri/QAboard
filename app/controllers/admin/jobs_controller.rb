@@ -36,6 +36,6 @@ class Admin::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:name, :is_deleted)
+    params.require(:job).permit(:name, :color, :is_deleted)
   end
 end

@@ -4,6 +4,7 @@ class CreateJobs < ActiveRecord::Migration[6.1]
 
       t.string :name, null: false
       t.boolean :is_deleted, null: false, default: false
+      t.string :color, null: false
 
       t.timestamps
     end

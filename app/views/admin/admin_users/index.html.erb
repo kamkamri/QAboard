@@ -40,7 +40,7 @@
               </td>
               <td>
                 <% admin_user.jobs.each do |job| %>
-                  <%= job.name %>
+                  <span style="background-color:<%= job.color %>"><%= job.name %></span>
                 <% end %>
               </td>
               <td><%= admin_user.is_deleted ? '無効':'有効' %></td>

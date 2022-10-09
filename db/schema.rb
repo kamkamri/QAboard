@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2022_09_29_105953) do
   create_table "jobs", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "is_deleted", default: false, null: false
+    t.string "color", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
