@@ -2,7 +2,7 @@ class Admin::AdminUsersController < ApplicationController
 
   # 管理者一覧
   def index
-    @admin_users = AdminUser.all
+    @admin_users = AdminUser.all.page(params[:page])
     @areas = Area.where(is_deleted: false, admin_area_flag: false)
     @jobs = Job.where(is_deleted: false)
 
@@ -12,13 +12,13 @@ class Admin::AdminUsersController < ApplicationController
       # @user = YourArea.where(area_id: params[:area]).pluck(:admin_user_id)
       # @admin_users = AdminUser.where(id: @user)
       # Areaからthorouでyour_areasを通り、admin_userを取得
-      @admin_users = Area.find_by(id: params[:area]).admin_users
+      @admin_users = Area.find_by(id: params[:area]).admin_users.page(params[:page])
       @bord_name = Area.find(params[:area]).name + " "
       # binding.pry
     elsif params[:job]
       # @user = YourJob.where(job_id: params[:job]).pluck(:admin_user_id)
       # @admin_users = AdminUser.where(id: @user)
-      @admin_users = Job.find_by(id: params[:job]).admin_users
+      @admin_users = Job.find_by(id: params[:job]).admin_users.page(params[:page])
       @bord_name = Job.find(params[:job]).name + " "
     else
     end
@@ -39,6 +39,11 @@ class Admin::AdminUsersController < ApplicationController
     @admin_user.your_jobs.build
   end
 
+  # 管理者画面編集
+  def edit_pass
+    @admin_user = AdminUser.find(params[:id])
+  end
+
   # 管理者編集
   def update
     @admin_user = AdminUser.find(params[:id])
@@ -47,6 +52,7 @@ class Admin::AdminUsersController < ApplicationController
     # @admin_user.your_jobs.build
     if @admin_user.update(admin_user_params)
       redirect_to admin_admin_users_path
+      sign_in(@admin_user, bypass: true)
     else
       @admin_users = AdminUser.all
       @areas = Area.where(is_deleted: false, admin_area_flag: false)

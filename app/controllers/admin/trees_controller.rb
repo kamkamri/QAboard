@@ -10,7 +10,7 @@ class Admin::TreesController < ApplicationController
     @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
     # ツリーの業務がじぶんの担当業務
     @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
-    @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct
+    @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct.page(params[:page])
 
 
     # 検索
@@ -21,24 +21,24 @@ class Admin::TreesController < ApplicationController
       @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
       # ツリーの業務がじぶんの担当業務
       @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
-      @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct
+      @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct.page(params[:page])
       @bord_name = "担当拠点の質問"
 
     #全ての質問
     when "全て" then
-      @trees = Tree.all
+      @trees = Tree.all.page(params[:page])
       @bord_name = "全ての質問"
 
     # 自分が送信した質問
     when "送信" then
-      @trees = Tree.where(admin_user_id: @admin_user)
+      @trees = Tree.where(admin_user_id: @admin_user).page(params[:page])
       @bord_name = "自分の投稿"
     else
       if params[:area]
-        @trees = Tree.where(area_id: params[:area]).or( Tree.where(post_id: params[:area])).distinct
+        @trees = Tree.where(area_id: params[:area]).or( Tree.where(post_id: params[:area])).distinct.page(params[:page])
         @bord_name = Area.find(params[:area]).name + "の質問"
       elsif params[:job]
-        @trees = Tree.where(job_id: params[:job])
+        @trees = Tree.where(job_id: params[:job]).page(params[:page])
         @bord_name = Job.find(params[:job]).name + "の質問"
       else
       end
@@ -133,7 +133,7 @@ class Admin::TreesController < ApplicationController
   # 質問詳細画面(レスポンス新規画面)
   def show
     @tree = Tree.find(params[:id])
-    @responses = @tree.responses
+    @responses = @tree.responses.page(params[:page])
     @res = Response.new
 
     @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
@@ -154,24 +154,24 @@ class Admin::TreesController < ApplicationController
       @myarea = @admin_user.areas.where(your_areas:{admin_user_id: @admin_user.id})
       # ツリーの業務がじぶんの担当業務
       @myjob = @admin_user.jobs.where(your_jobs:{admin_user_id: @admin_user.id})
-      @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct
+      @trees = Tree.where(area_id: @myarea, job_id: @myjob).or( Tree.where(post_id: @myarea, job_id: @myjob)).distinct.page(params[:page])
       @bord_name = "担当拠点の質問"
 
     #全ての質問
     when "全て" then
-      @trees = Tree.all
+      @trees = Tree.all.page(params[:page])
       @bord_name = "全ての質問"
 
     # 自分が送信した質問
     when "送信" then
-      @trees = Tree.where(admin_user_id: @admin_user)
+      @trees = Tree.where(admin_user_id: @admin_user).page(params[:page])
       @bord_name = "自分の投稿"
     else
       if params[:area]
-        @trees = Tree.where(area_id: params[:area]).or( Tree.where(post_id: params[:area])).distinct
+        @trees = Tree.where(area_id: params[:area]).or( Tree.where(post_id: params[:area])).distinct.page(params[:page])
         @bord_name = Area.find(params[:area]).name + "の質問"
       elsif params[:job]
-        @trees = Tree.where(job_id: params[:job])
+        @trees = Tree.where(job_id: params[:job]).page(params[:page])
         @bord_name = Job.find(params[:job]).name + "の質問"
       else
       end

@@ -27,7 +27,7 @@ class Admin::ResponsesController < ApplicationController
       end
       redirect_to admin_tree_path(@tree.id)
     else
-      @tree.responses
+      @responses = @tree.responses.page(params[:page])
       render "admin/trees/show"
     end
   end

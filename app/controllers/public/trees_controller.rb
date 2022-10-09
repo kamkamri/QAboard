@@ -5,23 +5,23 @@ class Public::TreesController < ApplicationController
     @jobs = Job.where(is_deleted: false)
     @end_user = current_end_user
     @myarea = @end_user.area
-    @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
+    @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct.page(params[:page])
 
     # 検索
     case params[:genre]
     # admin受信した質問
     when "自拠点" then
       # ツリーの送信者が自分の担当拠点
-      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
+      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct.page(params[:page])
       @bord_name = "自拠点の質問"
 
     # 自分が送信した質問
     when "送信" then
-      @trees = Tree.where(end_user_id: @end_user)
+      @trees = Tree.where(end_user_id: @end_user).page(params[:page])
       @bord_name = "自分の投稿"
     else
       if params[:job]
-        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct
+        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct.page(params[:page])
         @bord_name = Job.find(params[:job]).name + "の質問"
       end
     end
@@ -111,7 +111,7 @@ class Public::TreesController < ApplicationController
   # 質問詳細画面(レスポンス新規画面)
   def show
     @tree = Tree.find(params[:id])
-    @responses = @tree.responses
+    @responses = @tree.responses.page(params[:page])
     @res = Response.new
 
     @jobs = Job.where(is_deleted: false)
@@ -129,14 +129,14 @@ class Public::TreesController < ApplicationController
     # admin受信した質問
     when "自拠点" then
       # ツリーの送信者が自分の担当拠点
-      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct
+      @trees = Tree.where(area_id: @myarea).or( Tree.where(post_id: @myarea)).distinct.page(params[:page])
 
     # 自分が送信した質問
     when "送信" then
-      @trees = Tree.where(end_user_id: @end_user)
+      @trees = Tree.where(end_user_id: @end_user).page(params[:page])
     else
       if params[:job]
-        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct
+        @trees = Tree.where(area_id: @myarea, job_id: params[:job]).or( Tree.where(post_id: @myarea, job_id: params[:job])).distinct.page(params[:page])
       end
     end
   end

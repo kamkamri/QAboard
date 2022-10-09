@@ -6,11 +6,12 @@
   </div>
 
   <div class = "row">
-    <div class = "col-md-3">
+    <div class = "col-md-3 text-center">
       <%= image_tag @admin_user.get_profile_image(200,200),class: "img-fluid" %>
     </div>
     <div class="col-md-6">
-      <%= link_to "変更する", edit_admin_admin_user_path(current_admin_user.id), class: "btn btn-secondary" %>
+      <%= link_to "登録情報変更", edit_admin_admin_user_path(current_admin_user.id), class: "btn btn-secondary" %>
+      <%= link_to "パスワード変更", edit_pass_admin_admin_user_path(current_admin_user.id), class: "btn btn-secondary" %>
       <table class="table">
         <tbody>
           <tr>

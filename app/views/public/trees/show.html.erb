@@ -12,10 +12,13 @@
       <div class = "row mb-4">
         <div class = "col-md-9">
           <div class = "card border-secondary mb-5">
-            <div class = "card-header">
+            <% if @tree.admin_user_id == current_admin_user or @tree.end_user_id == current_end_user %>
+              <div class = "card-header" style = "background-color:#ebe6ff">
+            <% else %>
+              <div class = "card-header">
+            <% end %>
               <div class = "row">
                 <div class = "col"><%= @tree.title %></div>
-                <div style = "background-color:<%= @tree.job.color %>"><strong>&emsp;<%= @tree.job.name %>&emsp;</strong></div>
               </div>
             </div>
             <div class = "card-header bg-white">
@@ -42,6 +45,12 @@
               <div class= "row">
                 <div class = "col-sm-2">宛先</div>
                 <div class = "col-sm-8"><%= @tree.post.name %></div>
+              </div>
+            </div>
+            <div class = "card-header bg-white">
+              <div class= "row">
+                <div class = "col-sm-2"></div>
+                <div style = "background-color:<%= @tree.job.color %>"><strong>&emsp;<%= @tree.job.name %>&emsp;</strong></div>
               </div>
             </div>
             <div class = "card-body">
@@ -94,7 +103,11 @@
         <div class = "row">
           <div class = "col-md-9">
             <div class = "card border-secondary mb-1">
-              <div class = "card-header bg-white">
+              <% if res.admin_user_id == current_admin_user or res.end_user_id == current_end_user %>
+                <div class = "card-header" style = "background-color:#ebe6ff">
+              <% else %>
+                <div class = "card-header bg-white">
+              <% end %>
                 <div class = "text-left">
                   <%= l res.updated_at %>
                   <% if res.end_user_id.nil? %>　<!--対象のツリーをadmin_userが投稿した場合-->
@@ -178,6 +191,7 @@
           </div>
         </div>
       <% end %>
+      <div class = "d-flex justify-content-center"><%= paginate @responses %></div>
     </div>
   </div>
 </div>

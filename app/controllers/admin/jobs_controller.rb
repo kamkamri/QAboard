@@ -3,7 +3,7 @@ class Admin::JobsController < ApplicationController
   # 業務マスタ一覧（新規登録）
   def index
     @job = Job.new
-    @jobs = Job.all
+    @jobs = Job.all.page(params[:page])
   end
 
   # 業務新規登録

@@ -1,0 +1,8 @@
+<!--メッセージ表示-->
+<div>
+  <% flash.each do |key, value| %>
+      <p class="alert alert-info">
+        <%= value %>
+      </p>
+  <% end %>
+</div>

@@ -26,7 +26,7 @@ class Public::ResponsesController < ApplicationController
       end
       redirect_to tree_path(@tree.id)
     else
-      @tree.responses
+      @responses = @tree.responses.page(params[:page])
       render "public/trees/show"
     end
   end

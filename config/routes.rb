@@ -8,7 +8,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'homes#top'
-    resources :admin_users, only:[:index, :show, :edit, :update]
+    resources :admin_users, only:[:index, :show, :edit, :update] do
+      get :edit_pass, on: :member
+    end
     resources :end_users, only:[:index, :show, :edit, :update]
     resources :areas, only:[:index, :create, :edit, :update]
     resources :jobs, only:[:index, :create, :edit, :update]
@@ -33,6 +35,7 @@ Rails.application.routes.draw do
       collection do
         get 'mypage'
         get 'mypage_edit'
+        get 'edit_pass'
       end
     end
     resources :notifications, only: :index
