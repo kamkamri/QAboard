@@ -19,7 +19,13 @@ Rails.application.routes.draw do
       post :confirm, on: :collection
       resources :responses, only:[:create, :edit, :update, :destroy]
     end
-    get "search" => "searches"
+    resource :searches, only:[] do
+      collection do
+        get 'search'
+        get 'admin_user_search'
+        get 'end_user_search'
+      end
+    end
   end
 
 

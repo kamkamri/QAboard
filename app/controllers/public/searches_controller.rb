@@ -20,7 +20,7 @@ class Public::SearchesController < ApplicationController
     # nilを削除
     @search_tree_ids = @search_tree_ids.compact
     # 対象のツリー
-    @trees = Tree.where(id: @search_tree_ids)
+    @trees = Tree.where(id: @search_tree_ids).page(params[:page])
 
 
     @bord_name = "検索結果　#{ params[:keyword]}"

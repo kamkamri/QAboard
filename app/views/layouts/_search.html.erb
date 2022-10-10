@@ -2,7 +2,7 @@
 <!--admin tree#index,show,_notification  public tree#index,show,_notification-->
 <!--検索機能-->
 <% if admin_user_signed_in? %>
-  <%= form_with url: admin_search_path, method: :get do |f| %>
+  <%= form_with url: search_admin_searches_path, method: :get do |f| %>
     <%= f.text_field :keyword %>
     <%= f.submit "検索", class: "btn btn-secondary" %>
   <% end %><br></br>

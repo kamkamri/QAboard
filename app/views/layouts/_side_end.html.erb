@@ -1,7 +1,14 @@
 <!--部分テンプレート-->
-<!--admin admin#index-->
+<!--admin end_user#index-->
 <!--検索機能-->
 <% if admin_user_signed_in? %>
+  
+  <!--検索-->
+  <%= form_with url: end_user_search_admin_searches_path, method: :get do |f| %>
+    <%= f.text_field :keyword %>
+    <%= f.submit "検索", class: "btn btn-secondary" %>
+  <% end %><br></br>
+
   <!--拠点検索-->
   <div class="dropdown mt-5">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

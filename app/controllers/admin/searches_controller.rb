@@ -25,11 +25,33 @@ class Admin::SearchesController < ApplicationController
     # nilを削除
     @search_tree_ids = @search_tree_ids.compact
     # 対象のツリー
-    @trees = Tree.where(id: @search_tree_ids)
+    @trees = Tree.where(id: @search_tree_ids).page(params[:page])
 
 
     @bord_name = "検索結果　#{ params[:keyword]}"
     render "admin/trees/index"
+  end
+
+  # admin_userの検索
+  def admin_user_search
+    @areas = Area.where(is_deleted: false, admin_area_flag: false)
+    @jobs = Job.where(is_deleted: false)
+
+    # admin_user検索 社員番号、名字、名前
+    @admin_users = AdminUser.where(["employee_number like? OR family_name like? OR first_name like?", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"]).page(params[:page])
+    @bord_name = "検索結果　#{ params[:keyword]}"
+    render "admin/admin_users/index"
+  end
+
+
+  # end_userの検索
+  def end_user_search
+    @areas = Area.where(is_deleted: false, admin_area_flag: false)
+    @jobs = Job.where(is_deleted: false)
+
+    @end_users = EndUser.where(["employee_number like? OR family_name like? OR first_name like?", "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%"]).page(params[:page])
+    @bord_name = "検索結果　#{ params[:keyword]}"
+    render "admin/end_users/index"
   end
 
 end
