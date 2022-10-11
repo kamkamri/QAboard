@@ -24,7 +24,11 @@
         </thead>
         <tbody>
           <% @jobs.each do |job| %>
-            <tr>
+            <% if job.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
               <td><%= job.id %></td>
               <td><%= job.name %></td>
               <td><span style = "background-color:<%= job.color %>">&emsp;&emsp;&emsp;</span></td>

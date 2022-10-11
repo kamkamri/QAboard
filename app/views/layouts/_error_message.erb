@@ -1,0 +1,12 @@
+<!--部分テンプレート：エラーメッセージ-->
+<!--public address#index-->
+
+<!--エラー表記-->
+  <% if model.errors.any? %>
+    <%= model.errors.count %>件のエラーが発生しました
+    <ul>
+      <% model.errors.full_messages.each do |message| %>
+        <li class="alert alert-danger"><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>

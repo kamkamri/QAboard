@@ -10,3 +10,12 @@
 .fa-bell {
   color: #efa04c;
 }
+
+// エラー崩れを防ぐ
+.field_with_errors {
+  display: contents;
+  // もしくは diplay: inline;
+  // input {
+    // @extend .is-invalid;
+  // }
+}

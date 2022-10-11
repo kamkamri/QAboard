@@ -8,7 +8,7 @@
     <div class="col-md-8 offset-1">
       <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
         <%= f.label :name, "業務名" %>
-        <%= f.text_field :name, placeholder: "業務の名前を入力してください", class: "col-md-4" %>
+        <%= f.text_field :name, placeholder: "拠点の名前を入力してください", class: "col-md-4" %>
         <%= f.submit "登録", class: "btn btn-secondary" %>
       <% end %>
       <table class="table table-hover">
@@ -22,7 +22,11 @@
         </thead>
         <tbody>
           <% @areas.each do |area| %>
-            <tr>
+            <% if area.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
               <td><%= area.id %></td>
               <td><%= area.name %></td>
               <td><%= area.is_deleted ? "廃止":"有効" %></td>

@@ -71,3 +71,7 @@ gem 'jquery-rails'
 
 # ページネーションのため
 gem 'kaminari','~> 1.2.1'
+
+# 日本語化
+gem 'rails-i18n'
+
