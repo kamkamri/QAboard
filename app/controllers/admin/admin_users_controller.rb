@@ -51,7 +51,16 @@ class Admin::AdminUsersController < ApplicationController
     # @admin_user.your_areas.build
     # @admin_user.your_jobs.build
     if @admin_user.update(admin_user_params)
-      redirect_to admin_admin_users_path
+      # binding.pry
+      # マイページで自分の情報を編集した場合は、マイページへ遷移
+        # マイページの場合は、transition_flag==1を送っている
+        # それ以外は、エンドユーザー一覧に遷移
+        if params[:transition_flag]=="1"
+          redirect_to admin_admin_user_path(@admin_user.id)
+        else
+          redirect_to admin_admin_users_path
+        end
+      # パスワードを変更してもログアウトされないようにする
       sign_in(@admin_user, bypass: true)
     else
       @admin_users = AdminUser.all

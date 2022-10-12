@@ -1,7 +1,7 @@
 <!--admin-sign-up-->
 
 <div class = "container-fluid">
-  <h5 class="mb-5">管理者 新規登録</h5>     
+  <h5 class="mb-5">管理者 新規登録</h5>
 
   <%= form_with model: @admin_user, url:admin_user_registration_path do |f| %>
     <%= render "admin/shared/error_messages", resource: resource %>
@@ -14,7 +14,7 @@
     <div class="form-group row">
       <%= f.label :family_name, "名字", class: "col-md-2" %>
       <%= f.text_field :family_name, autofocus: true, autocomplete: "on",  placeholder: "山田", class: "col-md-2"  %>
-      <%= f.label :first_name, "名前", class: "col-md-1 text-right"  %>
+      <%= f.label :first_name, "名前", class: "col-md-1"  %>
       <%= f.text_field :first_name, autofocus: true, autocomplete: "on",  placeholder: "太郎", class: "col-md-2"  %>
     </div>
 
@@ -64,5 +64,5 @@
   <div class="row offset-2">
     登録済みの方はこちらから<%= link_to "ログイン", new_admin_user_session_path %>
   </div>
-  
+
 </div>

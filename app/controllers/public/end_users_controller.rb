@@ -23,8 +23,17 @@ class Public::EndUsersController < ApplicationController
   # 拠点担当者更新
   def update
     @end_user = EndUser.find(params[:id])
+    # binding.pry
     if @end_user.update(end_user_params)
-      redirect_to end_users_path
+        # マイページで自分の情報を編集した場合は、マイページへ遷移
+        # マイページの場合は、transition_flag==1を送っている
+        # それ以外は、エンドユーザー一覧に遷移
+        if params[:transition_flag]=="1"
+          redirect_to mypage_end_users_path
+        else
+          redirect_to end_users_path
+        end
+      # パスワードを変更してもログアウトされないようにする
       sign_in(@end_user, bypass: true)
     else
       @end_users = EndUser.where(area_id: current_end_user.area_id).where(is_deleted: false)
@@ -38,4 +47,5 @@ class Public::EndUsersController < ApplicationController
   def end_user_params
     params.require(:end_user).permit(:employee_number, :family_name, :first_name, :email, :area_id, :is_deleted, :password, :profile_image)
   end
+
 end

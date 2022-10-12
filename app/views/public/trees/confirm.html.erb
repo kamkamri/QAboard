@@ -12,13 +12,13 @@
         </div>
         <div class = "card-footer">
           <div class = "row">
-            <div class = "col-sm-2">業務区分</div>
+            <div class = "col-sm-3">業務区分</div>
             <div class = "col-sm-3"><%= @tree.job.name %></div>
           </div>
           <% if @tree.attachments.attached? %>
             <div class = "row">
-              <div class = "col-sm-2">添付ファイル</div>
-              <div class = "colƒ">
+              <div class = "col-sm-3">添付ファイル</div>
+              <div class = "col">
                 <ul>
                   <% @tree.attachments.each do |obj| %>
                     <!--<li><%#= File.basename(rails_blob_path(obj))%></li>-->
