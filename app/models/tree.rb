@@ -23,6 +23,18 @@ class Tree < ApplicationRecord
   # 通知機能
   has_many :notifications, dependent: :destroy
 
+
+  # バリデーション
+  validates :area_id, presence: true
+  validates :post_id, presence: true
+  validates :job_id, presence: true
+  validates :title, presence: true
+  validates :body, presence: true
+
+
+
+
+
   # 1　admin投稿ツリーの通知機能
   # 1_①admin通知機能
   def create_admin_ad_notification_tree!(current_user, tree_id, post_id, job_id)

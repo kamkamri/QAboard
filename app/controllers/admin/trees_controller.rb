@@ -54,6 +54,29 @@ class Admin::TreesController < ApplicationController
 
   # 質問確認画面
   def confirm
+      @tree = current_admin_user.trees.new(tree_params)
+
+    # saveでバリデーション使えないので、エラーを表示するために記載
+    if tree_params[:title] == ""
+      @tree.errors.add(:title, "タイトルを入力してください" )
+    end
+    if tree_params[:body] == ""
+      @tree.errors.add(:body, "質問を入力してください" )
+    end
+    if tree_params[:post_id] == ""
+      @tree.errors.add(:post_id, "送信先を選択してください" )
+    end
+    if tree_params[:job_id] == ""
+      @tree.errors.add(:job_id, "業務を選択してください" )
+    end
+
+    # if tree_params[:post_id] == "" || tree_params[:job_id] == "" || tree_params[:title] == "" || tree_params[:body] == ""
+    # 上でエラーを判定し、errorsに追加しているので、ここからエラーがあった場合は、new画面に戻すという処理を書いている
+    if @tree.errors.any?
+      @jobs = Job.all
+      @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+      render :new
+    end
     # 複数添付ファイル保存のために
     # ファイルを入れるための箱を準備
     if tree_params[:attachments].present?

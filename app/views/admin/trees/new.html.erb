@@ -1,9 +1,13 @@
 <!--<h1>Admin::Trees#new</h1>-->
 <div class = "container-fluid">
 
+
   <div class = "row">
     <div class = "col-md-6">
       <%= form_with model: @tree, url: confirm_admin_trees_path, method: :post do |f| %>
+        <!--部分テンプレート：エラー-->
+        <%= render 'layouts/error_message', model: f.object %>
+
         <div class = "card border-secondary mb-3">
           <div class = "card-header">質問を投稿する</div>
           <div class = "card-body">

@@ -87,7 +87,7 @@
                 <%#= @tree.job.name %>
               <!--</div>-->
               <% if (admin_user_signed_in? && (current_admin_user == @tree.admin_user)) || (end_user_signed_in? && (current_end_user == @tree.end_user)) %>
-                <%= link_to "編集する", edit_admin_tree_path(@tree.id), class: "btn btn-secondary mr-2" %>
+                <%= link_to "修正する", edit_admin_tree_path(@tree.id), class: "btn btn-secondary mr-2" %>
                 <%= link_to "削除する", admin_tree_path(@tree.id), method: :delete, "data-confirm" => "ツリーを削除してもよろしいですか？全ての回答も削除されます", class: "btn btn-secondary mr-2" %>
               <% end %>
               <!--スレッドがクローズされていない場合、回答するを表示し、指定の場所に飛ぶようにする-->
@@ -148,7 +148,7 @@
                 </div>
                 <% if admin_user_signed_in? && current_admin_user == res.admin_user || end_user_signed_in? && current_end_user == res.end_user %>
                   <div class = "row d-flex justify-content-end">
-                    <%= link_to "編集する", edit_admin_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
+                    <%= link_to "修正する", edit_admin_tree_response_path(@tree.id, res.id), class: "btn btn-secondary mr-2" %>
                     <%= link_to "削除する", admin_tree_response_path(@tree.id, res.id), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>
                   </div>
                 <% end %>
@@ -172,16 +172,18 @@
                 </div>
                 <div class = "card-footer">
                   <div class = "row">
-                    <%= f.label "添付ファイル(複数可)", class: "col-sm-3" %>
+                    <%= f.label "添付ファイル(複数可)", class: "col-md-3" %>
                     <%= f.file_field :resattachments, multiple: true %>
                   </div>
                 </div>
                 <div class = "card-footer", id = "response">
                   <div class = "row">
-                    <%= f.label :is_closed, "質問を終了する", class: "col-sm-3" %>
+                    <%= f.label :is_closed, "質問を終了する", class: "col-md-3" %>
                     <div class = "col-sm-3 pl-0"><%= f.select :is_closed, options_for_select([["", false], ["質問をクローズする", true]]) %></div>
-                    <small class = "col text-muted">質問をクローズする場合は「質問をクローズする」選んでください。
-                        クローズすると、これ以降、このスレッドに返信はできなくなります</small></p>
+                    <div class = "col-md-10 offset-1 "><small class="text-muted">
+                      質問をクローズする場合は「質問をクローズする」選んでください。</br>
+                      クローズすると、これ以降、このスレッドに返信はできなくなります
+                    </small></div>
                   </div>
                   <div class = "row d-flex justify-content-end">
                     <%= f.submit "回答する", "data-confirm" => "質問をクローズするを選択した場合は、今後回答ができなくなります", class: "btn btn-secondary" %>
