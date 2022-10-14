@@ -65,7 +65,10 @@ class Admin::ResponsesController < ApplicationController
   # 削除
   def destroy
     @res = current_admin_user.responses.find(params[:id])
-    @res.delete
+
+    # @res.delete
+    # 関連データを一緒に削除したいのでdestroyに変更
+    @res.destroy
     redirect_to admin_tree_path(@res.tree_id)
   end
 

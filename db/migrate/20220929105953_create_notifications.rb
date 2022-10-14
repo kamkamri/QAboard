@@ -13,13 +13,19 @@ class CreateNotifications < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    
+
+    # response を削除した時、なぜかdependent: :destroyを記入しているのに、
+    # notification通知が消えてくれないので、外部きーの設定がうまくいっていない可能性あり
+    # 明確に記載してみる　エラーになったので消す
+    # add_foreign_key :notifications, :responses
+
+    # indexを貼ることにより、検索速度を早くする
     add_index :notifications, :admin_visitor_id
     add_index :notifications, :admin_visited_id
     add_index :notifications, :end_visitor_id
     add_index :notifications, :end_visited_id
     add_index :notifications, :tree_id
     add_index :notifications, :response_id
-    
+
   end
 end

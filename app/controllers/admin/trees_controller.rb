@@ -241,6 +241,7 @@ class Admin::TreesController < ApplicationController
   end
 
 
+
   private
   def tree_params
     params.require(:tree).permit(:post_id, :job_id, :title, :body, attachments: [])

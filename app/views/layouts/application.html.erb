@@ -50,7 +50,11 @@
                 </li>
               </ul>
             </div>
-            <span><%= current_admin_user.area.name %>：<%= current_admin_user.name_display %></span>
+            <div class="d-flex flex-column">
+              <div><%= current_admin_user.employee_number %></div>
+              <div><%= current_admin_user.area.name %></div>
+              <div><%= current_admin_user.name_display %></div>
+            </div>
 
           <% elsif end_user_signed_in? %>
             <div class = "collapse navbar-collapse justify-content-start" id = "navbarNavDropdown">
@@ -72,7 +76,11 @@
                 </li>
               </ul>
             </div>
-            <span><%= current_end_user.area.name %>：<%= current_end_user.name_display %>様</span>
+            <div class="d-flex flex-column">
+              <div><%= current_end_user.employee_number %></div>
+              <div><%= current_end_user.area.name %></div>
+              <div><%= current_end_user.name_display %></div>
+            </div>
           <% else %>
             <div class = "collapse navbar-collapse justify-content-start" id = "navbarNavDropdown">
               <ul class = 'navbar-nav'>

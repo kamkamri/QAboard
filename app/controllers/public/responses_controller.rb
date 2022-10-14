@@ -64,7 +64,8 @@ class Public::ResponsesController < ApplicationController
   # 削除
   def destroy
     @res = current_end_user.responses.find(params[:id])
-    @res.delete
+    # 関連データ(notification)を一緒に削除したいのでdestroyに変更
+    @res.destroy
     redirect_to tree_path(@res.tree_id)
   end
 
