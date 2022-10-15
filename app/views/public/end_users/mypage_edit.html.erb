@@ -5,8 +5,8 @@
     <h5 class="mb-5 ml-3">拠点担当者情報編集</h5>
   </div>
 
-  <!--transition_flag: "1"を送ることにより、マイページから遷移したというのをわかるようにしている-->
-  <%= form_with model: @end_user, url: end_user_path(current_end_user.id, transition_flag: "1"), method: :patch do |f| %>
+  <!--transition_flag: "2"を送ることにより、マイページから遷移したというのをわかるようにしている-->
+  <%= form_with model: @end_user, url: end_user_path(current_end_user.id, transition_flag: "2"), method: :patch do |f| %>
 
     <!--部分テンプレート：エラー-->
     <%= render 'layouts/error_message', model: f.object %>

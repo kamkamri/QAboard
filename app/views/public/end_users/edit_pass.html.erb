@@ -5,12 +5,20 @@
     <h5 class="mb-5 ml-3">パスワード変更</h5>
   </div>
 
-  <!--transition_flag: "1"を送ることにより、マイページから遷移したというのをわかるようにしている-->
-  <%= form_with model: @end_user, url: end_user_path(current_end_user.id, transition_flag: "1"), method: :patch do |f| %>
+  <!--transition_flag: "3"を送ることにより、マイページから遷移したパスワード変更というのをわかるようにしている-->
+  <%= form_with model: @end_user, url: end_user_path(current_end_user.id, transition_flag: "3"), method: :patch do |f| %>
+
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
 
     <div class="form-group row">
       <%= f.label :password, "パスワード", class: "col-md-2" %>
       <%= f.password_field :password, class: "col-md-2" %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :password_confirmation, "パスワード(確認)", class: "col-md-2" %>
+      <%= f.password_field :password_confirmation, class: "col-md-2" %>
     </div>
 
     <div class="form-group row offset-2 mt-4">

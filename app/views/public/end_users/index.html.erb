@@ -27,7 +27,8 @@
               <td><%= end_user.employee_number %></td>
               <td><%= end_user.name_display %></td>
               <!--end_user:{is_deleted: true}で渡している理由　is_deletedのみでもいけるが、ストロングパラメータでrezuire(:end_user)しているので、end_userつけないとパラメータ-->
-              <td><%= link_to "削除", end_user_path(end_user.id, end_user:{is_deleted: true}), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
+              <!--transition_flag: "2"を送ることにより、一覧からユーザー削除のため遷移したというのをわかるようにしている-->
+              <td><%= link_to "削除", end_user_path(end_user.id, end_user:{is_deleted: true}, transition_flag: "1"), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
             </tr>
           <% end %>
         </tbody>
