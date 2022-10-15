@@ -54,11 +54,13 @@
                     <!--<td><%#= link_to tree.title.truncate(20), admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>-->
                     <td><%= tree.title.truncate(20) %></td>
                     <td>
-                      <% if tree.responses.exists? %>
-                        <%= l tree.latest_response.updated_at, format: :short %>
-                      <% else %>
-                        <%= l tree.updated_at, format: :short %>
-                      <% end %>
+                      <%= l tree.updated_at, format: :short %>
+                      <!--レスポンスの新規投稿、編集でツリーの更新日を変えていなかったので、レスポンスがあったら、最新のレスポンスの更新日、なかったらツリーの更新日を表示していたー-->
+                      <%# if tree.responses.exists? %>
+                        <%#= l tree.latest_response.updated_at, format: :short %>
+                      <%# else %>
+                        <%#= l tree.updated_at, format: :short %>
+                      <%# end %>
                     </td>
                     <td>
                       <%= tree.responses.count %>

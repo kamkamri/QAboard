@@ -8,12 +8,23 @@ class Public::ResponsesController < ApplicationController
     @res.tree_id = @tree.id
     @res.end_user_id = current_end_user.id
      #byebug
-    # 修正するをクリック、または@treeがsaveされなかったときはshowに戻る
+     # レスポンスをsaveできた場合
     if @res.save
-      #@tree.update!(tree_params)
-      if tree_params[:is_closed] != @tree.is_closed
+      # ツリーのクローズのフラグが保存と違う場合は、ツリーを更新
+      # パラメータで出力したbooleanは、文字列になってしまうので、テーブルから出力したものを文字列にして比較
+      if tree_params[:is_closed] != @tree.is_closed.to_s
         @tree.update(tree_params)
+      # それ以外の場合は、レスが保存された時間で、ツリーの更新日のみを更新
+      # 理由は一覧で、ツリー（レスポンスの新規、編集の更新日も含む）で、最新のツリーを上に
+      # 持ってくるように並び替えしたいので、ツリーの更新日もレスの保存と同時に更新
+      else
+        # touchで、更新日updated_atのみ更新できる
+        # touch(:created_at)で、引数をつければ、updated_at以外の日付も更新してくれる
+        # ただし、バリデーションはしてくれないので、そこだけ注意
+        @tree.touch
       end
+
+
       # コメント通知　adminが投稿したツリーの場合 モデルに定義
       # admin_userが投稿したツリー場合
       if @tree.end_user_id.nil?
@@ -40,6 +51,10 @@ class Public::ResponsesController < ApplicationController
     @res = current_end_user.responses.find(params[:id])
   end
 
+
+
+
+
   # 更新
   def update
     @tree = Tree.find(params[:tree_id])
@@ -55,8 +70,18 @@ class Public::ResponsesController < ApplicationController
 
     # 修正するをクリック、または@resがsaveされなかったときはnewに戻る
     if @res.update(response_params)
-      if close_params[:tree][:is_closed] != @tree.is_closed
+      # 保存しているクローズフラグと、送られてきたフラグが違う場合
+      # パラメータで出力したbooleanは、文字列になってしまうので、テーブルから出力したものを文字列にして比較
+      if close_params[:tree][:is_closed] != @tree.is_closed.to_s
         @tree.update(close_params[:tree])
+      # それ以外の場合は、レスが保存された時間で、ツリーの更新日のみを更新
+      # 理由は一覧で、ツリー（レスポンスの新規、編集の更新日も含む）で、最新のツリーを上に
+      # 持ってくるように並び替えしたいので、ツリーの更新日もレスの保存と同時に更新
+      else
+        # touchで、更新日updated_atのみ更新できる
+        # touch(:created_at)で、引数をつければ、updated_at以外の日付も更新してくれる
+        # ただし、バリデーションはしてくれないので、そこだけ注意
+        @tree.touch
       end
       redirect_to tree_path(@tree.id)
     else
@@ -71,6 +96,11 @@ class Public::ResponsesController < ApplicationController
     @res.destroy
     redirect_to tree_path(@res.tree_id)
   end
+
+
+
+
+
 
   # ストロングパラメータ
   private

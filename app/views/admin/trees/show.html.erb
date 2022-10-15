@@ -13,7 +13,7 @@
       <div class = "row mb-4">
         <div class = "col-md-9">
           <div class = "card border-secondary mb-5">
-            <% if @tree.admin_user_id == current_admin_user or @tree.end_user_id == current_end_user %>
+            <% if @tree.admin_user_id == current_admin_user || @tree.end_user_id == current_end_user %>
               <div class = "card-header" style = "background-color:#ebe6ff">
             <% else %>
               <div class = "card-header">
@@ -104,7 +104,7 @@
         <div class = "row">
           <div class = "col-md-9">
             <div class = "card border-secondary mb-1">
-              <% if res.admin_user_id == current_admin_user or res.end_user_id == current_end_user %>
+              <% if res.admin_user_id == current_admin_user || res.end_user_id == current_end_user %>
                 <div class = "card-header" style = "background-color:#ebe6ff">
               <% else %>
                 <div class = "card-header bg-white">

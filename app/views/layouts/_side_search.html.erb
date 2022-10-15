@@ -16,7 +16,7 @@
   <!--全ての質問-->
   <%= link_to "全ての質問", admin_trees_path(genre: "全て"), class: "text-secondary" %></br>
   <!--自分が送信した質問-->
-  <%= link_to "自分の投稿", admin_trees_path(genre: "送信"), class: "text-secondary" %>
+  <%= link_to "自分の質問", admin_trees_path(genre: "送信"), class: "text-secondary" %>
 
 
   <!--拠点検索-->
@@ -55,10 +55,10 @@
     <%= link_to "新着通知", notifications_path, class: "text-secondary" %></br>
   <% end %>
   <!--自分宛の質問-->
-  <%= link_to "自拠点", trees_path(genre: "自拠点"), class: "text-secondary" %></br>
+  <%= link_to "担当拠点", trees_path(genre: "自拠点"), class: "text-secondary" %></br>
 
   <!--自分が送信した質問-->
-  <%= link_to "自分の投稿", trees_path(genre: "送信"), class: "text-secondary" %>
+  <%= link_to "自分の質問", trees_path(genre: "送信"), class: "text-secondary" %>
 
 
   <!--業務検索-->

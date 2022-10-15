@@ -53,11 +53,12 @@
                     <td><span style="background-color:<%= tree.job.color %>">&emsp;<%= tree.job.name %>&emsp;</span></td>
                     <td><%= tree.title.truncate(20) %></td>
                     <td>
-                      <% if tree.responses.exists? %>
-                        <%= l tree.latest_response.updated_at, format: :short %>
-                      <% else %>
-                        <%= l tree.updated_at, format: :short %>
-                      <% end %>
+                      <%= l tree.updated_at, format: :short %>
+                      <%# if tree.responses.exists? %>
+                        <%#= l tree.latest_response.updated_at, format: :short %>
+                      <%# else %>
+                        <%#= l tree.updated_at, format: :short %>
+                      <%# end %>
                     </td>
                     <td>
                       <%= tree.responses.count %>
