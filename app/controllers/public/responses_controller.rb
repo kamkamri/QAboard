@@ -8,8 +8,8 @@ class Public::ResponsesController < ApplicationController
     @res.tree_id = @tree.id
     @res.end_user_id = current_end_user.id
      #byebug
-    # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
-    if @res.save!
+    # 修正するをクリック、または@treeがsaveされなかったときはshowに戻る
+    if @res.save
       #@tree.update!(tree_params)
       if tree_params[:is_closed] != @tree.is_closed
         @tree.update(tree_params)
@@ -26,6 +26,9 @@ class Public::ResponsesController < ApplicationController
       end
       redirect_to tree_path(@tree.id)
     else
+      @jobs = Job.where(is_deleted: false)
+      @end_user = current_end_user
+      @myarea = @end_user.area
       @responses = @tree.responses.page(params[:page])
       render "public/trees/show"
     end

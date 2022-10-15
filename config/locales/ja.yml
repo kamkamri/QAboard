@@ -6,6 +6,16 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    attributes:
+      # レスポンス　回答機能の日本語化
+      response:
+        body: 本文
+      # ツリー　質問機能に日本語化
+      tree:
+        title: タイトル
+        body: 本文
+        post_id: 送信先
+        job_id: 質問タグ
   date:
     abbr_day_names:
     - 日
@@ -174,14 +184,20 @@ ja:
   time:
     am: 午前
     formats:
-      default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
-      long: "%Y/%m/%d %H:%M"
-      short: "%m/%d %H:%M"
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%Y/%m/%d %H:%M"
+    # formats:
+      # default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      # long: "%Y/%m/%d %H:%M"
+      # short: "%m/%d %H:%M"
     pm: 午後
 
 
-ja:
-  time:
-    formats:
-      default: "%Y/%m/%d %H:%M:%S"
-      short: "%Y/%m/%d %H:%M"
+# ja:
+#   activerecord:
+#     models:
+#       response: 回答
+#     attributes:
+#       # レスポンス　回答機能の日本語化け
+#       response:
+#         body: 質問

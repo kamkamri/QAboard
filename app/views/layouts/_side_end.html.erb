@@ -5,7 +5,7 @@
   
   <!--検索-->
   <%= form_with url: end_user_search_admin_searches_path, method: :get do |f| %>
-    <%= f.text_field :keyword %>
+    <%= f.text_field :keyword, placeholder: "社員番号・氏名検索" %>
     <%= f.submit "検索", class: "btn btn-secondary" %>
   <% end %><br></br>
 

@@ -45,35 +45,42 @@ class Admin::TreesController < ApplicationController
     end
   end
 
+
+
+
   # 質問入力画面
   def new
     @tree = Tree.new
-    @jobs = Job.all
+    @jobs = Job.where(is_deleted: false)
     @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
 
+
+
+
+
   # 質問確認画面
   def confirm
-      @tree = current_admin_user.trees.new(tree_params)
+     @tree = current_admin_user.trees.new(tree_params)
 
     # saveでバリデーション使えないので、エラーを表示するために記載
     if tree_params[:title] == ""
-      @tree.errors.add(:title, "タイトルを入力してください" )
+      @tree.errors.add(:title, "を入力してください" )
     end
     if tree_params[:body] == ""
-      @tree.errors.add(:body, "質問を入力してください" )
+      @tree.errors.add(:body, "を入力してください" )
     end
     if tree_params[:post_id] == ""
-      @tree.errors.add(:post_id, "送信先を選択してください" )
+      @tree.errors.add(:post_id, "を選択してください" )
     end
     if tree_params[:job_id] == ""
-      @tree.errors.add(:job_id, "業務を選択してください" )
+      @tree.errors.add(:job_id, "を選択してください" )
     end
 
     # if tree_params[:post_id] == "" || tree_params[:job_id] == "" || tree_params[:title] == "" || tree_params[:body] == ""
     # 上でエラーを判定し、errorsに追加しているので、ここからエラーがあった場合は、new画面に戻すという処理を書いている
     if @tree.errors.any?
-      @jobs = Job.all
+      @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
       render :new
     end
@@ -99,6 +106,10 @@ class Admin::TreesController < ApplicationController
     # @tree.attachments = params[:tree][:attachments]
   end
 
+
+
+
+
   # 更新機能
   def create
     # paramで送られてきたデータを2個単位での保存に戻す。最初の状態[finename, base64でエンコードされたdata]
@@ -111,7 +122,7 @@ class Admin::TreesController < ApplicationController
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     # !@tree.save !が前にあるので、saveできなかったらになる
     if params[:back] || !@tree.save
-      @jobs = Job.all
+      @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
       render :new and return
     end
@@ -151,6 +162,9 @@ class Admin::TreesController < ApplicationController
 
     redirect_to admin_tree_path(@tree.id)
   end
+
+
+
 
 
   # 質問詳細画面(レスポンス新規画面)
@@ -202,12 +216,20 @@ class Admin::TreesController < ApplicationController
   end
 
 
+
+
+
+
   # 質問編集
   def edit
     @tree = current_admin_user.trees.find(params[:id])
-    @jobs = Job.all
+    @jobs = Job.where(is_deleted: false)
     @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
   end
+
+
+
+
 
   # 質問更新
   def update
@@ -225,7 +247,7 @@ class Admin::TreesController < ApplicationController
     if @tree.update(tree_params)
       redirect_to admin_tree_path(@tree.id)
     else
-      @jobs = Job.all
+      @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
       render :edit
     end

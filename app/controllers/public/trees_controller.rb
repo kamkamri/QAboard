@@ -27,15 +27,40 @@ class Public::TreesController < ApplicationController
     end
   end
 
+
+
   # 質問確認画面
   def new
     @admin_area = Area.where(admin_area_flag: true).where(is_deleted: false).limit(1)
     @tree = Tree.new
-    @jobs = Job.all
+    @jobs = Job.where(is_deleted: false)
   end
+
+
 
   # 質問確認画面
   def confirm
+    @tree = current_end_user.trees.new(tree_params)
+
+    # saveでバリデーション使えないので、エラーを表示するために記載
+    if tree_params[:title] == ""
+      @tree.errors.add(:title, "を入力してください" )
+    end
+    if tree_params[:body] == ""
+      @tree.errors.add(:body, "を入力してください" )
+    end
+    if tree_params[:job_id] == ""
+      @tree.errors.add(:job_id, "を選択してください" )
+    end
+
+    # if tree_params[:post_id] == "" || tree_params[:job_id] == "" || tree_params[:title] == "" || tree_params[:body] == ""
+    # 上でエラーを判定し、errorsに追加しているので、ここからエラーがあった場合は、new画面に戻すという処理を書いている
+    if @tree.errors.any?
+      @jobs = Job.where(is_deleted: false)
+      @admin_area = Area.where(admin_area_flag: true).where(is_deleted: false).limit(1)
+      render :new
+    end
+
     # 複数添付ファイル保存のために
     # ファイルを入れるための箱を準備
     if tree_params[:attachments].present?
@@ -75,7 +100,7 @@ class Public::TreesController < ApplicationController
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
     # !@tree.save !が前にあるので、saveできなかったらになる
     if params[:back] || !@tree.save
-      @jobs = Job.all
+      @jobs = Job.where(is_deleted: false)
       render :new and return
     end
 
@@ -107,6 +132,8 @@ class Public::TreesController < ApplicationController
     end
     redirect_to tree_path(@tree.id)
   end
+
+
 
   # 質問詳細画面(レスポンス新規画面)
   def show
@@ -146,7 +173,7 @@ class Public::TreesController < ApplicationController
   # 質問編集
   def edit
     @tree = current_end_user.trees.find(params[:id])
-    @jobs = Job.all
+    @jobs = Job.where(is_deleted: false)
   end
 
   # 質問更新
@@ -165,7 +192,7 @@ class Public::TreesController < ApplicationController
     if @tree.update(tree_params)
       redirect_to tree_path(@tree.id)
     else
-      @jobs = Job.all
+      @jobs = Job.where(is_deleted: false)
       render :edit
     end
   end

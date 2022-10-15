@@ -10,7 +10,7 @@ class Admin::ResponsesController < ApplicationController
     @res.admin_user_id = current_admin_user.id
      #byebug
     # 修正するをクリック、または@treeがsaveされなかったときはnewに戻る
-    if @res.save!
+    if @res.save
       #@tree.update!(tree_params)
       if tree_params[:is_closed] != @tree.is_closed
         @tree.update(tree_params)
@@ -27,6 +27,9 @@ class Admin::ResponsesController < ApplicationController
       end
       redirect_to admin_tree_path(@tree.id)
     else
+      @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
+      @jobs = Job.where(is_deleted: false)
+      @admin_user = current_admin_user
       @responses = @tree.responses.page(params[:page])
       render "admin/trees/show"
     end

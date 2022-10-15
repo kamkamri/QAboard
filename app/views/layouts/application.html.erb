@@ -25,7 +25,7 @@
             <div class = "collapse navbar-collapse justify-content-start" id = "navbarNavDropdown">
               <ul class = 'navbar-nav'>
                 <% if admin_unchecked_notifications.any? %>
-                  <li class = "nav-item m-3"><i class="fa-solid fa-circle"></i></li>
+                  <li class = "nav-item m-3"><i class="fa-solid fa-bell header_bell"></i></li>
                 <% end %>
                 <li class = "nav-item m-3">
                   <%= link_to "掲示板", admin_trees_path, class: "nav-link active border border-secondary rounded" %>
@@ -60,7 +60,7 @@
             <div class = "collapse navbar-collapse justify-content-start" id = "navbarNavDropdown">
               <ul class = 'navbar-nav'>
                 <% if end_unchecked_notifications.any? %>
-                  <li class = "nav-item m-3"><i class="fa-solid fa-circle"></i></li>
+                  <li class = "nav-item m-3"><i class="fa-solid fa-bell header_bell"></i></li>
                 <% end %>
                 <li class = "nav-item m-3">
                   <%= link_to "掲示板", trees_path, class: "nav-link active border border-secondary rounded" %>

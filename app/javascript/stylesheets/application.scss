@@ -1,12 +1,15 @@
 @import '~bootstrap/scss/bootstrap';
 
-.fa-circle {
+// fontawesome　ヘッダーにあるベル
+.header_bell {
   position: absolute;
   padding-left: 1rem;
   padding-top: 1rem;
   color: #efa04c;
 }
 
+
+// fontawesome　通知機能と掲示板一覧にあるベル
 .fa-bell {
   color: #efa04c;
 }

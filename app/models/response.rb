@@ -12,6 +12,9 @@ class Response < ApplicationRecord
   # 通知機能
   has_many :notifications, dependent: :destroy
 
+  # バリデーション
+  validates :body, presence: true
+
   # 1レスポンスをした時の通帳機能 admin投稿ツリーの場合
   # 1_①admin通知機能
   def create_admin_ad_notification_res!(current_user, response_id, tree_id, post_id, job_id)

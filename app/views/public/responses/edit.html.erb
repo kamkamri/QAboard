@@ -4,8 +4,12 @@
   <div class = "row">
     <div class = "col-md-6">
       <%= form_with model: @res, url: tree_response_path(@tree.id, @res.id), method: :patch do |f| %>
+
+        <!--部分テンプレート：エラー-->
+        <%= render 'layouts/error_message', model: f.object %>
+
         <div class = "card border-danger mt-5">
-          <div class = "card-header bg-danger text-white"><strong>回答を編集する</strong></div>
+          <div class = "card-header bg-danger text-white"><strong>回答を修正する</strong></div>
           <div class = "card-body">
             <div class = "row">
               <%= f.text_area :body, autofocus: true,  placeholder: "回答を入力してください", rows:10, class: "col-sm-12 " %>
