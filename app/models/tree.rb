@@ -15,7 +15,7 @@ class Tree < ApplicationRecord
 
 
   # モデルファイルに並び替えを行う
-  default_scope -> { order(updated_at: :desc) }
+  default_scope -> {order(updated_at: :desc) }
 
   # 最新レスポンスを1件取得
   has_one :latest_response, -> { order(updated_at: :desc)}, class_name: :Response

@@ -29,6 +29,11 @@ class Admin::AdminUsersController < ApplicationController
     @admin_user = AdminUser.find(current_admin_user.id)
   end
 
+
+
+
+
+
   # 管理者画面編集
   def edit
     @admin_user = AdminUser.find(params[:id])
@@ -37,37 +42,106 @@ class Admin::AdminUsersController < ApplicationController
     @jobs = Job.where(is_deleted: false)
     @admin_user.your_areas.build
     @admin_user.your_jobs.build
+      #一覧画面からと、マイページから飛ぶ場合、リダイレクト先を変更したいので
+      # ここで前ページセッションURLを保存(一覧から？マイページから？)
+      # request.refererで遷移元のURLを取得することができる
+    session[:previous_url] = request.referer
   end
+
+
+
+
 
   # 管理者画面編集
   def edit_pass
     @admin_user = AdminUser.find(params[:id])
   end
 
+
+
+
   # 管理者編集
   def update
     @admin_user = AdminUser.find(params[:id])
-    # binding.pry
-    # @admin_user.your_areas.build
-    # @admin_user.your_jobs.build
-    if @admin_user.update(admin_user_params)
-      # binding.pry
-      # マイページで自分の情報を編集した場合は、マイページへ遷移
-        # マイページの場合は、transition_flag==1を送っている
-        # それ以外は、エンドユーザー一覧に遷移
-        if params[:transition_flag]=="1"
+
+    # ◆一覧からの編集、マイページからの編集、パスワードの編集は、全てupdateで行っている。
+    # リダイレクトや、render先を、ページによって変更したい
+    # update成功時・・・一覧：一覧　マイページから：マイページ　パスワード：マイページ
+    # update失敗時・・・一覧：edit マイページ編集：edit パスワード：edit_pass
+
+    # パスワード変更を更新に送る時、transition_flagに3を送って、遷移先を変更
+    # 一覧とマイページからの編集は、1つ前のページのアドレス（一覧、マイページ）を保村し、
+    # そちらに遷移するようにする
+
+   # パスワード変更の場合
+    if params[:transition_flag]=="3"
+      # パスワード比較
+      if admin_user_params[:password]==params[:admin_user][:password_confirmation]
+        # 保存
+        if @admin_user.update(admin_user_params)
           redirect_to admin_admin_user_path(@admin_user.id)
+          # パスワードを変更してもログアウトされないようにする
+          sign_in(@admin_user, bypass: true)
         else
-          redirect_to admin_admin_users_path
+          render :edit_pass
         end
-      # パスワードを変更してもログアウトされないようにする
-      sign_in(@admin_user, bypass: true)
+      # パスワードが違ったら
+      else
+        @admin_user.errors.add(:password, "が違います。" )
+        render :edit_pass
+      end
+
+    # 登録情報変更か、一覧情報から変更の場合
     else
-      @admin_users = AdminUser.all
-      @areas = Area.where(is_deleted: false, admin_area_flag: false)
-      @jobs = Job.where(is_deleted: false)
-      render :index
+      if @admin_user.update(admin_user_params)
+        # edit時に前のページ（一覧か、マイページ）のURLを、session[:previaous_url]に保存してあるのでそこへリダイレクト
+        redirect_to session[:previous_url]
+        # パスワードを変更してもログアウトされないようにする
+        sign_in(@admin_user, bypass: true)
+      else
+        @admin_areas = Area.where(admin_area_flag: true).where(is_deleted: false)
+        @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+        @jobs = Job.where(is_deleted: false)
+        @admin_user.your_areas.build
+        @admin_user.your_jobs.build
+        render :edit
+      end
     end
+
+    # if @admin_user.update(admin_user_params)
+    #   # パスワード変更の場合
+    #   if params[:transition_flag]=="3"
+
+    #   # 登録情報変更か、一覧情報から変更の場合
+    #   else
+    #     # edit時に前のページ（一覧か、マイページ）のURLを、session[:previaous_url]に保存してあるのでそこへリダイレクト
+    #     redirect_to session[:previous_url]
+    #   end
+    #   # パスワードを変更してもログアウトされないようにする
+    #   sign_in(@admin_user, bypass: true)
+
+    # # 保存が失敗した時
+    # else
+    #   # パスワード変更時
+    #   if params[:transition_flag]=="3"
+    #     render :edit_pass
+
+    #   # 一覧かマイページ
+    #   else
+    #     @admin_areas = Area.where(admin_area_flag: true).where(is_deleted: false)
+    #     @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+    #     @jobs = Job.where(is_deleted: false)
+    #     @admin_user.your_areas.build
+    #     @admin_user.your_jobs.build
+    #     render :edit
+
+        # @admin_users = AdminUser.all
+        # @areas = Area.where(is_deleted: false, admin_area_flag: false)
+        # @jobs = Job.where(is_deleted: false)
+        # render :index
+      # end
+
+    # end
   end
 
    # サインアップする時のカラムを増やす

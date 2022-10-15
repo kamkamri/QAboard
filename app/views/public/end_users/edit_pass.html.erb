@@ -7,6 +7,7 @@
 
   <!--transition_flag: "1"を送ることにより、マイページから遷移したというのをわかるようにしている-->
   <%= form_with model: @end_user, url: end_user_path(current_end_user.id, transition_flag: "1"), method: :patch do |f| %>
+
     <div class="form-group row">
       <%= f.label :password, "パスワード", class: "col-md-2" %>
       <%= f.password_field :password, class: "col-md-2" %>

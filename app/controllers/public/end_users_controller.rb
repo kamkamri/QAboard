@@ -20,6 +20,9 @@ class Public::EndUsersController < ApplicationController
     @end_user = current_end_user
   end
 
+
+
+
   # 拠点担当者更新
   def update
     @end_user = EndUser.find(params[:id])
@@ -36,10 +39,13 @@ class Public::EndUsersController < ApplicationController
       # パスワードを変更してもログアウトされないようにする
       sign_in(@end_user, bypass: true)
     else
-      @end_users = EndUser.where(area_id: current_end_user.area_id).where(is_deleted: false)
-      render :index
+      @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+      render :mypage_edit
     end
   end
+
+
+
 
 
   private

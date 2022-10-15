@@ -12,6 +12,11 @@ class Public::RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def create
+    @user_areas=  Area.where(admin_area_flag: false).where(is_deleted: false)
+    super
+  end
+
   # POST /resource
   # def create
   #   super

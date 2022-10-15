@@ -4,7 +4,10 @@
   <h5 class="mb-5">管理者 新規登録</h5>
 
   <%= form_with model: @admin_user, url:admin_user_registration_path do |f| %>
-    <%= render "admin/shared/error_messages", resource: resource %>
+    <%#= render "admin/shared/error_messages", resource: resource %>
+
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
 
     <div class="form-group row">
       <%= f.label :employee_number, "社員番号", class: "col-md-2" %>

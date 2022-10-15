@@ -6,6 +6,9 @@
   </div>
 
   <%= form_with model: @admin_user, url: admin_admin_user_path(@admin_user.id), method: :patch do |f| %>
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
+
     <div class="form-group row">
       <%= f.label :enmloyee_number, "社員番号", class: "col-md-2" %>
       <%= f.text_field :employee_number, autofocus: true, autocomplete: "on", class: "col-md-2" %>
