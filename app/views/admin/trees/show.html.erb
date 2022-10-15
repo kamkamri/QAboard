@@ -13,10 +13,14 @@
       <div class = "row mb-4">
         <div class = "col-md-9">
           <div class = "card border-secondary mb-5">
-            <% if @tree.admin_user_id == current_admin_user || @tree.end_user_id == current_end_user %>
-              <div class = "card-header" style = "background-color:#ebe6ff">
+            <!--signed_inを追加　これがないと、current_~user.idをした時に、サインインしていない方が、nomethoderrorになるため-->
+            <% if (admin_user_signed_in? && @tree.admin_user_id == current_admin_user.id) || (end_user_signed_in? && @tree.end_user_id == current_end_user.id) %>
+              <div class = "card-header" style = "background-color:#bfeb7f">
+            <!--エンドユーザーの質問-->
+            <% elsif @tree_admin_user_id.nil? %>
+              <div class = "card-header" style = "background-color:#fff5ae">
             <% else %>
-              <div class = "card-header">
+              <div class = "card-header" style = "background-color:#fffde7">
             <% end %>
               <div class = "row">
                 <div class = "col"><%= @tree.title %></div>
@@ -36,7 +40,7 @@
                     <%= @tree.admin_user.area.name %>
                     <%= @tree.admin_user.name_display_short %>
                   <% else %><!--対象のツリーをend_userが投稿した場合-->
-                    <%= @tree.end_user.area.name %>
+                    <strong><%= @tree.end_user.area.name %></strong>
                     <%= @tree.end_user.name_display_short %>
                   <% end %>
                 </div>
@@ -103,9 +107,9 @@
       <% @responses.each do |res| %>
         <div class = "row">
           <div class = "col-md-9">
-            <div class = "card border-secondary mb-1">
-              <% if res.admin_user_id == current_admin_user || res.end_user_id == current_end_user %>
-                <div class = "card-header" style = "background-color:#ebe6ff">
+            <div class = "card border-secondary mb-3">
+              <% if (admin_user_signed_in? && res.admin_user_id == current_admin_user.id) || (end_user_signed_in? && res.end_user_id == current_end_user.id) %>
+                <div class = "card-header" style = "background-color:#bfeb7f">
               <% else %>
                 <div class = "card-header bg-white">
               <% end %>
@@ -164,7 +168,7 @@
           <div class = "col-md-9">
             <%= form_with model: @res, url: admin_tree_responses_path(@tree), method: :post do |f| %>
               <div class = "card border-danger mt-5">
-                <div class = "card-header bg-danger text-white"><strong>回答する</strong></div>
+                <div class = "card-header" style = "background-color:#90ebf0"><strong>回答する</strong></div>
 
                 <!--部分テンプレート：エラー-->
                 <%= render 'layouts/error_message', model: f.object %>

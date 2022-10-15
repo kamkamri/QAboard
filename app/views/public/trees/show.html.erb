@@ -14,7 +14,8 @@
       <div class = "row mb-4">
         <div class = "col-md-9">
           <div class = "card border-secondary mb-5">
-            <% if @tree.admin_user_id == current_admin_user or @tree.end_user_id == current_end_user %>
+            <!--signed_inを追加　これがないと、current_~user.idをした時に、サインインしていない方が、nomethoderrorになるため-->
+            <% if (admin_user_signed_in? && @tree.admin_user_id == current_admin_user.id) || (end_user_signed_in? && @tree.end_user_id == current_end_user.id) %>
               <div class = "card-header" style = "background-color:#ebe6ff">
             <% else %>
               <div class = "card-header">
@@ -105,7 +106,7 @@
         <div class = "row">
           <div class = "col-md-9">
             <div class = "card border-secondary mb-1">
-              <% if res.admin_user_id == current_admin_user or res.end_user_id == current_end_user %>
+              <% if (admin_user_signed_in? && res.admin_user_id == current_admin_user.id) || (end_user_signed_in? && res.end_user_id == current_end_user.id) %>
                 <div class = "card-header" style = "background-color:#ebe6ff">
               <% else %>
                 <div class = "card-header bg-white">

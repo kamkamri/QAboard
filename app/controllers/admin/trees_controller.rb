@@ -176,6 +176,7 @@ class Admin::TreesController < ApplicationController
     @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
     @jobs = Job.where(is_deleted: false)
     @admin_user = current_admin_user
+    # binding.pry
 
     # 通知をチェック済にする
     @notifications = current_admin_user.passive_notifications.where(tree_id: @tree.id)

@@ -45,11 +45,17 @@
                         <%= tree.admin_user.area.name %>
                         <%= tree.admin_user.name_display_short %>
                       <% else %><!--対象のツリーをend_userが投稿した場合-->
-                        <%= tree.end_user.area.name %>
+                        <strong><%= tree.end_user.area.name %></strong>
                         <%= tree.end_user.name_display_short %>
                       <% end %>
                     </td>
-                    <td><%= tree.post.name %></td>
+                    <td>
+                      <% if tree.post_id == Area.find_by(admin_area_flag: true).id %>
+                        <%= tree.post.name %>
+                      <% else %>
+                        <strong><%= tree.post.name %></strong>
+                      <% end %>
+                      </td>
                     <td><span style="background-color:<%= tree.job.color %>">&emsp;<%= tree.job.name %>&emsp;</span></td>
                     <!--<td><%#= link_to tree.title.truncate(20), admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>-->
                     <td><%= tree.title.truncate(20) %></td>
