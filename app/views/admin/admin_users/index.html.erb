@@ -44,7 +44,7 @@
                 <% end %>
               </td>
               <td><%= admin_user.is_deleted ? '無効':'有効' %></td>
-              <td><%= link_to "編集", edit_admin_admin_user_path(admin_user.id), class: "btn btn-secondary" %></td>
+              <td><%= link_to "編集", edit_admin_admin_user_path(admin_user.id), class: "btn btn-secondary btn-sm" %></td>
             </tr>
           <% end %>
         </tbody>

@@ -9,7 +9,7 @@
       <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
         <%= f.label :name, "業務名" %>
         <%= f.text_field :name, placeholder: "拠点の名前を入力してください", class: "col-md-4" %>
-        <%= f.submit "登録", class: "btn btn-secondary" %>
+        <%= f.submit "登録", class: "btn btn-secondary btn-sm" %>
       <% end %>
       <table class="table table-hover">
         <thead>
@@ -30,7 +30,7 @@
               <td><%= area.id %></td>
               <td><%= area.name %></td>
               <td><%= area.is_deleted ? "廃止":"有効" %></td>
-              <td><%= link_to "編集", edit_admin_area_path(area.id), class: "btn btn-secondary" %></td>
+              <td><%= link_to "編集", edit_admin_area_path(area.id), class: "btn btn-secondary btn-sm" %></td>
             </tr>
           <% end %>
         </tbody>

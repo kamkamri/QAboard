@@ -171,7 +171,10 @@ class Admin::TreesController < ApplicationController
   def show
     @tree = Tree.find(params[:id])
     @responses = @tree.responses.page(params[:page])
-    @res = Response.new
+    @newres = Response.new
+    # 部分テンプレートをしようのため、新規レス投稿のURLを入れておく
+    # form_with内でしようのため、通常ではできなかった
+    @create_newres_url = admin_tree_responses_path(@tree)
 
     @areas = Area.where(admin_area_flag: false).where(is_deleted: false)
     @jobs = Job.where(is_deleted: false)

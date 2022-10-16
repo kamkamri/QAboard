@@ -6,86 +6,13 @@
     <div class = "col-md-3 border-right pl-4">
       <!--部分テンプレート：検索-->
       <%= render 'layouts/search' %>
-      <!--部分テンプレート：ジャンル検索-->
-      <%= render 'layouts/side_search', areas: @areas, jobs: @jobs %>
+      <!--部分テンプレート：ジャンル検索等-->
+      <%= render 'layouts/side_navi', areas: @areas, jobs: @jobs %>
     </div>
 
     <div class = "col-md-8">
-      <div class = "row">
-        <h5 class = "bg-light ml-3"><%= @bord_name %></h5>
-      </div>
-      <div class = "row justify-content-center mb-5">
-        <%= link_to "質問をする", new_admin_tree_path, class: "btn btn-secondary" %>
-      </div>
-
-      <div class = "row">
-        <div class = "col-md-12">
-
-          <table class = "table table-hover ">
-            <thead>
-              <tr>
-                <th>送信者</th>
-                <th>宛先</th>
-                <th>カテゴリ</th>
-                <th>タイトル</th>
-                <th>更新日</th>
-                <th>回答数</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% @trees.each do |tree| %>
-                <% if tree.is_closed == true %>
-                  <tr class="table-secondary tree_tbody_tr" data-link="<%= admin_tree_path(tree.id) %>">
-                <% else %>
-                  <tr class="tree_tbody_tr" data-link="<%= admin_tree_path(tree.id) %>">
-                <% end %>
-                    <td>
-                      <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
-                        <%= tree.admin_user.area.name %>
-                        <%= tree.admin_user.name_display_short %>
-                      <% else %><!--対象のツリーをend_userが投稿した場合-->
-                        <strong><%= tree.end_user.area.name %></strong>
-                        <%= tree.end_user.name_display_short %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if tree.post_id == Area.find_by(admin_area_flag: true).id %>
-                        <%= tree.post.name %>
-                      <% else %>
-                        <strong><%= tree.post.name %></strong>
-                      <% end %>
-                      </td>
-                    <td><span style="background-color:<%= tree.job.color %>">&emsp;<%= tree.job.name %>&emsp;</span></td>
-                    <!--<td><%#= link_to tree.title.truncate(20), admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>-->
-                    <td><%= tree.title.truncate(20) %></td>
-                    <td>
-                      <%= l tree.updated_at, format: :short %>
-                      <!--レスポンスの新規投稿、編集でツリーの更新日を変えていなかったので、レスポンスがあったら、最新のレスポンスの更新日、なかったらツリーの更新日を表示していたー-->
-                      <%# if tree.responses.exists? %>
-                        <%#= l tree.latest_response.updated_at, format: :short %>
-                      <%# else %>
-                        <%#= l tree.updated_at, format: :short %>
-                      <%# end %>
-                    </td>
-                    <td>
-                      <%= tree.responses.count %>
-                      <% if tree.is_closed == true %>
-                         終了
-                      <% end %>
-                      <!--レスポンス含め未読がある場合-->
-                      <% if h_appli_admin_unchecked_notifications_tree(tree.id).present? %>
-                        <i class="fa-solid fa-bell"></i>
-                      <% end %>
-                    </td>
-                  </tr>
-              <% end %>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-      <div class = "d-flex justify-content-center"><%= paginate @trees %></div>
+      <!--部分テンプレート：ツリー本文-->
+      <%= render 'layouts/tree_index', bord_name: @bord_name, trees: @trees %>
     </div>
 
   </div>

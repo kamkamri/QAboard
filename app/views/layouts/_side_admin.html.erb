@@ -6,13 +6,13 @@
   <!--検索-->
   <%= form_with url: admin_user_search_admin_searches_path, method: :get do |f| %>
     <%= f.text_field :keyword, placeholder: "社員番号・氏名検索" %>
-    <%= f.submit "検索", class: "btn btn-secondary" %>
-  <% end %><br></br>
+    <%= f.submit "検索", class: "btn btn-secondary btn-sm" %>
+  <% end %><br>
 
   <!--拠点検索-->
   <div class="dropdown mt-5">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      拠点
+      拠点検索
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
       <% areas.each do |area| %>
@@ -24,7 +24,7 @@
   <!--業務検索-->
   <div class="dropdown mt-4">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      業務
+      業務検索
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
       <% jobs.each do |job| %>

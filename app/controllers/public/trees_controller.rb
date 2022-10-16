@@ -139,7 +139,10 @@ class Public::TreesController < ApplicationController
   def show
     @tree = Tree.find(params[:id])
     @responses = @tree.responses.page(params[:page])
-    @res = Response.new
+    @newres = Response.new
+    # 部分テンプレートをしようのため、新規レス投稿のURLを入れておく
+    # form_with内でしようのため、通常ではできなかった
+    @create_newres_url = tree_responses_path(@tree)
 
     @jobs = Job.where(is_deleted: false)
     @end_user = current_end_user

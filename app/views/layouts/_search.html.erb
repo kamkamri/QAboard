@@ -1,14 +1,15 @@
 <!--部分テンプレート-->
 <!--admin tree#index,show,_notification  public tree#index,show,_notification-->
 <!--検索機能-->
+</br>
 <% if admin_user_signed_in? %>
   <%= form_with url: search_admin_searches_path, method: :get do |f| %>
     <%= f.text_field :keyword, placeholder: "質問・回答検索" %>
-    <%= f.submit "検索", class: "btn btn-secondary" %>
+    <%= f.submit "検索", class: "btn btn-secondary btn-sm" %>
   <% end %><br></br>
 <% else %>
   <%= form_with url: search_path, method: :get do |f| %>
     <%= f.text_field :keyword, placeholder: "質問・回答検索" %>
-    <%= f.submit "検索", class: "btn btn-secondary" %>
+    <%= f.submit "検索", class: "btn btn-secondary btn-sm" %>
   <% end %><br></br>
 <% end %>

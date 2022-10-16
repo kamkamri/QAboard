@@ -10,7 +10,7 @@
         <%= f.label :name, "業務名" %>
         <%= f.text_field :name, placeholder: "業務の名前を入力してください", class: "col-md-4" %>
         <%= f.color_field :color %>
-        <%= f.submit "登録", class: "btn btn-secondary" %>
+        <%= f.submit "登録", class: "btn btn-secondary btn-sm" %>
       <% end %>
       <table class="table table-hover">
         <thead>
@@ -33,7 +33,7 @@
               <td><%= job.name %></td>
               <td><span style = "background-color:<%= job.color %>">&emsp;&emsp;&emsp;</span></td>
               <td><%= job.is_deleted ? "廃止":"有効" %></td>
-              <td><%= link_to "編集", edit_admin_job_path(job.id), class: "btn btn-secondary" %></td>
+              <td><%= link_to "編集", edit_admin_job_path(job.id), class: "btn btn-secondary btn-sm" %></td>
             </tr>
           <% end %>
         </tbody>
