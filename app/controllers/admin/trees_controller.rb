@@ -53,6 +53,8 @@ class Admin::TreesController < ApplicationController
     @tree = Tree.new
     @jobs = Job.where(is_deleted: false)
     @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+    # form_with用URL
+    @url = confirm_admin_trees_path
   end
 
 
@@ -62,6 +64,7 @@ class Admin::TreesController < ApplicationController
   # 質問確認画面
   def confirm
      @tree = current_admin_user.trees.new(tree_params)
+     @url = admin_trees_path
 
     # saveでバリデーション使えないので、エラーを表示するために記載
     if tree_params[:title] == ""
@@ -229,6 +232,7 @@ class Admin::TreesController < ApplicationController
     @tree = current_admin_user.trees.find(params[:id])
     @jobs = Job.where(is_deleted: false)
     @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+    @url = admin_tree_path(@tree.id)
   end
 
 

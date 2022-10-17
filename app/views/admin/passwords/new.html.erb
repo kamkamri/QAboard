@@ -1,16 +1,22 @@
-<h2>Forgot your password?</h2>
+<!--admin-再設定-->
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "admins/shared/error_messages", resource: resource %>
+<div class = "container-fluid">
+  <h5 class="mb-5">管理者 パスワード再設定</h5>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <%= form_with model: @admin_user, url: admin_user_password_path, class: 'registration-main', local: true do |f| %>
+    <%#= render "admins/shared/error_messages", resource: resource %>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
 
-<%= render "admins/shared/links" %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "メールを送る" %>
+    </div>
+  <% end %>
+
+</div>

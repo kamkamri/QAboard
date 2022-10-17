@@ -1,51 +1,9 @@
 <!--<h1>Admin::Trees#confirm</h1>-->
 <div class = "container-fluid">
-
   <div class = "row">
-    <div class = "col-md-6">
-      <div class = "card border-secondary mb-3">
-        <div class = "card-header">
-          <h5 class = "card-title"><%= @tree.title %></h5>
-        </div>
-        <div class = "card-body">
-            <%= simple_format(@tree.body) %>
-        </div>
-        <div class = "card-footer">
-          <div class = "row">
-            <div class = "col-sm-2">送信先</div>
-            <div class = "col-sm-3"><%= @tree.post.name %></div>
-          </div>
-          <div class = "row">
-            <div class = "col-sm-2">業務区分</div>
-            <div class = "col-sm-3"><%= @tree.job.name %></div>
-          </div>
-          <% if @tree.attachments.attached? %>
-            <div class = "row">
-              <div class = "col-sm-2">添付ファイル</div>
-              <div class = "colƒ">
-                <ul>
-                  <% @tree.attachments.each do |obj| %>
-                    <!--<li><%#= File.basename(rails_blob_path(obj))%></li>-->
-                    <li><%= obj.filename %></li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-          <%= form_with model: @tree, url: admin_trees_path, method: :post do |f| %>
-            <%= f.hidden_field :title, :value => @tree.title %>
-            <%= f.hidden_field :body, :value => @tree.body %>
-            <%= f.hidden_field :post_id, :value => @tree.post_id %>
-            <%= f.hidden_field :job_id, :value => @tree.job_id %>
-            <%#= f.hidden_field :attachments, multiple: true, :value => @tree.attachments %>
-            <%= f.hidden_field :attachments, value: @files %>
-            <%= f.submit "修正する", name: "back", class: "btn btn-secondary" %>
-            <%= f.submit "投稿する", class: "btn btn-danger" %>
-          <% end %>
-        </div>
-      </div>
 
-    </div>
+   <!--部分テンプレート：ツリー本文-->
+   <%= render 'layouts/tree_confirm', tree: @tree, url: @url, files: @files %>
+
   </div>
-
 </div>
