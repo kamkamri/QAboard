@@ -1,0 +1,41 @@
+<!--<h1>Admin::Areas#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h5 class="mb-5 offset-1">拠点マスタ</h5>
+  </div>
+
+  <div class = "row">
+    <div class="col-md-8 offset-1">
+      <%= form_with model: @area, url: admin_areas_path, method: :post do |f| %>
+        <%= f.label :name, "業務名" %>
+        <%= f.text_field :name, placeholder: "拠点の名前を入力してください", class: "col-md-4" %>
+        <%= f.submit "登録", class: "btn btn-secondary btn-sm" %>
+      <% end %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>業務名</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @areas.each do |area| %>
+            <% if area.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= area.id %></td>
+              <td><%= area.name %></td>
+              <td><%= area.is_deleted ? "廃止":"有効" %></td>
+              <td><%= link_to "編集", edit_admin_area_path(area.id), class: "btn btn-secondary btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class = "d-flex justify-content-center"><%= paginate @areas %></div>
+    </div>
+  </div>
+</div>

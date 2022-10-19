@@ -1,0 +1,56 @@
+<!--<h1>Admin::AdminUsers#index</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+
+    <div class="col-md-3 border-right pl-4">
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_admin', areas: @areas, jobs: @jobs %>
+    </div>
+
+    <!--管理者一覧-->
+    <div class="col-md-8">
+      <h5 class="mb-5"><%= @bord_name %>管理者一覧</h5>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>社員番号</th>
+            <th>管理者名</th>
+            <th>担当拠点</th>
+            <th>業務</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @admin_users.each do |admin_user| %>
+            <% if admin_user.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= admin_user.id %></td>
+              <td><%= admin_user.employee_number %></td>
+              <td><%= admin_user.name_display %></td>
+              <td>
+                <% admin_user.areas.each do |area| %>
+                  <%= area.name %>
+                <% end %>
+              </td>
+              <td>
+                <% admin_user.jobs.each do |job| %>
+                  <span style="background-color:<%= job.color %>"><%= job.name %></span>
+                <% end %>
+              </td>
+              <td><%= admin_user.is_deleted ? '無効':'有効' %></td>
+              <td><%= link_to "編集", edit_admin_admin_user_path(admin_user.id), class: "btn btn-secondary btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class = "d-flex justify-content-center"><%= paginate @admin_users %></div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,57 @@
+@import '~bootstrap/scss/bootstrap';
+
+body{
+  background-color: #fffffc;
+}
+
+// fontawesome　ヘッダーにあるベル
+.header_bell {
+  position: absolute;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  color: #efa04c;
+}
+
+
+// fontawesome　通知機能と掲示板一覧にあるベル
+.fa-bell {
+  color: #efa04c;
+}
+
+// エラー崩れを防ぐ
+.field_with_errors {
+  display: contents;
+  // もしくは diplay: inline;
+  // input {
+    // @extend .is-invalid;
+  // }
+}
+
+// admin_user_現在ログイン中の質問新規画面＆ツリーindex未読の色
+.current_admin_qa{
+  background-color: #D1E5E8;
+}
+
+// end_user_現在ログイン中の質問新規画面＆ツリーindex未読の色
+.current_end_qa{
+  background-color: #FFDCDB;
+}
+
+// admin_user_現在ログイン中投稿ツリーの色
+.current_admin{
+  background-color: #F4FAFE;
+}
+
+// end_user_現在ログイン中投稿ツリーの色
+.current_end{
+  background-color: #f8dff5;
+}
+// その他のadmin_userが投稿したツリー等の色
+.other_admin{
+  background-color: #fffffc;
+}
+
+// その他のend_userが投稿したツリー等の色
+.other_end{
+  background-color: #fff5f9;
+}

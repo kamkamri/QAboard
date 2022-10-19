@@ -1,0 +1,38 @@
+<!--<h1>Public::EndUsers#mypage</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h5 class="mb-5 ml-2">登録情報</h5>
+  </div>
+
+  <div class = "row">
+    <div class = "col-md-3 text-center">
+      <%= image_tag @end_user.get_profile_image(200,200),class: "img-fluid" %>
+    </div>
+    <div class = "col-md-6">
+      <%= link_to "登録情報変更", mypage_edit_end_users_path, class: "btn btn-secondary" %>
+      <%= link_to "パスワード変更", edit_pass_end_users_path, class: "btn btn-secondary" %>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>社員番号</th>
+            <td><%= @end_user.employee_number %></td>
+          </tr>
+          <tr>
+            <th>氏名</th>
+            <td><%= @end_user.name_display %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= @end_user.email %></td>
+          </tr>
+          <tr>
+            <th>所属拠点</th>
+            <td><%= @end_user.area.name %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

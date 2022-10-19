@@ -1,0 +1,44 @@
+<!--<h1>Admin::Jobs#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <h5 class="mb-5 offset-1">業務マスタ</h5>
+  </div>
+
+  <div class = "row">
+    <div class="col-md-8 offset-1">
+      <%= form_with model: @job, url: admin_jobs_path, method: :post do |f| %>
+        <%= f.label :name, "業務名" %>
+        <%= f.text_field :name, placeholder: "業務の名前を入力してください", class: "col-md-4" %>
+        <%= f.color_field :color %>
+        <%= f.submit "登録", class: "btn btn-secondary btn-sm" %>
+      <% end %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>業務名</th>
+            <th>カラー</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @jobs.each do |job| %>
+            <% if job.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= job.id %></td>
+              <td><%= job.name %></td>
+              <td><span style = "background-color:<%= job.color %>">&emsp;&emsp;&emsp;</span></td>
+              <td><%= job.is_deleted ? "廃止":"有効" %></td>
+              <td><%= link_to "編集", edit_admin_job_path(job.id), class: "btn btn-secondary btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class = "d-flex justify-content-center"><%= paginate @jobs %></div>
+    </div>
+  </div>
+</div>

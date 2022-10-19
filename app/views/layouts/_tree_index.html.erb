@@ -1,0 +1,105 @@
+<!--部分テンプレート-->
+<!--admin_user end_user  Tree#index-->
+<!--本文-->
+
+<div class = "row">
+  <h5 class = "bg-light ml-3"><%= bord_name %></h5>
+</div>
+<div class = "row justify-content-center mb-5">
+  <!--adminuserサインインの場合-->
+  <% if admin_user_signed_in? %>
+    <%= link_to "質問をする", new_admin_tree_path, class: "btn btn-secondary" %>
+  <!--enduserサインインの場合-->
+  <% else %>
+    <%= link_to "質問をする", new_tree_path, class: "btn btn-secondary" %>
+  <% end %>
+</div>
+
+<div class = "row">
+  <div class = "col-md-12">
+
+    <table class = "table table-hover ">
+      <thead>
+        <tr>
+          <th>送信者</th>
+          <th>宛先</th>
+          <th>カテゴリ</th>
+          <th>タイトル</th>
+          <th>更新日</th>
+          <th>回答数</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% trees.each do |tree| %>
+          <!--admin_userサインインの場合の動き-->
+          <% if admin_user_signed_in? %>
+          <!--新着の場合-->
+            <% if h_appli_admin_unchecked_notifications_tree(tree.id).present? %>
+              <tr class="tree_tbody_tr current_admin_qa" data-link="<%= admin_tree_path(tree.id) %>">
+            <!--ツリーがクローズの場合-->
+            <% elsif tree.is_closed == true %>
+              <tr class="table-secondary tree_tbody_tr" data-link="<%= admin_tree_path(tree.id) %>">
+            <!--それ以外-->
+            <% else %>
+              <tr class="tree_tbody_tr" data-link="<%= admin_tree_path(tree.id) %>">
+            <% end %>
+          <!--end_userサインインの場合の動き-->
+          <% else %>
+          <!--新着の場合-->
+            <% if h_appli_end_unchecked_notifications_tree(tree.id).present? %>
+              <tr class="tree_tbody_tr current_end_qa" data-link="<%= tree_path(tree.id) %>">
+            <!--ツリーがクローズの場合-->
+            <% elsif tree.is_closed == true %>
+              <tr class="table-secondary tree_tbody_tr" data-link="<%= tree_path(tree.id) %>">
+            <!--それ以外-->
+            <% else %>
+              <tr class="tree_tbody_tr" data-link="<%= tree_path(tree.id) %>">
+            <% end %>
+          <% end %>
+              <td>
+                <% if tree.end_user_id.nil? %><!--対象のツリーをadmin_userが投稿した場合-->
+                  <%= tree.admin_user.area.name %>
+                  <%= tree.admin_user.name_display_short %>
+                <% else %><!--対象のツリーをend_userが投稿した場合-->
+                  <strong><%= tree.end_user.area.name %></strong>
+                  <%= tree.end_user.name_display_short %>
+                <% end %>
+              </td>
+              <td>
+                <% if tree.post_id == Area.find_by(admin_area_flag: true).id %>
+                  <%= tree.post.name %>
+                <% else %>
+                  <strong><%= tree.post.name %></strong>
+                <% end %>
+                </td>
+              <td><span style="background-color:<%= tree.job.color %>">&emsp;<%= tree.job.name %>&emsp;</span></td>
+              <!--<td><%#= link_to tree.title.truncate(20), admin_tree_path(tree.id), class: "text-decoration-none text-dark" %></td>-->
+              <td><%= tree.title.truncate(20) %></td>
+              <td>
+                <%= l tree.updated_at, format: :short %>
+                <!--レスポンスの新規投稿、編集でツリーの更新日を変えていなかったので、レスポンスがあったら、最新のレスポンスの更新日、なかったらツリーの更新日を表示していたー-->
+                <%# if tree.responses.exists? %>
+                  <%#= l tree.latest_response.updated_at, format: :short %>
+                <%# else %>
+                  <%#= l tree.updated_at, format: :short %>
+                <%# end %>
+              </td>
+              <td>
+                <%= tree.responses.count %>
+                <% if tree.is_closed == true %>
+                   終了
+                <% end %>
+                <!--ログイン中のユーザーのレスポンス含め未読がある場合-->
+                <% if (admin_user_signed_in? && h_appli_admin_unchecked_notifications_tree(tree.id).present?) || (end_user_signed_in? && h_appli_end_unchecked_notifications_tree(tree.id).present?) %>
+                  <i class="fa-solid fa-bell"></i>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+<div class = "d-flex justify-content-center"><%= paginate trees %></div>

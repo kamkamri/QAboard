@@ -1,0 +1,19 @@
+<!--<h1>Public::Trees#show</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+
+    <!--検索-->
+    <div class = "col-md-3 border-right pl-4">
+      <!--部分テンプレート：検索-->
+      <%= render 'layouts/search' %>
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_navi', jobs: @jobs %>
+    </div>
+
+    <div class = "col-md-8">
+      <!--部分テンプレート：ツリーshow-->
+      <%= render 'layouts/tree_show', tree: @tree, responses: @responses, newres: @newres, create_newres_url: @create_newres_url %>
+    </div>
+
+  </div>
+</div>

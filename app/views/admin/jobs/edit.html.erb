@@ -1,0 +1,34 @@
+<!--<h1>Admin::Jobs#edit</h1>-->
+<div class = "container-fluid">
+
+  <div class = "row">
+    <h5 class="mb-5 ml-3">業務マスタ編集</h5>
+  </div>
+
+
+  <%= form_with model: @job, url: admin_job_path(@job.id), method: :patch do |f| %>
+    <div class="form-group row">
+      <%= f.label :id, "ID", class: "col-md-2 offset-1" %>
+      <div class="col-md-2"><%= @job.id%></div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :name, "業務名", class: "col-md-2 offset-1" %>
+      <%= f.text_field :name, class: "col-md-2" %>
+    </div>
+    <div class="form-group row">
+      <%= f.label :color, "色", class: "col-md-2 offset-1" %>
+      <%= f.color_field :color, class: "col-md-2" %>
+    </div>
+    <div class="form-group row">
+      <%= f.label :is_deleted, "業務ステータス", class: "col-md-2 offset-1" %>
+      <%= f.radio_button :is_deleted, false, checked: true %>&emsp;
+      <%= f.label :is_deleted, "有効" %>&emsp;&emsp;
+      <%= f.radio_button :is_deleted, true %>&emsp;
+      <%= f.label :is_deleted, "廃止" %>
+    </div>
+    <div class="form-group row offset-3 mt-4">
+      <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+
+</div>

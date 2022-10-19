@@ -1,0 +1,39 @@
+<!--<h1>Public::EndUsers#index</h1>-->
+<div class = "container-fluid">
+  <div class = "row">
+    <div class="col-md-3">
+      <!--部分テンプレート：ジャンル検索-->
+      <%= render 'layouts/side_end', areas: @areas %>
+    </div>
+    <div class="col-md-8">
+      <h5 class="mb-5"><%= current_end_user.area.name %>  担当者一覧</h5>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>社員番号</th>
+            <th>名前</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @end_users.each do |end_user| %>
+            <% if end_user.is_deleted == true %>
+              <tr class="table-secondary">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= end_user.id %></td>
+              <td><%= end_user.employee_number %></td>
+              <td><%= end_user.name_display %></td>
+              <!--end_user:{is_deleted: true}で渡している理由　is_deletedのみでもいけるが、ストロングパラメータでrezuire(:end_user)しているので、end_userつけないとパラメータ-->
+              <!--transition_flag: "2"を送ることにより、一覧からユーザー削除のため遷移したというのをわかるようにしている-->
+              <td><%= link_to "削除", end_user_path(end_user.id, end_user:{is_deleted: true}, transition_flag: "1"), method: :patch, "data-confirm" => "本当に消しますか？", class: "btn btn-secondary" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class = "d-flex justify-content-center"><%= paginate @end_users %></div>
+    </div>
+  </div>
+</div>

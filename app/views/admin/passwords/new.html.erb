@@ -1,0 +1,22 @@
+<!--admin-再設定-->
+
+<div class = "container-fluid">
+  <h5 class="mb-5">管理者 パスワード再設定</h5>
+
+  <%= form_with model: @admin_user, url: admin_user_password_path, class: 'registration-main', local: true do |f| %>
+    <%#= render "admins/shared/error_messages", resource: resource %>
+
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "メールを送る" %>
+    </div>
+  <% end %>
+
+</div>

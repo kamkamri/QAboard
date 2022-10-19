@@ -8,7 +8,8 @@ gem 'rails', '~> 6.1.6', '>= 6.1.6.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+# 本番環境用に、pumaのversionを、5.0から3.11に変更
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -23,7 +24,8 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+# 画像をリサイズ
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -54,3 +56,32 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# pry-byebugを使用のため
+gem 'pry-byebug', group: :development
+
+# deviseを追加
+gem 'devise'
+
+gem "net-smtp"
+
+gem "mini_magick"
+
+# jquery
+gem 'jquery-rails'
+
+# ページネーションのため
+gem 'kaminari','~> 1.2.1'
+
+# 日本語化
+gem 'rails-i18n'
+
+# 本番環境でMysQLと、環境変数を利用するための設定
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
+
+gem "net-smtp"
+gem "net-pop"
+gem "net-imap"

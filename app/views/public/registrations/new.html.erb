@@ -1,0 +1,50 @@
+<!--end-sign-up-->
+<div class = "container-fluid">
+  <h5 class="mb-5">拠点担当者 新規登録</h5>
+
+  <%= form_with model: @end_user, url: end_user_registration_path do |f| %>
+    <%#= render "public/shared/error_messages", resource: resource %>
+
+    <!--部分テンプレート：エラー-->
+    <%= render 'layouts/error_message', model: f.object %>
+
+    <div class="form-group row">
+      <%= f.label :employee_number, "社員番号", class: "col-md-2" %>
+      <%= f.text_field :employee_number, autofocus: true, autocomplete: "on",  placeholder: "6桁前0を追加", class: "col-md-2" %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :family_name, "名字", class: "col-md-2" %>
+      <%= f.text_field :family_name, autofocus: true, autocomplete: "on",  placeholder: "山田", class: "col-md-2"  %>
+      <%= f.label :first_name, "名前", class: "col-md-1" %>
+      <%= f.text_field :first_name, autofocus: true, autocomplete: "on",  placeholder: "太郎", class: "col-md-2"  %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :email, "メールアドレス", class: "col-md-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-md-2" %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :password, "パスワード (#{@minimum_password_length}文字以上)", class: "col-md-2" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "col-md-2" %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :password_confirmation, "パスワード(確認)", class: "col-md-2" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "col-md-2" %>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label "所属拠点", class: "col-md-2" %>
+      <%= f.collection_select(:area_id, @user_areas, :id, :name) %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "新規登録", class: "btn btn-secondary offset-2 mt-4" %>
+    </div>
+  <% end %>
+  <div class="row offset-2">
+    登録済みの方は<%= link_to "こちら", new_end_user_session_path %>
+  </div>
+</div>
