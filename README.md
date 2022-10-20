@@ -1,24 +1,36 @@
-# README
+# 質問掲示板
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+### サイトテーマ
+業務の質問、回答をする掲示板  
+<br>
+<br>
+### テーマを選んだ理由
+会社で人事業務に従事しています。<br>
+年末調整業務（人事業務）で、各拠点担当者から問い合わせを受ける際、  
+拠点ごとのエクセルファイルに、業務の内容ごとにシートを分けて質問事項を記載してもらっています。<br>
+やりにくい点があるので、それを解決できればと思い、本テーマを選びました。
+#### （やりにくい点）  
+- エクセルファイルなので、同時に何人も開けない　
+- 人事側は一人で2〜3箇所の拠点を担当しているので、毎日数個、数シートを、見にいかなければならない　
+<br>
+<br>
+### ターゲットユーザー
+業務での質問回答が、メールやエクセル等で、煩雑だと思っている方
+<br>
+<br>
+<br>
+## 設計書
+### 実装機能リスト
+[こちらをクリック](https://docs.google.com/spreadsheets/d/1R9J-nloF-uO3lLW0vu77Y45dgzpdJ1cE7aT6E9YA2ng/edit?usp=sharing)
 
-Things you may want to cover:
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 使用素材
+- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
+- 使用しない場合は、使用素材の項目をREADMEから削除してください。
