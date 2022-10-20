@@ -1,6 +1,6 @@
 class CreateResponses < ActiveRecord::Migration[6.1]
   def change
-    create_table :responses do |t|
+    create_table :responses, id: :integer do |t|
 
       t.integer :tree_id, null: false
       t.integer :end_user_id

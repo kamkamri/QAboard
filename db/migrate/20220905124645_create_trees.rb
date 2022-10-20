@@ -1,6 +1,6 @@
 class CreateTrees < ActiveRecord::Migration[6.1]
   def change
-    create_table :trees do |t|
+    create_table :trees, id: :integer do |t|
 
       t.integer :end_user_id
       t.integer :admin_user_id
