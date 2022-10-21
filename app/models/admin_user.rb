@@ -14,13 +14,13 @@ class AdminUser < ApplicationRecord
   # validates_associated :関連テーブル名
   # validates :関連テーブル名, validatesの内容
   validates_associated :your_areas
-  validates :your_areas, presence: true
+  # validates :your_areas, presence: true
 
   # 関連テーブルyour_jobのvalidatesをかける
   # validates_associated :関連テーブル名
   # validates :関連テーブル名, validatesの内容
   validates_associated :your_jobs
-  validates :your_jobs, presence: true
+  # validates :your_jobs, presence: true
 
 
   # validates :your_areas, area_id: {presence: true}
@@ -40,12 +40,12 @@ class AdminUser < ApplicationRecord
 
   # プロフィール画像
   has_one_attached :profile_image
-  
+
   ## 条件
   # admin　受信した質問1 拠点担当者のarea_idが、自分の担当拠点
   has_many :rec_admin_yourareas, ->{rec_admin_myarea}, class_name: "YourArea"
   has_many :rec_admin_area, through: :rec_admin_yourareas
-  
+
   # 通知機能
   # 自分からの通知
   has_many :active_notifications, class_name: "Notification", foreign_key: "admin_visitor_id", dependent: :destroy
@@ -65,7 +65,7 @@ class AdminUser < ApplicationRecord
   def name_display
     family_name + "　" + first_name
   end
-  
+
   # 氏名を表示するメソッド短い
   def name_display_short
     family_name + first_name

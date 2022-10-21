@@ -10,3 +10,13 @@ Area.create!(
   name: "管理者",
   admin_area_flag: true
   )
+
+AdminUser.create!(
+  employee_number: "000000",
+  family_name: "admin",
+  first_name: "管理者",
+  area_id: 1,
+  email: "admin@example.com",
+  password: "000000",
+  is_deleted: false
+  )
