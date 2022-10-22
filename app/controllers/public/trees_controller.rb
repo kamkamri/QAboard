@@ -60,6 +60,7 @@ class Public::TreesController < ApplicationController
     if @tree.errors.any?
       @jobs = Job.where(is_deleted: false)
       @admin_area = Area.where(admin_area_flag: true).where(is_deleted: false).limit(1)
+      @url = confirm_trees_path
       render :new
     end
 
@@ -91,7 +92,9 @@ class Public::TreesController < ApplicationController
   # 更新機能
   def create
     # paramで送られてきたデータを2個単位での保存に戻す。最初の状態[finename, base64でエンコードされたdata]
-    files = params[:tree][:attachments].split(',').each_slice(2).to_a
+    # if tree_params[:attachments].present?
+      files = params[:tree][:attachments].split(',').each_slice(2).to_a
+    # end
 
     @tree = current_end_user.trees.new(tree_params)
     @tree.area_id = current_end_user.area_id
@@ -103,6 +106,7 @@ class Public::TreesController < ApplicationController
     # !@tree.save !が前にあるので、saveできなかったらになる
     if params[:back] || !@tree.save
       @jobs = Job.where(is_deleted: false)
+      @url = confirm_trees_path
       render :new and return
     end
 
@@ -199,6 +203,7 @@ class Public::TreesController < ApplicationController
       redirect_to tree_path(@tree.id)
     else
       @jobs = Job.where(is_deleted: false)
+      @url = tree_path(@tree.id)
       render :edit
     end
   end

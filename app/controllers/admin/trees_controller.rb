@@ -85,6 +85,7 @@ class Admin::TreesController < ApplicationController
     if @tree.errors.any?
       @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+      @url = confirm_admin_trees_path
       render :new
     end
     # 複数添付ファイル保存のために
@@ -127,6 +128,7 @@ class Admin::TreesController < ApplicationController
     if params[:back] || !@tree.save
       @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+      @url = confirm_admin_trees_path
       render :new and return
     end
 
@@ -257,6 +259,7 @@ class Admin::TreesController < ApplicationController
     else
       @jobs = Job.where(is_deleted: false)
       @user_areas =  Area.where(admin_area_flag: false).where(is_deleted: false)
+      @url = admin_tree_path(params[:id])
       render :edit
     end
   end
