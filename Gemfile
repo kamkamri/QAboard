@@ -77,6 +77,10 @@ gem 'kaminari','~> 1.2.1'
 # 日本語化
 gem 'rails-i18n'
 
+# 時間ごとにメール通知するための機能
+gem 'whenever', require: false
+
+
 # 本番環境でMysQLと、環境変数を利用するための設定
 gem 'dotenv-rails'
 group :production do
