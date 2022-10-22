@@ -18,7 +18,7 @@ ja:
         title: タイトル
         body: 本文
         post_id: 送信先
-        job_id:
+        job_id: 質問タグ
       # end_userモデル　日本語化
       end_user:
         employee_number: 社員番号
