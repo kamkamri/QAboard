@@ -36,9 +36,9 @@ set :environment, :production
 # end
 
 # テスト用
-every 5.minutes do
-   runner "ScheduledProcessingMailer.check_notice_mail.deliver_now"
-end
+# every 5.minutes do
+#   runner "ScheduledProcessingMailer.check_notice_mail.deliver_now"
+# end
 
 # 毎日　7：00にメールを送る
 every 1.day, :at => "7:00 am" do
