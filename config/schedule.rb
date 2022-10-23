@@ -11,8 +11,13 @@
 env :PATH, ENV['PATH']
 # ログファイルの出力先　バッチ処理の記録が入る
 set :output, 'log/cron.log'
-# ジョブの実行環境の指定　開発環境、本番環境
-set :environment, :development
+# ジョブの実行環境の指定　開発環境(消すと本番環境になる)
+# set :environment, :development
+
+# cronを実行する環境変数
+rails_env = ENV['RAILS_ENV'] || :development
+# cronを実行する環境変数をセット
+set :environment, rails_env
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
