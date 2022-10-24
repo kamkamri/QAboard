@@ -40,8 +40,8 @@ set :environment, :production
 #   runner "ScheduledProcessingMailer.check_notice_mail.deliver_now"
 # end
 
-# 毎日　7：00にメールを送る
-every 1.day, :at => "7:00 am" do
+# 毎日　7：00にメールを送る（JSTは+9:00なので-9:00の時間を記述）
+every 1.day, :at => "10:00 pm" do
    runner "ScheduledProcessingMailer.check_notice_mail.deliver_now"
 end
 
