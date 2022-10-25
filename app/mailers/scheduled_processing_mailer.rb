@@ -1,7 +1,7 @@
 class ScheduledProcessingMailer < ApplicationMailer
 
   def check_notice_mail
-    @url = "https://e6290ffce75f4ee9aeb58a25b1a85baa.vfs.cloud9.ap-northeast-1.amazonaws.com/"
+    @url = "qaboard.xyz"
 
     # admin_userの未読者
     admin_users_with_unchecked_notices = AdminUser.all.select do |admin_user|
