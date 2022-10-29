@@ -36,6 +36,7 @@
     </div>
 
     <div class="form-group row">
+      <%# byebug %>
       <%= f.label "所属拠点", class: "col-md-2" %>
       <%= f.collection_select(:area_id, @user_areas, :id, :name) %>
     </div>
