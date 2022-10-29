@@ -1,4 +1,5 @@
 # 質問掲示板
+<img width="956" alt="スクリーンショット 2022-10-29 21 39 09" src="https://user-images.githubusercontent.com/108494968/198832070-2666e515-637d-4f62-93ee-cd51e46be4c4.png">
 
 ## サイト概要
 ### サイトテーマ
