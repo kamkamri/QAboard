@@ -29,7 +29,12 @@
 <br>
 ## 設計書
 ### 実装機能リスト
-[こちらをクリック](https://docs.google.com/spreadsheets/d/1R9J-nloF-uO3lLW0vu77Y45dgzpdJ1cE7aT6E9YA2ng/edit?usp=sharing)
+- 通知機能
+- メール送信
+- 定時処理
+- 返信機能
+- タグ機能
+- 検索機能
 
 ## 開発環境
 - OS：Linux(CentOS)
@@ -39,4 +44,5 @@
 - IDE：Cloud9
 
 ## 使用素材
+使用させていただき、ありがとうございました。
 - [フリー素材ぱくたそ](www.pakutaso.com)
