@@ -38,23 +38,27 @@
     <div class="form-group row">
       <%= f.label "担当拠点", class: "col-md-2" %>
       <%= f.collection_check_boxes(:area_ids, @user_areas, :id, :name, include_hidden: false) do |area| %>
-        <%= area.check_box %>
-        <%= area.text %>&emsp;
+        <!--チェックボックスのラベルをクリックしても、ボタンが反応するようにする-->
+        <%= area.label{area.check_box + area.text + "　"} %>
+        <%#= area.check_box %>
+        <!--<%#= area.text %>&emsp;-->
       <% end %>
     </div>
     <div class="form-group row">
       <%= f.label "担当業務", class: "col-md-2" %>
       <%= f.collection_check_boxes(:job_ids, @jobs, :id, :name, include_hidden: false) do |job| %>
-        <%= job.check_box %>
-        <%= job.text %>&emsp;
+        <!--チェックボックスのラベルをクリックしても、ボタンが反応するようにする-->
+        <%= job.label{job.check_box + job.text + "　"} %>
+        <%#= job.check_box %>
+        <!--<%#= job.text %>&emsp;-->
       <% end %>
     </div>
     <div class="form-group row">
       <%= f.label :is_deleted, "管理者ステータス", class: "col-md-2" %>
       <%= f.radio_button :is_deleted, false %>
-      <%= f.label :is_deleted, "有効" %>&emsp;
+      <%= f.label :is_deleted, "有効", value: false %>&emsp;
       <%= f.radio_button :is_deleted, true %>
-      <%= f.label :is_deleted, "無効" %>
+      <%= f.label :is_deleted, "無効",value: true %>
     </div>
     <div class="form-group row offset-2 mt-4">
       <%= f.submit "変更を保存", class: "btn btn-secondary" %>

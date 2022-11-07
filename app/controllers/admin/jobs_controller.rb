@@ -12,7 +12,7 @@ class Admin::JobsController < ApplicationController
     if @job.save
       redirect_to admin_jobs_path
     else
-      @jobs = Job.all
+      @jobs = Job.all.page(params[:page])
       render :index
     end
   end

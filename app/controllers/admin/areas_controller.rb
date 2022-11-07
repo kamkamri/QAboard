@@ -12,7 +12,7 @@ class Admin::AreasController < ApplicationController
     if @area.save
       redirect_to admin_areas_path
     else
-      @areas = Area.all
+      @areas = Area.where(admin_area_flag: false).page(params[:page])
       render :index
     end
   end

@@ -196,7 +196,7 @@
           <!--end_user_サインインの場合-->
           <% else %>
             <!--現在ログインしているユーザーの投稿-->
-            <% if current_admin_user == res.admin_user %>
+            <% if current_end_user == res.end_user %>
               <div class = "row d-flex justify-content-end">
                 <%= link_to "修正する", edit_tree_response_path(tree.id, res.id), class: "btn btn-secondary mr-2" %>
                 <%= link_to "削除する", tree_response_path(tree.id, res.id), method: :delete, "data-confirm" => "回答を削除してもよろしいですか？", class: "btn btn-secondary mr-2" %>

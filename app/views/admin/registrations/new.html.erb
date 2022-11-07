@@ -45,8 +45,10 @@
       <%= f.label "担当拠点", class: "col-md-2" %>
         <!--fields_forで、別モデルnのyour_area も一緒に保存できるようにする-->
         <%= f.collection_check_boxes(:area_ids, @user_areas, :id, :name, include_hidden: false) do |area| %>
-          <%= area.check_box %>
-          <%= area.text %>&emsp;
+          <!--ラベルをクリックしてもチェックボックスが反応-->
+          <%= area.label { area.check_box + area.text + "　"  } %>
+          <%#= area.check_box %>
+          <!--<%#= area.text %>&emsp;-->
         <% end %>
     </div>
 
@@ -54,8 +56,10 @@
       <%= f.label "担当業務", class: "col-md-2" %>
       <!--fields_forで、別モデルnのyour_job も一緒に保存できるようにする-->
       <%= f.collection_check_boxes(:job_ids, @jobs, :id, :name, include_hidden: false) do |job| %>
-        <%= job.check_box %>
-        <%= job.text %>&emsp;
+        <!--ラベルをクリックしてもチェックボックスが反応-->
+        <%= job.label { job.check_box + job.text + '　'  } %>
+        <%#= job.check_box %>
+        <!--<%#= job.text %>&emsp;-->
       <% end %>
     </div>
 

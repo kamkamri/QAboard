@@ -1,7 +1,7 @@
 <!--部分テンプレート-->
 <!--admin_user end_user  Tree#new-->
 
-<div class = "col-md-6">
+<div class = "col-md-6 mx-auto">
   <%= form_with model: tree, url: url, method: :post do |f| %>
     <!--部分テンプレート：エラー-->
     <%= render 'layouts/error_message', model: f.object %>
